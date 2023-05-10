@@ -1,4 +1,7 @@
 package otava.library;
 
-class Result {
+interface Result {
+    String asString();
+    String asJson();
+    String asTurtle();
 }
