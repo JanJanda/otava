@@ -1,4 +1,4 @@
 package otava.library;
 
-class Document {
+interface Document {
 }
