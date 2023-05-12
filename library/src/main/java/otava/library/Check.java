@@ -4,10 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 abstract class Check {
-    Check[] preChecks = new Check[0];
-    Table[] tables = new Table[0];
-    Descriptor descriptor;
-    Result result;
+    protected Check[] preChecks = new Check[0];
+    protected Table[] tables = new Table[0];
+    protected Descriptor descriptor;
+    protected Result result;
 
     public Check(Table[] tables) {
         this.tables = tables;
@@ -40,7 +40,5 @@ abstract class Check {
         return result;
     }
 
-    Result performValidation() {
-        return new NoCheckResult();
-    }
+    protected abstract Result performValidation();
 }
