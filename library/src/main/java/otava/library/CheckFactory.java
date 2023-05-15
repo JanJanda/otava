@@ -1,5 +1,9 @@
 package otava.library;
 
-interface CheckFactory {
-    <T extends Check> Check getInstance(Class<T> type) throws ValidatorException;
+import otava.library.checks.Check;
+
+public interface CheckFactory {
+    Tables getTables();
+    Descriptor getDescriptor();
+    <T extends Check> T getInstance(Class<T> type) throws ValidatorException;
 }

@@ -1,4 +1,4 @@
 package otava.library;
 
-interface Descriptor extends Document {
+public interface Descriptor extends Document {
 }

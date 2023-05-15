@@ -1,5 +1,7 @@
 package otava.library;
 
+import otava.library.checks.Check;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.lang.reflect.Constructor;
@@ -15,17 +17,26 @@ class SingletonCheckFactory implements CheckFactory {
     }
 
     @Override
-    public<T extends Check> Check getInstance(Class<T> type) throws ValidatorException {
-        if (instances.containsKey(type)) return instances.get(type);
+    public Tables getTables() {
+        return tables;
+    }
+
+    @Override
+    public Descriptor getDescriptor() {
+        return descriptor;
+    }
+
+    @Override
+    public <T extends Check> T getInstance(Class<T> type) throws ValidatorException {
+        if (instances.containsKey(type)) return (T)instances.get(type);
         try {
             Constructor<T> ctor = type.getConstructor(CheckFactory.class);
             T check = ctor.newInstance(this);
-            check.setDocuments(tables, descriptor);
             instances.put(type, check);
             return check;
         }
         catch (Exception e) {
-            throw new ValidatorException("The check does not have the expected constructor.");
+            throw new ValidatorException("The check " + type.getName() + " does not have the expected constructor.");
         }
     }
 }

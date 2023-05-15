@@ -1,15 +1,17 @@
-package otava.library;
+package otava.library.checks;
+
+import otava.library.*;
 
 import java.util.HashSet;
 import java.util.Set;
 
-abstract class Check {
+public abstract class Check {
     protected Check[] preChecks = new Check[0];
-    protected Tables tables;
-    protected Descriptor descriptor;
+    protected final Tables tables;
+    protected final Descriptor descriptor;
     protected Result result;
 
-    public final void setDocuments(Tables tables, Descriptor descriptor) {
+    protected Check(Tables tables, Descriptor descriptor) {
         this.tables = tables;
         this.descriptor = descriptor;
     }

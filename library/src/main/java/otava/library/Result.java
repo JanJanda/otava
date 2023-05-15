@@ -1,6 +1,6 @@
 package otava.library;
 
-interface Result {
+public interface Result {
     String asString();
     String asJson();
     String asTurtle();
