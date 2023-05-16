@@ -1,6 +1,6 @@
 package otava.library;
 
-final class NoCheckResult implements Result {
+public final class NoCheckResult implements Result {
 
     @Override
     public String asString() {
