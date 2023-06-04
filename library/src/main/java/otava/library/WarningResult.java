@@ -1,6 +1,14 @@
 package otava.library;
 
-public final class NoCheckResult implements Result {
+import java.util.ArrayList;
+import java.util.List;
+
+public class WarningResult implements Result {
+    private final List<String> messages = new ArrayList<>();
+
+    public void addMessage(String message) {
+        messages.add(message);
+    }
 
     @Override
     public String asString() {

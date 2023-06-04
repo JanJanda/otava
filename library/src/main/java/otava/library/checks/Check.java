@@ -27,12 +27,12 @@ public abstract class Check {
         return results;
     }
 
-    public final Result validate() {
+    public final Result validate() throws ValidatorException {
         if (result != null) return result;
         for (Check pc : preChecks) pc.validate();
         result = performValidation();
         return result;
     }
 
-    protected abstract Result performValidation();
+    protected abstract Result performValidation() throws ValidatorException;
 }

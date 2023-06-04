@@ -1,6 +1,9 @@
 package otava.library;
 
-public final class Tables {
+import java.util.Arrays;
+import java.util.Iterator;
+
+public final class Tables implements Iterable<Table> {
     private final Table[] tables;
     public final int length;
 
@@ -11,5 +14,10 @@ public final class Tables {
 
     public Table getTable(int index) {
         return tables[index];
+    }
+
+    @Override
+    public Iterator<Table> iterator() {
+        return Arrays.stream(tables).iterator();
     }
 }
