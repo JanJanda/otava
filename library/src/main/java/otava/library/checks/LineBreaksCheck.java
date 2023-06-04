@@ -28,8 +28,7 @@ final class LineBreaksCheck extends Check {
     }
 
     private boolean lineBreaksWrong(Table table) throws ValidatorException {
-        FileReader reader = table.getFileReader();
-        try {
+        try (FileReader reader = table.getFileReader()) {
             int c = reader.read();
             boolean afterCR = false;
             while (c != -1) {
