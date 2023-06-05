@@ -24,4 +24,5 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Test library
+      working-directory: library
       run: mvn test
