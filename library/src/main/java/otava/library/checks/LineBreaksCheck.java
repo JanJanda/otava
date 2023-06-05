@@ -9,7 +9,7 @@ import java.io.IOException;
  * Line breaks must be CRLF.
  * @see <a href="https://www.rfc-editor.org/rfc/rfc4180.html">RFC4180</a>
  */
-final class LineBreaksCheck extends Check {
+public final class LineBreaksCheck extends Check {
     public LineBreaksCheck(CheckFactory f) {
         super(f.getTables(), f.getDescriptor());
     }
