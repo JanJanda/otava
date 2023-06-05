@@ -4,6 +4,6 @@ import org.junit.jupiter.api.Test;
 public class ChecksTests {
     @Test
     void addition() {
-        assertEquals(2, 2);
+        assertEquals(2, 1);
     }
 }
