@@ -28,19 +28,19 @@ public final class LineBreaksCheck extends Check {
     }
 
     private boolean lineBreaksWrong(Table table) throws ValidatorException {
-        try (FileReader reader = table.getFileReader()) {
-            int c = reader.read();
+        try (FileReader reader = table.getReader()) {
             boolean afterCR = false;
+            int c = reader.read();
             while (c != -1) {
                 if (c == '\n' && !afterCR) return true;
                 if (afterCR && c != '\n') return true;
                 afterCR = c == '\r';
                 c = reader.read();
             }
+            return false;
         }
         catch (IOException e) {
             throw new ValidatorException("Unexpected IOException.");
         }
-        return false;
     }
 }

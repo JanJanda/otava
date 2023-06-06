@@ -16,7 +16,7 @@ final class LocalTable implements Table {
     }
 
     @Override
-    public FileReader getFileReader() throws ValidatorException {
+    public FileReader getReader() throws ValidatorException {
         try {
             return new FileReader(fileName);
         }
