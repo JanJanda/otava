@@ -11,6 +11,11 @@ public class WarningResult implements Result {
     }
 
     @Override
+    public boolean isOk() {
+        return false;
+    }
+
+    @Override
     public String asString() {
         return null;
     }

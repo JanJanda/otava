@@ -6,14 +6,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Check {
-    protected Check[] preChecks = new Check[0];
+    private final Check[] preChecks;
     protected final Tables tables;
     protected final Descriptor descriptor;
-    protected Result result;
+    private Result result;
 
-    protected Check(Tables tables, Descriptor descriptor) {
+    protected Check(Tables tables, Descriptor descriptor, Check... preChecks) {
         this.tables = tables;
         this.descriptor = descriptor;
+        this.preChecks = preChecks;
     }
 
     public final Result getResult() {

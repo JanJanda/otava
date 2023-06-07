@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.lang.reflect.Constructor;
 
-final class SingletonCheckFactory implements CheckFactory {
+public final class SingletonCheckFactory implements CheckFactory {
     private final Map<Class<?>, Check> instances = new HashMap<>();
     private final Set<Class<?>> unfinishedInstances = new HashSet<>();
     private final Tables tables;

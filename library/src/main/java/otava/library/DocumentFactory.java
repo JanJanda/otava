@@ -1,9 +1,7 @@
 package otava.library;
 
-import java.io.FileNotFoundException;
-
-final class DocumentFactory {
-    public Table getLocalTable(String path) throws FileNotFoundException {
+public final class DocumentFactory {
+    public LocalTable getLocalTable(String path) {
         return new LocalTable(path);
     }
 }

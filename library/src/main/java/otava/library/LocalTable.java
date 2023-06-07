@@ -3,7 +3,7 @@ package otava.library;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
-final class LocalTable implements Table {
+public final class LocalTable implements Table {
     private final String fileName;
 
     LocalTable(String fileName) {

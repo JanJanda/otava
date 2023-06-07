@@ -3,6 +3,11 @@ package otava.library;
 public class OkResult implements Result {
 
     @Override
+    public boolean isOk() {
+        return true;
+    }
+
+    @Override
     public String asString() {
         return null;
     }

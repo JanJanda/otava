@@ -7,7 +7,7 @@ public final class Tables implements Iterable<Table> {
     private final Table[] tables;
     public final int length;
 
-    public Tables(Table[] tables) {
+    public Tables(Table... tables) {
         this.tables = tables;
         length = tables.length;
     }
