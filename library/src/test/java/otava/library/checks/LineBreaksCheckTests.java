@@ -15,15 +15,16 @@ class LineBreaksCheckTests {
 
     @Test
     void CrLfPass() throws ValidatorException {
-        LineBreaksCheck lbc = createCheck("table001.csv");
-        Result result = lbc.validate();
-        assertTrue(result.isOk());
+        assertTrue(createCheck("table001.csv").validate().isOk());
     }
 
     @Test
     void LfFail() throws ValidatorException {
-        LineBreaksCheck lbc = createCheck("table002.csv");
-        Result result = lbc.validate();
-        assertFalse(result.isOk());
+        assertFalse(createCheck("table002.csv").validate().isOk());
+    }
+
+    @Test
+    void CrFail() throws ValidatorException {
+        assertFalse(createCheck("table003.csv").validate().isOk());
     }
 }
