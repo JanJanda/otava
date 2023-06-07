@@ -21,7 +21,7 @@ public final class LocalTable implements Table {
             return new FileReader(fileName);
         }
         catch (FileNotFoundException e) {
-            throw new ValidatorException("Unexpected FileNotFoundException.");
+            throw new ValidatorException(Manager.locale().missingFile(fileName));
         }
     }
 }

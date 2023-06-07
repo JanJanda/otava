@@ -20,7 +20,7 @@ public final class LineBreaksCheck extends Check {
         for (Table table : tables) {
             if (lineBreaksWrong(table)) {
                 if (tmpResult == null) tmpResult = new WarningResult();
-                tmpResult.addMessage("Table " + table.getName() + " has incorrect line separators.");
+                tmpResult.addMessage(Manager.locale().badLineSeparators(table.getName()));
             }
         }
         if (tmpResult == null) return new OkResult();
@@ -40,7 +40,7 @@ public final class LineBreaksCheck extends Check {
             return false;
         }
         catch (IOException e) {
-            throw new ValidatorException("Unexpected IOException.");
+            throw new ValidatorException(Manager.locale().ioException());
         }
     }
 }

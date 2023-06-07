@@ -35,7 +35,7 @@ public final class SingletonCheckFactory implements CheckFactory {
         if (instances.containsKey(type)) return (T)instances.get(type);
         try {
             Constructor<T> ctor = type.getConstructor(CheckFactory.class);
-            if (unfinishedInstances.contains(type)) throw new ValidatorException("Pre-check dependencies are cyclical.");
+            if (unfinishedInstances.contains(type)) throw new ValidatorException(Manager.locale().cyclicalDeps());
             unfinishedInstances.add(type);
             T check = ctor.newInstance(this);
             unfinishedInstances.remove(type);
@@ -43,7 +43,7 @@ public final class SingletonCheckFactory implements CheckFactory {
             return check;
         }
         catch (ReflectiveOperationException e) {
-            throw new ValidatorException("The check " + type.getName() + " does not have the expected constructor.");
+            throw new ValidatorException(Manager.locale().badCtor(type.getName()));
         }
     }
 }
