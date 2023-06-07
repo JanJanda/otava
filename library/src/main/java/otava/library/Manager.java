@@ -4,16 +4,16 @@ import otava.library.checks.*;
 import otava.library.locales.*;
 
 public final class Manager {
-    private static Locale locale = new EnglishLocale();
+    private static Locale currentLocale = new EnglishLocale();
 
     public Manager() {}
 
     public Manager(Locale locale) {
-        Manager.locale = locale;
+        Manager.currentLocale = locale;
     }
 
     public static Locale locale() {
-        return locale;
+        return currentLocale;
     }
 
     public Result validateLocalTable(String tablePath) throws ValidatorException {
