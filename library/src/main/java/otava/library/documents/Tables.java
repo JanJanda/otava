@@ -1,4 +1,4 @@
-package otava.library;
+package otava.library.documents;
 
 import java.util.Arrays;
 import java.util.Iterator;

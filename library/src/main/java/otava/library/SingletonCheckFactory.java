@@ -1,7 +1,7 @@
 package otava.library;
 
 import otava.library.checks.Check;
-
+import otava.library.documents.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

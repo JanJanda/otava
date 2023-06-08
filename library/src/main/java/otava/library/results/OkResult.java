@@ -1,4 +1,4 @@
-package otava.library;
+package otava.library.results;
 
 public final class OkResult implements Result {
 

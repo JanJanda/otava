@@ -1,7 +1,9 @@
 package otava.library;
 
 import otava.library.checks.*;
+import otava.library.documents.*;
 import otava.library.locales.*;
+import otava.library.results.Result;
 
 public final class Manager {
     private static Locale currentLocale = new EnglishLocale();

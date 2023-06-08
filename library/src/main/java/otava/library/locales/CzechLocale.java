@@ -1,6 +1,6 @@
 package otava.library.locales;
 
-public class CzechLocale implements Locale {
+public final class CzechLocale implements Locale {
     @Override
     public String badLineSeparators(String tableName) {
         return "Tabulka " + tableName + " má špatné oddělovače řádků.";

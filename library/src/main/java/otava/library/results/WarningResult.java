@@ -1,4 +1,4 @@
-package otava.library;
+package otava.library.results;
 
 import java.util.ArrayList;
 import java.util.List;

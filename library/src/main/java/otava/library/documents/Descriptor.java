@@ -1,4 +1,4 @@
-package otava.library;
+package otava.library.documents;
 
 public interface Descriptor extends Document {
 }

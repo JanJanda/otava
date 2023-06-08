@@ -1,12 +1,13 @@
-package otava.library;
+package otava.library.documents;
 
+import otava.library.*;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
 public final class LocalTable implements Table {
     private final String fileName;
 
-    LocalTable(String fileName) {
+    public LocalTable(String fileName) {
         this.fileName = fileName;
     }
 

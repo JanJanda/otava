@@ -3,6 +3,7 @@ package otava.library.checks;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import otava.library.*;
+import otava.library.documents.*;
 
 class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws ValidatorException {

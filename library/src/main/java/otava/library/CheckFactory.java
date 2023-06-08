@@ -1,6 +1,7 @@
 package otava.library;
 
 import otava.library.checks.Check;
+import otava.library.documents.*;
 
 public interface CheckFactory {
     Tables getTables();
