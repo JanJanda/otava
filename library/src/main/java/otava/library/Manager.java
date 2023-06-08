@@ -9,7 +9,7 @@ public final class Manager {
     public Manager() {}
 
     public Manager(Locale locale) {
-        Manager.currentLocale = locale;
+        currentLocale = locale;
     }
 
     public static Locale locale() {

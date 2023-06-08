@@ -1,6 +1,6 @@
 package otava.library;
 
-public class OkResult implements Result {
+public final class OkResult implements Result {
 
     @Override
     public boolean isOk() {

@@ -3,7 +3,7 @@ package otava.library;
 import java.util.ArrayList;
 import java.util.List;
 
-public class WarningResult implements Result {
+public final class WarningResult implements Result {
     private final List<String> messages = new ArrayList<>();
 
     public void addMessage(String message) {
