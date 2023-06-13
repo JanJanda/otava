@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public final class LineBreaksCheck extends Check {
     public LineBreaksCheck(CheckFactory f) {
-        super(f.getTables(), f.getDescriptor());
+        super(f.getTables(), f.getDescriptors());
     }
 
     @Override

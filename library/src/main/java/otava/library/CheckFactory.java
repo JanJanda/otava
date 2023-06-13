@@ -4,7 +4,7 @@ import otava.library.checks.Check;
 import otava.library.documents.*;
 
 public interface CheckFactory {
-    Tables getTables();
-    Descriptor getDescriptor();
+    Documents<Table> getTables();
+    Documents<Descriptor> getDescriptors();
     <T extends Check> T getInstance(Class<T> type) throws ValidatorException;
 }

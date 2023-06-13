@@ -9,7 +9,7 @@ class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws ValidatorException {
         DocumentFactory df = new DocumentFactory();
         LocalTable table = df.getLocalTable("src/test/resources/custom-tables/" + tableName);
-        Tables tables = new Tables(table);
+        Documents<Table> tables = new Documents<>(new Table[]{table});
         SingletonCheckFactory scf = new SingletonCheckFactory(tables, null);
         return scf.getInstance(LineBreaksCheck.class);
     }
