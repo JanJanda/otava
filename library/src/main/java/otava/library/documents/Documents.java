@@ -5,11 +5,11 @@ import java.util.Iterator;
 
 public final class Documents <T extends Document> implements Iterable<T> {
     private final T[] documents;
-    public final int length;
+    public final int count;
 
     public Documents(T[] documents) {
         this.documents = documents;
-        length = this.documents.length;
+        count = this.documents.length;
     }
 
     public T getDocument(int index) {

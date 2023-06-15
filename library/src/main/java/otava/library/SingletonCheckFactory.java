@@ -14,9 +14,9 @@ public final class SingletonCheckFactory implements CheckFactory {
     private final Documents<Table> tables;
     private final Documents<Descriptor> descriptors;
 
-    public SingletonCheckFactory(Documents<Table> tables, Documents<Descriptor> descriptor) {
+    public SingletonCheckFactory(Documents<Table> tables, Documents<Descriptor> descriptors) {
         this.tables = tables;
-        this.descriptors = descriptor;
+        this.descriptors = descriptors;
     }
 
     @Override

@@ -7,14 +7,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 public abstract class Check {
-    private final Check[] preChecks;
+    protected final Check[] preChecks;
     protected final Documents<Table> tables;
-    protected final Documents<Descriptor> descriptor;
+    protected final Documents<Descriptor> descriptors;
     private Result result;
 
-    protected Check(Documents<Table> tables, Documents<Descriptor> descriptor, Check... preChecks) {
+    protected Check(Documents<Table> tables, Documents<Descriptor> descriptors, Check... preChecks) {
         this.tables = tables;
-        this.descriptor = descriptor;
+        this.descriptors = descriptors;
         this.preChecks = preChecks;
     }
 
