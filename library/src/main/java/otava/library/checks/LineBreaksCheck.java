@@ -5,6 +5,7 @@ import otava.library.documents.Table;
 import otava.library.results.*;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * This class checks the line breaks of the tables according to the CSV specification.
@@ -30,7 +31,7 @@ public final class LineBreaksCheck extends Check {
     }
 
     private boolean lineBreaksWrong(Table table) throws ValidatorException {
-        try (FileReader reader = table.getReader()) {
+        try (InputStreamReader reader = table.getReader()) {
             boolean afterCR = false;
             int c = reader.read();
             while (c != -1) {

@@ -1,9 +1,9 @@
 package otava.library.documents;
 
 import otava.library.ValidatorException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
 
 public interface Table extends Document {
     String getName();
-    FileReader getReader() throws ValidatorException;
+    InputStreamReader getReader() throws ValidatorException;
 }

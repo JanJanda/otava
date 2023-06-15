@@ -1,13 +1,15 @@
 package otava.library.documents;
 
 import otava.library.*;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
-public final class LocalTable implements Table {
+public final class LocalInMemoryTable implements Table {
     private final String fileName;
 
-    public LocalTable(String fileName) {
+    public LocalInMemoryTable(String fileName) {
         this.fileName = fileName;
     }
 
@@ -17,9 +19,9 @@ public final class LocalTable implements Table {
     }
 
     @Override
-    public FileReader getReader() throws ValidatorException {
+    public InputStreamReader getReader() throws ValidatorException {
         try {
-            return new FileReader(fileName);
+            return new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8);
         }
         catch (FileNotFoundException e) {
             throw new ValidatorException(Manager.locale().missingFile(fileName));

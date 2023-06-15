@@ -11,21 +11,21 @@ import java.lang.reflect.Constructor;
 public final class SingletonCheckFactory implements CheckFactory {
     private final Map<Class<?>, Check> instances = new HashMap<>();
     private final Set<Class<?>> unfinishedInstances = new HashSet<>();
-    private final Documents<Table> tables;
-    private final Documents<Descriptor> descriptors;
+    private final DocsGroup<Table> tables;
+    private final DocsGroup<Descriptor> descriptors;
 
-    public SingletonCheckFactory(Documents<Table> tables, Documents<Descriptor> descriptors) {
+    public SingletonCheckFactory(DocsGroup<Table> tables, DocsGroup<Descriptor> descriptors) {
         this.tables = tables;
         this.descriptors = descriptors;
     }
 
     @Override
-    public Documents<Table> getTables() {
+    public DocsGroup<Table> getTables() {
         return tables;
     }
 
     @Override
-    public Documents<Descriptor> getDescriptors() {
+    public DocsGroup<Descriptor> getDescriptors() {
         return descriptors;
     }
 

@@ -1,9 +1,9 @@
 package otava.library;
 
-import otava.library.documents.LocalTable;
+import otava.library.documents.LocalInMemoryTable;
 
 public final class DocumentFactory {
-    public LocalTable getLocalTable(String path) {
-        return new LocalTable(path);
+    public LocalInMemoryTable getLocalTable(String path) {
+        return new LocalInMemoryTable(path);
     }
 }

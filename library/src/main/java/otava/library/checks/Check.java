@@ -8,11 +8,11 @@ import java.util.Set;
 
 public abstract class Check {
     protected final Check[] preChecks;
-    protected final Documents<Table> tables;
-    protected final Documents<Descriptor> descriptors;
+    protected final DocsGroup<Table> tables;
+    protected final DocsGroup<Descriptor> descriptors;
     private Result result;
 
-    protected Check(Documents<Table> tables, Documents<Descriptor> descriptors, Check... preChecks) {
+    protected Check(DocsGroup<Table> tables, DocsGroup<Descriptor> descriptors, Check... preChecks) {
         this.tables = tables;
         this.descriptors = descriptors;
         this.preChecks = preChecks;

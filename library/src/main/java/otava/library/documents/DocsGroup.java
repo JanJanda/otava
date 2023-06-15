@@ -3,12 +3,12 @@ package otava.library.documents;
 import java.util.Arrays;
 import java.util.Iterator;
 
-public final class Documents <T extends Document> implements Iterable<T> {
+public final class DocsGroup<T extends Document> implements Iterable<T> {
     private final T[] documents;
     public final int count;
 
-    public Documents(T[] documents) {
-        this.documents = documents;
+    public DocsGroup(T[] documents) {
+        this.documents = documents.clone();
         count = this.documents.length;
     }
 
