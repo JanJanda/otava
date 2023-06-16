@@ -4,6 +4,7 @@ import otava.library.checks.*;
 import otava.library.documents.*;
 import otava.library.locales.*;
 import otava.library.results.Result;
+import java.io.IOException;
 
 public final class Manager {
     private static Locale currentLocale = new EnglishLocale();
@@ -18,7 +19,7 @@ public final class Manager {
         return currentLocale;
     }
 
-    public Result validateLocalTable(String tablePath) throws ValidatorException {
+    public Result validateLocalTable(String tablePath) throws ValidatorException, IOException {
         DocumentFactory documentFactory = new DocumentFactory();
         LocalInMemoryTable table = documentFactory.getLocalTable(tablePath);
         DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});

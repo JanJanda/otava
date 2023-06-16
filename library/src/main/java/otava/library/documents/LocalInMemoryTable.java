@@ -1,16 +1,36 @@
 package otava.library.documents;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import otava.library.*;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public final class LocalInMemoryTable implements Table {
     private final String fileName;
+    private String[][] cells;
 
-    public LocalInMemoryTable(String fileName) {
+    public LocalInMemoryTable(String fileName, CSVFormat csvFormat) throws IOException {
         this.fileName = fileName;
+        fillCells(csvFormat);
+    }
+
+    private void fillCells(CSVFormat csvFormat) throws IOException {
+        List<CSVRecord> records = csvFormat.parse(makeReader()).getRecords();
+        cells = new String[records.size()][];
+        int index = 0;
+        for (CSVRecord record : records) {
+            cells[index] = record.values();
+            index++;
+        }
+    }
+
+    private InputStreamReader makeReader() throws FileNotFoundException {
+        return new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8);
     }
 
     @Override
@@ -19,9 +39,25 @@ public final class LocalInMemoryTable implements Table {
     }
 
     @Override
+    public int getWidth() {
+        if (cells.length > 0) return cells[0].length;
+        else return 0;
+    }
+
+    @Override
+    public int getHeight() {
+        return cells.length;
+    }
+
+    @Override
+    public String getCell(int row, int column) {
+        return cells[row][column];
+    }
+
+    @Override
     public InputStreamReader getReader() throws ValidatorException {
         try {
-            return new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8);
+            return makeReader();
         }
         catch (FileNotFoundException e) {
             throw new ValidatorException(Manager.locale().missingFile(fileName));

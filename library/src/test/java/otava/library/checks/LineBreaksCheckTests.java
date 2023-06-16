@@ -6,7 +6,7 @@ import otava.library.*;
 import otava.library.documents.*;
 
 class LineBreaksCheckTests {
-    private LineBreaksCheck createCheck(String tableName) throws ValidatorException {
+    private LineBreaksCheck createCheck(String tableName) throws Exception {
         DocumentFactory df = new DocumentFactory();
         LocalInMemoryTable table = df.getLocalTable("src/test/resources/custom-tables/" + tableName);
         DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});
@@ -15,17 +15,17 @@ class LineBreaksCheckTests {
     }
 
     @Test
-    void CrLfPass() throws ValidatorException {
+    void CrLfPass() throws Exception {
         assertTrue(createCheck("table001.csv").validate().isOk());
     }
 
     @Test
-    void LfFail() throws ValidatorException {
+    void LfFail() throws Exception {
         assertFalse(createCheck("table002.csv").validate().isOk());
     }
 
     @Test
-    void CrFail() throws ValidatorException {
+    void CrFail() throws Exception {
         assertFalse(createCheck("table003.csv").validate().isOk());
     }
 }
