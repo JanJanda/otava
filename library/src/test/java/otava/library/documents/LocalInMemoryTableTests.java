@@ -7,19 +7,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 import otava.library.DocumentFactory;
 
 class LocalInMemoryTableTests {
+    private LocalInMemoryTable makeTable() throws Exception {
+        DocumentFactory df = new DocumentFactory();
+        return df.getLocalTable("src/test/resources/custom-tables/table001.csv");
+    }
+
     @Test
     void correctWidth() throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        LocalInMemoryTable table = df.getLocalTable("src/test/resources/custom-tables/table001.csv");
-        assertEquals(2, table.getWidth());
+        assertEquals(2, makeTable().getWidth());
     }
 
     @Test
     void correctHeight() throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        LocalInMemoryTable table = df.getLocalTable("src/test/resources/custom-tables/table001.csv");
-        assertEquals(9, table.getHeight());
-
+        assertEquals(9, makeTable().getHeight());
     }
 
     @ParameterizedTest
@@ -29,8 +29,6 @@ class LocalInMemoryTableTests {
             "8, 1, Smithers"
     })
     void parsingIntoCellsTest(int row, int column, String value) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        LocalInMemoryTable table = df.getLocalTable("src/test/resources/custom-tables/table001.csv");
-        assertEquals(value, table.getCell(row, column));
+        assertEquals(value, makeTable().getCell(row, column));
     }
 }
