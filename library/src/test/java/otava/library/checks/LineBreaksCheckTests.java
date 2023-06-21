@@ -8,7 +8,7 @@ import otava.library.documents.*;
 class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws Exception {
         DocumentFactory df = new DocumentFactory();
-        LocalInMemoryTable table = df.getLocalTable("src/test/resources/custom-tables/" + tableName);
+        LocalInMemoryTable table = df.getLocalTable("src/test/resources/tables/" + tableName);
         DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});
         SingletonCheckFactory scf = new SingletonCheckFactory(tables, null);
         return scf.getInstance(LineBreaksCheck.class);

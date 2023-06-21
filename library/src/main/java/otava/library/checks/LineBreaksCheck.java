@@ -3,7 +3,6 @@ package otava.library.checks;
 import otava.library.*;
 import otava.library.documents.Table;
 import otava.library.results.*;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 

@@ -23,4 +23,9 @@ public class LocalDescriptor implements Descriptor {
     public JsonNode getRootNode() {
         return root;
     }
+
+    @Override
+    public JsonNode path(String fieldName) {
+        return root.path(fieldName);
+    }
 }
