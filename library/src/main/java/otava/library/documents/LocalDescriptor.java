@@ -20,6 +20,11 @@ public class LocalDescriptor implements Descriptor {
     }
 
     @Override
+    public String getName() {
+        return fileName;
+    }
+
+    @Override
     public JsonNode getRootNode() {
         return root;
     }

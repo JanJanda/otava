@@ -25,4 +25,9 @@ public final class CzechLocale implements Locale {
     public String badCtor(String typeName) {
         return "Validační kontrola " + typeName + " nemá očekávaný konstruktor.";
     }
+
+    @Override
+    public String badContext(String descriptorName) {
+        return "Deskriptor " + descriptorName + " má špatnou položku @context.";
+    }
 }

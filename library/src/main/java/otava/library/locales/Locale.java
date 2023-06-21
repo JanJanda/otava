@@ -6,4 +6,5 @@ public interface Locale {
     String missingFile(String fileName);
     String cyclicalDeps();
     String badCtor(String typeName);
+    String badContext(String descriptorName);
 }

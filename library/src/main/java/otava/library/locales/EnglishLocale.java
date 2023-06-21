@@ -25,4 +25,9 @@ public final class EnglishLocale implements Locale {
     public String badCtor(String typeName) {
         return "The check " + typeName + " does not have the expected constructor.";
     }
+
+    @Override
+    public String badContext(String descriptorName) {
+        return "Descriptor " + descriptorName + " has incorrect @context.";
+    }
 }
