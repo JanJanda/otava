@@ -1,8 +1,7 @@
 package otava.library.checks;
 
 import otava.library.CheckFactory;
-import otava.library.documents.Descriptor;
-import otava.library.results.Result;
+import otava.library.Result;
 
 public final class ContextCheck extends Check {
     public ContextCheck(CheckFactory f) {

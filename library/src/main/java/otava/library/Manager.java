@@ -3,7 +3,6 @@ package otava.library;
 import otava.library.checks.*;
 import otava.library.documents.*;
 import otava.library.locales.*;
-import otava.library.results.Result;
 import java.io.IOException;
 
 public final class Manager {

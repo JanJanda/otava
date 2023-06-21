@@ -2,7 +2,7 @@ package otava.library.checks;
 
 import otava.library.*;
 import otava.library.documents.*;
-import otava.library.results.Result;
+import otava.library.Result;
 import java.util.HashSet;
 import java.util.Set;
 
