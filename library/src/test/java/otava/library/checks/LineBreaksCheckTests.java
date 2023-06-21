@@ -16,16 +16,16 @@ class LineBreaksCheckTests {
 
     @Test
     void CrLfPass() throws Exception {
-        assertTrue(createCheck("table001.csv").validate().isOk());
+        assertTrue(createCheck("table001.csv").validate().isOk);
     }
 
     @Test
     void LfFail() throws Exception {
-        assertFalse(createCheck("table002.csv").validate().isOk());
+        assertFalse(createCheck("table002.csv").validate().isOk);
     }
 
     @Test
     void CrFail() throws Exception {
-        assertFalse(createCheck("table003.csv").validate().isOk());
+        assertFalse(createCheck("table003.csv").validate().isOk);
     }
 }

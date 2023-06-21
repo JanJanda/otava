@@ -4,22 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Result {
-    private final List<String> messages = new ArrayList<>();
-    private final boolean isFatal;
+    public final boolean isFatal;
+    private final String[] messages;
+    public final boolean isOk;
 
-    public Result(boolean isFatal) {
-        this.isFatal = isFatal;
+    private Result(Builder b) {
+        this.isFatal = b.fatal;
+        this.messages = b.listMessages.toArray(new String[0]);
+        isOk = this.messages.length == 0;
     }
 
-    public void addMessage(String message) {
-        messages.add(message);
-    }
-
-    public boolean isOk() {
-        return messages.size() == 0;
-    }
-
-    public String asString() {
+    public String asText() {
         return null;
     }
 
@@ -29,5 +24,24 @@ public final class Result {
 
     public String asTurtle() {
         return null;
+    }
+
+    public static final class Builder {
+        private boolean fatal = false;
+        private final List<String> listMessages = new ArrayList<>();
+
+        public Builder setFatal() {
+            fatal = true;
+            return this;
+        }
+
+        public Builder addMessage(String message) {
+            listMessages.add(message);
+            return this;
+        }
+
+        public Result build() {
+            return new Result(this);
+        }
     }
 }

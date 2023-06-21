@@ -17,11 +17,11 @@ public final class LineBreaksCheck extends Check {
 
     @Override
     protected Result performValidation() throws ValidatorException {
-        Result result = new Result(false);
+        Result.Builder resultBuilder = new Result.Builder();
         for (Table table : tables) {
-            if (lineBreaksWrong(table)) result.addMessage(Manager.locale().badLineSeparators(table.getName()));
+            if (lineBreaksWrong(table)) resultBuilder.addMessage(Manager.locale().badLineSeparators(table.getName()));
         }
-        return result;
+        return resultBuilder.build();
     }
 
     private boolean lineBreaksWrong(Table table) throws ValidatorException {
