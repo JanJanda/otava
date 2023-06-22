@@ -1,7 +1,7 @@
 package otava.library;
 
 import org.apache.commons.csv.CSVFormat;
-import otava.library.documents.LocalInMemoryTable;
+import otava.library.documents.*;
 import java.io.IOException;
 
 public final class DocumentFactory {
@@ -9,5 +9,9 @@ public final class DocumentFactory {
 
     public LocalInMemoryTable getLocalTable(String path) throws IOException {
         return new LocalInMemoryTable(path, csvFormat);
+    }
+
+    public LocalDescriptor getLocalDescriptor(String path) throws IOException {
+        return new LocalDescriptor(path);
     }
 }

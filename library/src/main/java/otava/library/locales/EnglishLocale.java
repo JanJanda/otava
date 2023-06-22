@@ -28,6 +28,6 @@ public final class EnglishLocale implements Locale {
 
     @Override
     public String badContext(String descriptorName) {
-        return "Descriptor " + descriptorName + " has incorrect @context.";
+        return "Descriptor " + descriptorName + " has incorrect field @context.";
     }
 }

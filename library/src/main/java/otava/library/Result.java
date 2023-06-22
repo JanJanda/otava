@@ -9,13 +9,15 @@ public final class Result {
     public final boolean isOk;
 
     private Result(Builder b) {
-        this.isFatal = b.fatal;
-        this.messages = b.listMessages.toArray(new String[0]);
-        isOk = this.messages.length == 0;
+        isFatal = b.fatal;
+        messages = b.listMessages.toArray(new String[0]);
+        isOk = messages.length == 0 && !isFatal;
     }
 
     public String asText() {
-        return null;
+        StringBuilder result = new StringBuilder();
+        for (String message : messages) result.append(message).append("\n");
+        return result.toString();
     }
 
     public String asJson() {
