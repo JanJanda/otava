@@ -5,13 +5,15 @@ import java.util.List;
 
 public final class Result {
     public final boolean isFatal;
-    private final String[] messages;
     public final boolean isOk;
+    public final boolean isSkipped;
+    private final String[] messages;
 
     private Result(Builder b) {
         isFatal = b.fatal;
         messages = b.listMessages.toArray(new String[0]);
         isOk = messages.length == 0 && !isFatal;
+        isSkipped = b.skipped;
     }
 
     public String asText() {
@@ -30,10 +32,16 @@ public final class Result {
 
     public static final class Builder {
         private boolean fatal = false;
+        private boolean skipped = false;
         private final List<String> listMessages = new ArrayList<>();
 
         public Builder setFatal() {
             fatal = true;
+            return this;
+        }
+
+        public Builder setSkipped() {
+            skipped = true;
             return this;
         }
 

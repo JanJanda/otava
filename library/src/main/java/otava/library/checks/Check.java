@@ -29,6 +29,13 @@ public abstract class Check {
         return results;
     }
 
+    public final boolean fatalSubResult() {
+        boolean fatal = false;
+        if (result != null) fatal = result.isFatal;
+        for (Check pc : preChecks) fatal = fatal || pc.fatalSubResult();
+        return fatal;
+    }
+
     public final Result validate() throws ValidatorException {
         if (result != null) return result;
         for (Check pc : preChecks) pc.validate();

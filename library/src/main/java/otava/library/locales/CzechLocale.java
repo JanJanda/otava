@@ -30,4 +30,9 @@ public final class CzechLocale implements Locale {
     public String badContext(String descriptorName) {
         return "Deskriptor " + descriptorName + " má špatnou položku @context.";
     }
+
+    @Override
+    public String missingDesc(String tableName) {
+        return "Chybí deskriptor pro tabulku " + tableName;
+    }
 }

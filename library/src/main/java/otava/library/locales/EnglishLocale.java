@@ -30,4 +30,9 @@ public final class EnglishLocale implements Locale {
     public String badContext(String descriptorName) {
         return "Descriptor " + descriptorName + " has incorrect field @context.";
     }
+
+    @Override
+    public String missingDesc(String tableName) {
+        return "Missing descriptor for the table " + tableName;
+    }
 }

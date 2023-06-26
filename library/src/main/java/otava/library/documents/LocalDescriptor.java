@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-public class LocalDescriptor implements Descriptor {
+public final class LocalDescriptor implements Descriptor {
     private final String fileName;
     private final String alias;
     private JsonNode root;

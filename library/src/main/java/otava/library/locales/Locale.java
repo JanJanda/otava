@@ -7,4 +7,5 @@ public interface Locale {
     String cyclicalDeps();
     String badCtor(String typeName);
     String badContext(String descriptorName);
+    String missingDesc(String tableName);
 }
