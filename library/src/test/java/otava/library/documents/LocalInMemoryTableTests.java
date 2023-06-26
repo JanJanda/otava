@@ -9,7 +9,7 @@ import otava.library.DocumentFactory;
 class LocalInMemoryTableTests {
     private LocalInMemoryTable makeTable() throws Exception {
         DocumentFactory df = new DocumentFactory();
-        return df.getLocalTable("src/test/resources/tables/table001.csv");
+        return df.getLocalTable("src/test/resources/tables/table001.csv", null);
     }
 
     @Test

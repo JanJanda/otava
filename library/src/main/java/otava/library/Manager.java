@@ -20,7 +20,7 @@ public final class Manager {
 
     public Result validateLocalTable(String tablePath) throws ValidatorException, IOException {
         DocumentFactory documentFactory = new DocumentFactory();
-        LocalInMemoryTable table = documentFactory.getLocalTable(tablePath);
+        LocalInMemoryTable table = documentFactory.getLocalTable(tablePath, null);
         DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});
         SingletonCheckFactory scf = new SingletonCheckFactory(tables, null);
         LineBreaksCheck validator = scf.getInstance(LineBreaksCheck.class);

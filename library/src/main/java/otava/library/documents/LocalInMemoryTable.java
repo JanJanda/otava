@@ -12,10 +12,12 @@ import java.util.List;
 
 public final class LocalInMemoryTable implements Table {
     private final String fileName;
+    private final String alias;
     private String[][] cells;
 
-    public LocalInMemoryTable(String fileName, CSVFormat csvFormat) throws IOException {
+    public LocalInMemoryTable(String fileName, CSVFormat csvFormat, String alias) throws IOException {
         this.fileName = fileName;
+        this.alias = alias;
         fillCells(csvFormat);
     }
 
@@ -36,6 +38,11 @@ public final class LocalInMemoryTable implements Table {
     @Override
     public String getName() {
         return fileName;
+    }
+
+    @Override
+    public String getAlias() {
+        return alias;
     }
 
     @Override

@@ -7,8 +7,8 @@ import java.io.IOException;
 public final class DocumentFactory {
     private final CSVFormat csvFormat= CSVFormat.Builder.create().setDelimiter(',').setQuote('"').setRecordSeparator('\n').setIgnoreEmptyLines(false).build();
 
-    public LocalInMemoryTable getLocalTable(String path) throws IOException {
-        return new LocalInMemoryTable(path, csvFormat);
+    public LocalInMemoryTable getLocalTable(String path, String alias) throws IOException {
+        return new LocalInMemoryTable(path, csvFormat, alias);
     }
 
     public LocalDescriptor getLocalDescriptor(String path) throws IOException {
