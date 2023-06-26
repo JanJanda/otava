@@ -12,6 +12,6 @@ public final class DocumentFactory {
     }
 
     public LocalDescriptor getLocalDescriptor(String path) throws IOException {
-        return new LocalDescriptor(path);
+        return new LocalDescriptor(path, null);
     }
 }

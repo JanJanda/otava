@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LocalDescriptorTests {
     private Descriptor makeDescriptor() throws Exception {
-        return new LocalDescriptor("src/test/resources/metadata/metadata001.json");
+        return new LocalDescriptor("src/test/resources/metadata/metadata001.json", null);
     }
 
     @Test

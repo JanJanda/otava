@@ -7,10 +7,12 @@ import java.io.IOException;
 
 public class LocalDescriptor implements Descriptor {
     private final String fileName;
+    private final String alias;
     private JsonNode root;
 
-    public LocalDescriptor(String fileName) throws IOException {
+    public LocalDescriptor(String fileName, String alias) throws IOException {
         this.fileName = fileName;
+        this.alias = alias;
         parseFile();
     }
 
@@ -22,6 +24,11 @@ public class LocalDescriptor implements Descriptor {
     @Override
     public String getName() {
         return fileName;
+    }
+
+    @Override
+    public String getAlias() {
+        return alias;
     }
 
     @Override
