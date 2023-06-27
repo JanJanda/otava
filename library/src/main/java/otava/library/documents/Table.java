@@ -4,6 +4,7 @@ import otava.library.ValidatorException;
 import java.io.InputStreamReader;
 
 public interface Table extends Document {
+    String getAlias();
     int getWidth();
     int getHeight();
     String getCell(int row, int column);
