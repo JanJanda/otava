@@ -35,4 +35,9 @@ public final class EnglishLocale implements Locale {
     public String missingDesc(String tableName) {
         return "Missing descriptor for the table " + tableName;
     }
+
+    @Override
+    public String missingTable(String url) {
+        return "Missing described table with URL " + url;
+    }
 }

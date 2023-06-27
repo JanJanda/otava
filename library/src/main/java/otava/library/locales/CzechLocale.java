@@ -35,4 +35,9 @@ public final class CzechLocale implements Locale {
     public String missingDesc(String tableName) {
         return "Chybí deskriptor pro tabulku " + tableName;
     }
+
+    @Override
+    public String missingTable(String url) {
+        return "Chybí popsaná tabulka s URL " + url;
+    }
 }

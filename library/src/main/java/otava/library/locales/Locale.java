@@ -8,4 +8,5 @@ public interface Locale {
     String badCtor(String typeName);
     String badContext(String descriptorName);
     String missingDesc(String tableName);
+    String missingTable(String url);
 }
