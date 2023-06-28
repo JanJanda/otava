@@ -17,13 +17,8 @@ public final class EnglishLocale implements Locale {
     }
 
     @Override
-    public String cyclicalDeps() {
-        return "Pre-check dependencies are cyclical.";
-    }
-
-    @Override
-    public String badCtor(String typeName) {
-        return "The check " + typeName + " does not have the expected constructor.";
+    public String checkCreationFail(String typeName) {
+        return "The check " + typeName + " cannot be created.";
     }
 
     @Override

@@ -17,13 +17,8 @@ public final class CzechLocale implements Locale {
     }
 
     @Override
-    public String cyclicalDeps() {
-        return "Závislosti validačních kontrol jsou cyklické.";
-    }
-
-    @Override
-    public String badCtor(String typeName) {
-        return "Validační kontrola " + typeName + " nemá očekávaný konstruktor.";
+    public String checkCreationFail(String typeName) {
+        return "Validační kontrola " + typeName + " nemůže být vytvořena.";
     }
 
     @Override
