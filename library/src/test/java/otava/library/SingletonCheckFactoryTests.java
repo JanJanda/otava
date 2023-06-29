@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.provider.ValueSource;
 import otava.library.checks.*;
+import otava.library.exceptions.CheckCreationException;
 
 class SingletonCheckFactoryTests {
     @Test
@@ -19,6 +20,6 @@ class SingletonCheckFactoryTests {
     @ValueSource(classes = {CheckA.class, CheckB.class, CheckC.class, SelfRefCheck.class})
     void cyclicalPreChecksThrow(Class<? extends Check> check) {
         SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
-        assertThrowsExactly(ValidatorException.class, () -> scf.getInstance(check));
+        assertThrowsExactly(CheckCreationException.class, () -> scf.getInstance(check));
     }
 }

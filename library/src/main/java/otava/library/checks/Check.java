@@ -1,8 +1,8 @@
 package otava.library.checks;
 
-import otava.library.*;
 import otava.library.documents.*;
 import otava.library.Result;
+import otava.library.exceptions.ValidatorException;
 import java.util.HashSet;
 import java.util.Set;
 

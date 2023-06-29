@@ -2,6 +2,7 @@ package otava.library;
 
 import otava.library.checks.*;
 import otava.library.documents.*;
+import otava.library.exceptions.ValidatorException;
 import otava.library.locales.*;
 import java.io.IOException;
 

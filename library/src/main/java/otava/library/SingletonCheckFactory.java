@@ -2,6 +2,7 @@ package otava.library;
 
 import otava.library.checks.Check;
 import otava.library.documents.*;
+import otava.library.exceptions.CheckCreationException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -31,7 +32,7 @@ public final class SingletonCheckFactory implements CheckFactory {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T extends Check> T getInstance(Class<T> type) throws ValidatorException {
+    public <T extends Check> T getInstance(Class<T> type) throws CheckCreationException {
         if (instances.containsKey(type)) return (T)instances.get(type);
         try {
             Constructor<T> ctor = type.getConstructor(CheckFactory.class);
@@ -43,7 +44,7 @@ public final class SingletonCheckFactory implements CheckFactory {
             return check;
         }
         catch (ReflectiveOperationException e) {
-            throw new ValidatorException(Manager.locale().checkCreationFail(type.getName()));
+            throw new CheckCreationException(Manager.locale().checkCreationFail(type.getName()));
         }
     }
 }

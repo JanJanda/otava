@@ -3,6 +3,7 @@ package otava.library.documents;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import otava.library.*;
+import otava.library.exceptions.ValidatorFileException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -62,12 +63,12 @@ public final class LocalInMemoryTable implements Table {
     }
 
     @Override
-    public InputStreamReader getReader() throws ValidatorException {
+    public InputStreamReader getReader() throws ValidatorFileException {
         try {
             return makeReader();
         }
         catch (FileNotFoundException e) {
-            throw new ValidatorException(Manager.locale().missingFile(fileName));
+            throw new ValidatorFileException(Manager.locale().missingFile(fileName));
         }
     }
 }

@@ -2,6 +2,8 @@ package otava.library.checks;
 
 import otava.library.*;
 import otava.library.documents.Table;
+import otava.library.exceptions.ValidatorException;
+import otava.library.exceptions.ValidatorFileException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -24,7 +26,7 @@ public final class LineBreaksCheck extends Check {
         return resultBuilder.build();
     }
 
-    private boolean lineBreaksWrong(Table table) throws ValidatorException {
+    private boolean lineBreaksWrong(Table table) throws ValidatorFileException {
         try (InputStreamReader reader = table.getReader()) {
             boolean afterCR = false;
             int c = reader.read();
@@ -37,7 +39,7 @@ public final class LineBreaksCheck extends Check {
             return false;
         }
         catch (IOException e) {
-            throw new ValidatorException(Manager.locale().ioException());
+            throw new ValidatorFileException(Manager.locale().ioException());
         }
     }
 }

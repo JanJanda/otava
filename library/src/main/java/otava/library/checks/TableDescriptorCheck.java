@@ -3,6 +3,7 @@ package otava.library.checks;
 import com.fasterxml.jackson.databind.JsonNode;
 import otava.library.*;
 import otava.library.documents.*;
+import otava.library.exceptions.ValidatorException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public final class TableDescriptorCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws ValidatorException {
+    protected Result performValidation() {
         Result.Builder resultBuilder = new Result.Builder();
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         List<String> extractedUrls = extractTableUrlsFromDescriptors();

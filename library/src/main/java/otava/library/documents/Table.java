@@ -1,6 +1,6 @@
 package otava.library.documents;
 
-import otava.library.ValidatorException;
+import otava.library.exceptions.ValidatorFileException;
 import java.io.InputStreamReader;
 
 public interface Table extends Document {
@@ -8,5 +8,5 @@ public interface Table extends Document {
     int getWidth();
     int getHeight();
     String getCell(int row, int column);
-    InputStreamReader getReader() throws ValidatorException;
+    InputStreamReader getReader() throws ValidatorFileException;
 }
