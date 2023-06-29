@@ -6,6 +6,12 @@ import otava.library.exceptions.ValidatorException;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is an abstract parent for every check.
+ * It handles common repetitive tasks and provides a skeleton for actual validation checks.
+ * The constructor is used to configure the check.
+ * A validation check needs to implement {@link #performValidation()} and return a result.
+ */
 public abstract class Check {
     protected final Check[] preChecks;
     protected final DocsGroup<Table> tables;

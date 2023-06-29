@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 /**
  * This class checks the line breaks of the tables according to the CSV specification.
  * Line breaks must be CRLF.
+ * The check does not create fatal results because this requirement is not universally accepted.
  * @see <a href="https://www.rfc-editor.org/rfc/rfc4180.html">RFC4180</a>
  */
 public final class LineBreaksCheck extends Check {
