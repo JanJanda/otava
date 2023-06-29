@@ -2,7 +2,6 @@ package otava.library.checks;
 
 import otava.library.*;
 import otava.library.documents.Table;
-import otava.library.exceptions.ValidatorException;
 import otava.library.exceptions.ValidatorFileException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +17,7 @@ public final class LineBreaksCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws ValidatorException {
+    protected Result performValidation() throws ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder();
         for (Table table : tables) {
             if (lineBreaksWrong(table)) resultBuilder.addMessage(Manager.locale().badLineSeparators(table.getName()));

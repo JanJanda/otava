@@ -3,7 +3,7 @@ package otava.library.checks;
 import com.fasterxml.jackson.databind.JsonNode;
 import otava.library.*;
 import otava.library.documents.*;
-import otava.library.exceptions.ValidatorException;
+import otava.library.exceptions.CheckCreationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +11,7 @@ import java.util.List;
  * This class checks whether every table has a description in descriptors and every description has a corresponding table.
  */
 public final class TableDescriptorCheck extends Check {
-    public TableDescriptorCheck(CheckFactory f) throws ValidatorException {
+    public TableDescriptorCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(LineBreaksCheck.class), f.getInstance(ContextCheck.class));
     }
 
