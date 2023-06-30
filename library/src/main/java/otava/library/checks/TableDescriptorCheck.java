@@ -24,6 +24,7 @@ public final class TableDescriptorCheck extends Check {
             return tableDescriptorValidation();
         }
         catch (MalformedURLException e) {
+            // This check assumes that the URLs are not malformed because they are checked by a pre-check.
             throw new CheckRunException(Manager.locale().checkRunEx(this.getClass().getName()));
         }
     }
@@ -39,7 +40,6 @@ public final class TableDescriptorCheck extends Check {
             resultBuilder.setFatal().addMessage(Manager.locale().missingTable(url));
         }
         return resultBuilder.build();
-
     }
 
     private List<String> extractTableUrlsFromDescriptors() throws MalformedURLException {

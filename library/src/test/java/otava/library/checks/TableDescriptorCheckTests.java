@@ -11,15 +11,24 @@ class TableDescriptorCheckTests {
         return df.getLocalTable("src/test/resources/tables/" + name, alias);
     }
 
-    private LocalDescriptor createDescriptor(String name) throws Exception {
+    private LocalDescriptor createDescriptor(String name, String alias) throws Exception {
         DocumentFactory df = new DocumentFactory();
-        return df.getLocalDescriptor("src/test/resources/metadata/" + name, null);
+        return df.getLocalDescriptor("src/test/resources/metadata/" + name, alias);
     }
 
     @Test
     void tableWithDescriptor() throws Exception {
-        Table[] tables = {createTable("table004.csv", "tree-ops.csv")};
-        Descriptor[] descs = {createDescriptor("metadata001.json")};
+        Table[] tables = {createTable("table004.csv", "https://example.org/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
+        SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
+        TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
+        assertTrue(tdc.validate().isOk);
+    }
+
+    @Test
+    void tableWithBaseDescriptor() throws Exception {
+        Table[] tables = {createTable("table004.csv", "https://example.com/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata012.json", "https://example.org/metadata012.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isOk);
@@ -27,8 +36,8 @@ class TableDescriptorCheckTests {
 
     @Test
     void tableWithWrongAlias() throws Exception {
-        Table[] tables = {createTable("table004.csv", "tree-opsx.csv")};
-        Descriptor[] descs = {createDescriptor("metadata001.json")};
+        Table[] tables = {createTable("table004.csv", "https://example.org/tree-opsx.csv")};
+        Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isFatal);
@@ -37,7 +46,7 @@ class TableDescriptorCheckTests {
     @Test
     void tableWithNoAlias() throws Exception {
         Table[] tables = {createTable("table004.csv", null)};
-        Descriptor[] descs = {createDescriptor("metadata001.json")};
+        Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isFatal);
@@ -46,7 +55,7 @@ class TableDescriptorCheckTests {
     @Test
     void missingTable() throws Exception {
         Table[] tables = new Table[0];
-        Descriptor[] descs = {createDescriptor("metadata001.json")};
+        Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isFatal);
@@ -54,7 +63,7 @@ class TableDescriptorCheckTests {
 
     @Test
     void missingDescriptor() throws Exception {
-        Table[] tables = {createTable("table004.csv", "tree-ops.csv")};
+        Table[] tables = {createTable("table004.csv", "https://example.org/tree-ops.csv")};
         Descriptor[] descs = new Descriptor[0];
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
@@ -63,10 +72,10 @@ class TableDescriptorCheckTests {
 
     @Test
     void tableGroup() throws Exception {
-        Table[] tables = {createTable("table001.csv", "countries.csv"),
-                createTable("table001.csv", "country-groups.csv"),
-                createTable("table001.csv", "unemployment.csv")};
-        Descriptor[] descs = {createDescriptor("metadata011.json")};
+        Table[] tables = {createTable("table001.csv", "https://example.org/countries.csv"),
+                createTable("table001.csv", "https://example.org/country-groups.csv"),
+                createTable("table001.csv", "https://example.org/unemployment.csv")};
+        Descriptor[] descs = {createDescriptor("metadata011.json", "https://example.org/metadata011.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isOk);
@@ -74,10 +83,10 @@ class TableDescriptorCheckTests {
 
     @Test
     void tableGroupWrongTable() throws Exception {
-        Table[] tables = {createTable("table001.csv", "countries.csv"),
-                createTable("table001.csv", "country-groups.csv"),
-                createTable("table001.csv", "unemploymentx.csv")};
-        Descriptor[] descs = {createDescriptor("metadata011.json")};
+        Table[] tables = {createTable("table001.csv", "https://example.org/countries.csv"),
+                createTable("table001.csv", "https://example.org/country-groups.csv"),
+                createTable("table001.csv", "https://example.org/unemploymentx.csv")};
+        Descriptor[] descs = {createDescriptor("metadata011.json", "https://example.org/metadata011.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isFatal);
@@ -85,8 +94,8 @@ class TableDescriptorCheckTests {
 
     @Test
     void badContextSkip() throws Exception {
-        Table[] tables = {createTable("table004.csv", "tree-ops.csv")};
-        Descriptor[] descs = {createDescriptor("metadata005.json")};
+        Table[] tables = {createTable("table004.csv", "https://example.org/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata005.json", "https://example.org/metadata005.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
         assertTrue(tdc.validate().isSkipped);
