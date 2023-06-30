@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * This class checks whether every table has a description in descriptors and every description has a corresponding table.
+ * It also checks whether table URLs in the descriptors can be resolved.
  */
 public final class TableDescriptorCheck extends Check {
     public TableDescriptorCheck(CheckFactory f) throws CheckCreationException {
@@ -18,20 +19,10 @@ public final class TableDescriptorCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException {
-        if (fatalSubResult()) return new Result.Builder().setSkipped().build();
-        try {
-            return tableDescriptorValidation();
-        }
-        catch (MalformedURLException e) {
-            // This check assumes that the URLs are not malformed because they are checked by a pre-check.
-            throw new CheckRunException(Manager.locale().checkRunEx(this.getClass().getName()));
-        }
-    }
-
-    private Result tableDescriptorValidation() throws MalformedURLException {
+    protected Result performValidation() {
         Result.Builder resultBuilder = new Result.Builder();
-        List<String> extractedUrls = extractTableUrlsFromDescriptors();
+        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        List<String> extractedUrls = extractAndResolveTableUrls(resultBuilder);
         for (Table table : tables) {
             String tableName = table.getPreferredName();
             if (!extractedUrls.remove(tableName)) resultBuilder.setFatal().addMessage(Manager.locale().missingDesc(table.getName()));
@@ -42,18 +33,31 @@ public final class TableDescriptorCheck extends Check {
         return resultBuilder.build();
     }
 
-    private List<String> extractTableUrlsFromDescriptors() throws MalformedURLException {
+    private List<String> extractAndResolveTableUrls(Result.Builder resultBuilder) {
         List<String> urls = new ArrayList<>();
         for (Descriptor desc : descriptors) {
             String baseUrl = getBaseUrl(desc);
-            JsonNode urlNode = desc.path("url");
-            if (urlNode.isTextual()) urls.add(resolveUrl(baseUrl, urlNode.asText()));
-            JsonNode tablesArray = desc.path("tables");
-            if (urlNode.isMissingNode() && tablesArray.isArray()) {
-                for (int i = 0; i < tablesArray.size(); i++) {
-                    JsonNode arrayUrlNode = tablesArray.path(i).path("url");
-                    if (arrayUrlNode.isTextual()) urls.add(resolveUrl(baseUrl, arrayUrlNode.asText()));
+            List<String> extractedUrls = extractTableUrls(desc);
+            for (String url : extractedUrls) {
+                try {
+                    urls.add(resolveUrl(baseUrl, url));
+                } catch (MalformedURLException e) {
+                    resultBuilder.setFatal().addMessage(Manager.locale().malformedUrl(url, baseUrl, desc.getName()));
                 }
+            }
+        }
+        return urls;
+    }
+
+    private List<String> extractTableUrls(Descriptor desc) {
+        List<String> urls = new ArrayList<>();
+        JsonNode urlNode = desc.path("url");
+        if (urlNode.isTextual()) urls.add(urlNode.asText());
+        JsonNode tablesArray = desc.path("tables");
+        if (urlNode.isMissingNode() && tablesArray.isArray()) {
+            for (int i = 0; i < tablesArray.size(); i++) {
+                JsonNode arrayUrlNode = tablesArray.path(i).path("url");
+                if (arrayUrlNode.isTextual()) urls.add(arrayUrlNode.asText());
             }
         }
         return urls;

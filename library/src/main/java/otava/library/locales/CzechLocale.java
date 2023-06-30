@@ -37,7 +37,7 @@ public final class CzechLocale implements Locale {
     }
 
     @Override
-    public String checkRunEx(String checkName) {
-        return "Neočekávaná výjimka ve validační kontrole " + checkName;
+    public String malformedUrl(String url, String base, String descName) {
+        return "Nelze vytvořit absolutní URL z " + url + " vzhledem k bázi " + base + " v dekriptoru " + descName;
     }
 }

@@ -26,6 +26,15 @@ class TableDescriptorCheckTests {
     }
 
     @Test
+    void malformedUrl() throws Exception {
+        Table[] tables = {createTable("table004.csv", "https://example.org/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata001.json", "asdfjkl")};
+        SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
+        TableDescriptorCheck tdc = scf.getInstance(TableDescriptorCheck.class);
+        assertTrue(tdc.validate().isFatal);
+    }
+
+    @Test
     void tableWithBaseDescriptor() throws Exception {
         Table[] tables = {createTable("table004.csv", "https://example.com/tree-ops.csv")};
         Descriptor[] descs = {createDescriptor("metadata012.json", "https://example.org/metadata012.json")};

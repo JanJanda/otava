@@ -1,7 +1,7 @@
 package otava.library.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import otava.library.documents.Descriptor;
+import otava.library.documents.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 

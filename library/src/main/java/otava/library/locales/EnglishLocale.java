@@ -37,7 +37,7 @@ public final class EnglishLocale implements Locale {
     }
 
     @Override
-    public String checkRunEx(String checkName) {
-        return "Unexpected exception in the check " + checkName;
+    public String malformedUrl(String url, String base, String descName) {
+        return "Cannot resolve URL " + url + " against base " + base + " in descriptor " + descName;
     }
 }
