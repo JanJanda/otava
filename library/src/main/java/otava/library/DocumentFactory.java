@@ -11,7 +11,7 @@ public final class DocumentFactory {
         return new LocalInMemoryTable(path, csvFormat, alias);
     }
 
-    public LocalDescriptor getLocalDescriptor(String path) throws IOException {
-        return new LocalDescriptor(path);
+    public LocalDescriptor getLocalDescriptor(String path, String alias) throws IOException {
+        return new LocalDescriptor(path, alias);
     }
 }

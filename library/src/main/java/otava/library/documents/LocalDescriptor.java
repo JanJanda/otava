@@ -9,10 +9,12 @@ import java.nio.charset.StandardCharsets;
 
 public final class LocalDescriptor implements Descriptor {
     private final String fileName;
+    private final String alias;
     private JsonNode root;
 
-    public LocalDescriptor(String fileName) throws IOException {
+    public LocalDescriptor(String fileName, String alias) throws IOException {
         this.fileName = fileName;
+        this.alias = alias;
         parseFile();
     }
 
@@ -24,6 +26,16 @@ public final class LocalDescriptor implements Descriptor {
     @Override
     public String getName() {
         return fileName;
+    }
+
+    @Override
+    public String getAlias() {
+        return alias;
+    }
+
+    @Override
+    public String getPreferredName() {
+        return alias == null ? fileName : alias;
     }
 
     @Override

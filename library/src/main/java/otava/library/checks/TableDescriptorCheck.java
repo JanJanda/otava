@@ -1,9 +1,11 @@
 package otava.library.checks;
 
+import static otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import otava.library.*;
 import otava.library.documents.*;
-import otava.library.exceptions.CheckCreationException;
+import otava.library.exceptions.*;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,30 +18,41 @@ public final class TableDescriptorCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result performValidation() throws CheckRunException {
+        if (fatalSubResult()) return new Result.Builder().setSkipped().build();
+        try {
+            return tableDescriptorValidation();
+        }
+        catch (MalformedURLException e) {
+            throw new CheckRunException(Manager.locale().checkRunEx(this.getClass().getName()));
+        }
+    }
+
+    private Result tableDescriptorValidation() throws MalformedURLException {
         Result.Builder resultBuilder = new Result.Builder();
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
         List<String> extractedUrls = extractTableUrlsFromDescriptors();
         for (Table table : tables) {
-            String tableName = table.getAlias() == null ? table.getName() : table.getAlias();
+            String tableName = table.getPreferredName();
             if (!extractedUrls.remove(tableName)) resultBuilder.setFatal().addMessage(Manager.locale().missingDesc(table.getName()));
         }
         for (String url : extractedUrls) {
             resultBuilder.setFatal().addMessage(Manager.locale().missingTable(url));
         }
         return resultBuilder.build();
+
     }
 
-    private List<String> extractTableUrlsFromDescriptors() {
+    private List<String> extractTableUrlsFromDescriptors() throws MalformedURLException {
         List<String> urls = new ArrayList<>();
         for (Descriptor desc : descriptors) {
+            String baseUrl = getBaseUrl(desc);
             JsonNode urlNode = desc.path("url");
-            if (urlNode.isTextual()) urls.add(urlNode.asText());
+            if (urlNode.isTextual()) urls.add(resolveUrl(baseUrl, urlNode.asText()));
             JsonNode tablesArray = desc.path("tables");
             if (urlNode.isMissingNode() && tablesArray.isArray()) {
                 for (int i = 0; i < tablesArray.size(); i++) {
                     JsonNode arrayUrlNode = tablesArray.path(i).path("url");
-                    if (arrayUrlNode.isTextual()) urls.add(arrayUrlNode.asText());
+                    if (arrayUrlNode.isTextual()) urls.add(resolveUrl(baseUrl, arrayUrlNode.asText()));
                 }
             }
         }

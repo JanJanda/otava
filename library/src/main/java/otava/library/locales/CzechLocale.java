@@ -35,4 +35,9 @@ public final class CzechLocale implements Locale {
     public String missingTable(String url) {
         return "Chybí popsaná tabulka s URL " + url;
     }
+
+    @Override
+    public String checkRunEx(String checkName) {
+        return "Neočekávaná výjimka ve validační kontrole " + checkName;
+    }
 }

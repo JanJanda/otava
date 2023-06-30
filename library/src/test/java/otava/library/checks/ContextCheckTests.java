@@ -9,7 +9,7 @@ import otava.library.documents.*;
 class ContextCheckTests {
     private ContextCheck createCheck(String descName) throws Exception {
         DocumentFactory df = new DocumentFactory();
-        LocalDescriptor ld = df.getLocalDescriptor("src/test/resources/metadata/" + descName);
+        LocalDescriptor ld = df.getLocalDescriptor("src/test/resources/metadata/" + descName, null);
         DocsGroup<Descriptor> descs = new DocsGroup<>(new Descriptor[]{ld});
         SingletonCheckFactory scf = new SingletonCheckFactory(null, descs);
         return scf.getInstance(ContextCheck.class);

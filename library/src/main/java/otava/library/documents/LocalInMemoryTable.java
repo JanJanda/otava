@@ -47,6 +47,11 @@ public final class LocalInMemoryTable implements Table {
     }
 
     @Override
+    public String getPreferredName() {
+        return alias == null ? fileName : alias;
+    }
+
+    @Override
     public int getWidth() {
         if (cells.length > 0) return cells[0].length;
         else return 0;

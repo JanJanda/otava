@@ -13,7 +13,7 @@ class TableDescriptorCheckTests {
 
     private LocalDescriptor createDescriptor(String name) throws Exception {
         DocumentFactory df = new DocumentFactory();
-        return df.getLocalDescriptor("src/test/resources/metadata/" + name);
+        return df.getLocalDescriptor("src/test/resources/metadata/" + name, null);
     }
 
     @Test

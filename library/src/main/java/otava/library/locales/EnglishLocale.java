@@ -35,4 +35,9 @@ public final class EnglishLocale implements Locale {
     public String missingTable(String url) {
         return "Missing described table with URL " + url;
     }
+
+    @Override
+    public String checkRunEx(String checkName) {
+        return "Unexpected exception in the check " + checkName;
+    }
 }
