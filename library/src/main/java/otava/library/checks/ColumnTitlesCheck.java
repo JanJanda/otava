@@ -1,11 +1,14 @@
 package otava.library.checks;
 
 import static otava.library.utils.UrlUtils.*;
+import static otava.library.utils.DescriptorUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.MissingNode;
 import otava.library.exceptions.CheckCreationException;
 import otava.library.*;
 import otava.library.documents.*;
 import java.net.MalformedURLException;
+import java.util.List;
 
 public final class ColumnTitlesCheck extends Check {
     public ColumnTitlesCheck(CheckFactory f) throws CheckCreationException {
@@ -19,21 +22,17 @@ public final class ColumnTitlesCheck extends Check {
 
         return null;
     }
-// TODO: vyclenit extrakci tabulek z daneho deskriptoru?
+
     private JsonNode findTableDescription(Table table) throws MalformedURLException {
         String tableName = table.getPreferredName();
         for (Descriptor desc : descriptors) {
             String baseUrl = getBaseUrl(desc);
-            JsonNode urlNode = desc.path("url");
-            if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return desc.getRootNode();
-            JsonNode tablesArray = desc.path("tables");
-            if (urlNode.isMissingNode() && tablesArray.isArray()) {
-                for (int i = 0; i < tablesArray.size(); i++) {
-                    JsonNode arrayUrlNode = tablesArray.path(i).path("url");
-                    if (arrayUrlNode.isTextual() && resolveUrl(baseUrl, arrayUrlNode.asText()).equals(tableName)) return tablesArray.path(i);
-                }
+            List<JsonNode> tableNodes = extractTables(desc);
+            for (JsonNode tableNode : tableNodes) {
+                JsonNode urlNode = tableNode.path("url");
+                if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return tableNode;
             }
         }
-        return null;
+        return MissingNode.getInstance();
     }
 }

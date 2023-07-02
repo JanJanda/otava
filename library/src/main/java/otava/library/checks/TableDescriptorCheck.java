@@ -1,5 +1,6 @@
 package otava.library.checks;
 
+import static otava.library.utils.DescriptorUtils.*;
 import static otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import otava.library.*;
@@ -37,27 +38,16 @@ public final class TableDescriptorCheck extends Check {
         List<String> urls = new ArrayList<>();
         for (Descriptor desc : descriptors) {
             String baseUrl = getBaseUrl(desc);
-            List<String> extractedUrls = extractTableUrls(desc);
-            for (String url : extractedUrls) {
-                try {
-                    urls.add(resolveUrl(baseUrl, url));
-                } catch (MalformedURLException e) {
-                    resultBuilder.setFatal().addMessage(Manager.locale().malformedUrl(url, baseUrl, desc.getName()));
+            List<JsonNode> tableNodes = extractTables(desc);
+            for (JsonNode tableNode : tableNodes) {
+                JsonNode urlNode = tableNode.path("url");
+                if (urlNode.isTextual()) {
+                    try {
+                        urls.add(resolveUrl(baseUrl, urlNode.asText()));
+                    } catch (MalformedURLException e) {
+                        resultBuilder.setFatal().addMessage(Manager.locale().malformedUrl(urlNode.asText(), baseUrl, desc.getName()));
+                    }
                 }
-            }
-        }
-        return urls;
-    }
-
-    private List<String> extractTableUrls(Descriptor desc) {
-        List<String> urls = new ArrayList<>();
-        JsonNode urlNode = desc.path("url");
-        if (urlNode.isTextual()) urls.add(urlNode.asText());
-        JsonNode tablesArray = desc.path("tables");
-        if (urlNode.isMissingNode() && tablesArray.isArray()) {
-            for (int i = 0; i < tablesArray.size(); i++) {
-                JsonNode arrayUrlNode = tablesArray.path(i).path("url");
-                if (arrayUrlNode.isTextual()) urls.add(arrayUrlNode.asText());
             }
         }
         return urls;
