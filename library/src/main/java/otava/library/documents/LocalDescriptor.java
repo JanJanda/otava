@@ -1,11 +1,10 @@
 package otava.library.documents;
 
+import static otava.library.utils.FileUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 
 public final class LocalDescriptor implements Descriptor {
     private final String fileName;
@@ -19,8 +18,10 @@ public final class LocalDescriptor implements Descriptor {
     }
 
     private void parseFile() throws IOException {
-        ObjectMapper om = new ObjectMapper();
-        root = om.readTree(new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8));
+        try (InputStreamReader reader = makeReader(fileName)) {
+            ObjectMapper om = new ObjectMapper();
+            root = om.readTree(reader);
+        }
     }
 
     @Override

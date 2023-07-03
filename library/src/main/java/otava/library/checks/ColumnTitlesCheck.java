@@ -8,6 +8,7 @@ import otava.library.exceptions.CheckCreationException;
 import otava.library.*;
 import otava.library.documents.*;
 import java.net.MalformedURLException;
+import java.util.Iterator;
 import java.util.List;
 
 public final class ColumnTitlesCheck extends Check {
@@ -19,7 +20,10 @@ public final class ColumnTitlesCheck extends Check {
     protected Result performValidation() {
         Result.Builder resultBuilder = new Result.Builder();
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
-
+        for (Table table : tables) {
+           // JsonNode tableDescription = findTableDescription(table);
+// implementovat Table.getHeader()
+        }
         return null;
     }
 
@@ -34,5 +38,26 @@ public final class ColumnTitlesCheck extends Check {
             }
         }
         return MissingNode.getInstance();
+    }
+
+    private boolean isStringInTitle(String value, JsonNode title) {
+        if (title.isTextual() && title.asText().equals(value)) return true;
+        if (title.isArray() && isStringInArray(value, title)) return true;
+        if (title.isObject()) {
+            Iterator<String> fieldNames = title.fieldNames();
+            while (fieldNames.hasNext()) {
+                JsonNode item = title.path(fieldNames.next());
+                if (item.isTextual() && item.asText().equals(value)) return true;
+                if (item.isArray() && isStringInArray(value, item)) return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isStringInArray(String value, JsonNode arrayNode) {
+        for (int i = 0; i < arrayNode.size(); i++) {
+            if (arrayNode.path(i).isTextual() && arrayNode.path(i).asText().equals(value)) return true;
+        }
+        return false;
     }
 }

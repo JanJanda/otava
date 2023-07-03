@@ -1,14 +1,14 @@
 package otava.library.documents;
 
+import static otava.library.utils.FileUtils.*;
 import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import otava.library.*;
 import otava.library.exceptions.ValidatorFileException;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public final class LocalInMemoryTable implements Table {
@@ -23,17 +23,16 @@ public final class LocalInMemoryTable implements Table {
     }
 
     private void fillCells(CSVFormat csvFormat) throws IOException {
-        List<CSVRecord> records = csvFormat.parse(makeReader()).getRecords();
-        cells = new String[records.size()][];
-        int index = 0;
-        for (CSVRecord record : records) {
-            cells[index] = record.values();
-            index++;
+        try (InputStreamReader reader = makeReader(fileName);
+             CSVParser csvParser = csvFormat.parse(reader)) {
+            List<CSVRecord> records = csvParser.getRecords();
+            cells = new String[records.size()][];
+            int index = 0;
+            for (CSVRecord record : records) {
+                cells[index] = record.values();
+                index++;
+            }
         }
-    }
-
-    private InputStreamReader makeReader() throws FileNotFoundException {
-        return new InputStreamReader(new FileInputStream(fileName), StandardCharsets.UTF_8);
     }
 
     @Override
@@ -70,7 +69,7 @@ public final class LocalInMemoryTable implements Table {
     @Override
     public InputStreamReader getReader() throws ValidatorFileException {
         try {
-            return makeReader();
+            return makeReader(fileName);
         }
         catch (FileNotFoundException e) {
             throw new ValidatorFileException(Manager.locale().missingFile(fileName));
