@@ -9,4 +9,8 @@ public interface Locale {
     String missingDesc(String tableName);
     String missingTable(String url);
     String malformedUrl(String url, String base, String descName);
+    String checkRunException(String checkName);
+    String emptyTable(String tableName);
+    String missingColDesc(String colName, String tableName);
+    String missingCol(String colName, String descName);
 }

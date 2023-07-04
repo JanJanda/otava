@@ -7,7 +7,9 @@ import com.fasterxml.jackson.databind.node.MissingNode;
 import otava.library.exceptions.CheckCreationException;
 import otava.library.*;
 import otava.library.documents.*;
+import otava.library.exceptions.CheckRunException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -17,24 +19,57 @@ public final class ColumnTitlesCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result performValidation() throws CheckRunException {
         Result.Builder resultBuilder = new Result.Builder();
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-           // JsonNode tableDescription = findTableDescription(table);
-// implementovat Table.getHeader()
+            JsonNode tableDescription = findTableDescription(table);
+            List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription);
+            String[] firstLine = table.getFirstLine();
+            if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
+            else {
+                for (String tableColName : firstLine) {
+                    int indexFound = -1;
+                    for (int i = 0; i < descColumns.size(); i++) {
+                        if (isStringInTitle(tableColName, descColumns.get(i).path("titles"))) indexFound = i;
+                    }
+                    if (indexFound == -1) resultBuilder.addMessage(Manager.locale().missingColDesc(tableColName, table.getName()));
+                    else descColumns.remove(indexFound);
+                }
+                for (JsonNode missedCol : descColumns) {
+                    resultBuilder.setFatal().addMessage(Manager.locale().missingCol(missedCol.path("name").asText(), tableDescription.path("url").asText()));
+                }
+            }
         }
-        return null;
+        return resultBuilder.build();
     }
 
-    private JsonNode findTableDescription(Table table) throws MalformedURLException {
+    private List<JsonNode> extractNonVirtualColumns(JsonNode tableDescription) {
+        List<JsonNode> columns = new ArrayList<>();
+        JsonNode colsNode = tableDescription.path("columns");
+        if (colsNode.isArray()) {
+            for (int i = 0; i < colsNode.size(); i++) {
+                JsonNode column = colsNode.path(i);
+                JsonNode virtualNode = column.path("virtual");
+                if (!virtualNode.isBoolean() || !virtualNode.asBoolean()) columns.add(column);
+            }
+        }
+        return columns;
+    }
+
+    private JsonNode findTableDescription(Table table) throws CheckRunException {
         String tableName = table.getPreferredName();
         for (Descriptor desc : descriptors) {
             String baseUrl = getBaseUrl(desc);
             List<JsonNode> tableNodes = extractTables(desc);
             for (JsonNode tableNode : tableNodes) {
                 JsonNode urlNode = tableNode.path("url");
-                if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return tableNode;
+                try {
+                    if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return tableNode;
+                }
+                catch (MalformedURLException e) {
+                    throw new CheckRunException(Manager.locale().checkRunException(this.getClass().getName()));
+                }
             }
         }
         return MissingNode.getInstance();

@@ -40,4 +40,24 @@ public final class CzechLocale implements Locale {
     public String malformedUrl(String url, String base, String descName) {
         return "Nelze vytvořit absolutní URL z " + url + " vzhledem k bázi " + base + " v dekriptoru " + descName;
     }
+
+    @Override
+    public String checkRunException(String checkName) {
+        return "Neočekávaná výjimka ve validační kontrole " + checkName;
+    }
+
+    @Override
+    public String emptyTable(String tableName) {
+        return "Tabulka " + tableName + " je prázdná.";
+    }
+
+    @Override
+    public String missingColDesc(String colName, String tableName) {
+        return "Sloupec " + colName + " v tabulce " + tableName + " nemá popis v metadatech.";
+    }
+
+    @Override
+    public String missingCol(String colName, String descName) {
+        return "Sloupec " + colName + " chibí v popsané tabulce " + descName;
+    }
 }

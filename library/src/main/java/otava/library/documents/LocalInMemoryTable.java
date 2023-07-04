@@ -67,6 +67,12 @@ public final class LocalInMemoryTable implements Table {
     }
 
     @Override
+    public String[] getFirstLine() {
+        if (cells.length > 0) return cells[0].clone();
+        return null;
+    }
+
+    @Override
     public InputStreamReader getReader() throws ValidatorFileException {
         try {
             return makeReader(fileName);

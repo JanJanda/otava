@@ -7,5 +7,6 @@ public interface Table extends Document {
     int getWidth();
     int getHeight();
     String getCell(int row, int column);
+    String[] getFirstLine();
     InputStreamReader getReader() throws ValidatorFileException;
 }

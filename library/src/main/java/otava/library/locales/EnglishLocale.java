@@ -40,4 +40,24 @@ public final class EnglishLocale implements Locale {
     public String malformedUrl(String url, String base, String descName) {
         return "Cannot resolve URL " + url + " against base " + base + " in descriptor " + descName;
     }
+
+    @Override
+    public String checkRunException(String checkName) {
+        return "Unexpected exception in check " + checkName;
+    }
+
+    @Override
+    public String emptyTable(String tableName) {
+        return "Table " + tableName + " is empty.";
+    }
+
+    @Override
+    public String missingColDesc(String colName, String tableName) {
+        return "Column " + colName + " in table " + tableName + " does not have a description.";
+    }
+
+    @Override
+    public String missingCol(String colName, String descName) {
+        return "Column " + colName + " is not in described table " + descName;
+    }
 }
