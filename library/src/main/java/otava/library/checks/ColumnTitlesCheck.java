@@ -13,6 +13,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * This class checks columns in tables and their respective descriptors.
+ * There should be columns with same titles in a table and its descriptor.
+ */
 public final class ColumnTitlesCheck extends Check {
     public ColumnTitlesCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(TableDescriptorCheck.class));
@@ -24,7 +28,7 @@ public final class ColumnTitlesCheck extends Check {
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
             JsonNode tableDescription = findTableDescription(table);
-            List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription);
+            List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
             String[] firstLine = table.getFirstLine();
             if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
             else {
@@ -44,9 +48,9 @@ public final class ColumnTitlesCheck extends Check {
         return resultBuilder.build();
     }
 
-    private List<JsonNode> extractNonVirtualColumns(JsonNode tableDescription) {
+    private List<JsonNode> extractNonVirtualColumns(JsonNode tableSchema) {
         List<JsonNode> columns = new ArrayList<>();
-        JsonNode colsNode = tableDescription.path("columns");
+        JsonNode colsNode = tableSchema.path("columns");
         if (colsNode.isArray()) {
             for (int i = 0; i < colsNode.size(); i++) {
                 JsonNode column = colsNode.path(i);

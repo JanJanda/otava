@@ -58,6 +58,6 @@ public final class CzechLocale implements Locale {
 
     @Override
     public String missingCol(String colName, String descName) {
-        return "Sloupec " + colName + " chibí v popsané tabulce " + descName;
+        return "Sloupec " + colName + " chybí v popsané tabulce " + descName;
     }
 }
