@@ -1,17 +1,12 @@
 package otava.library.checks;
 
-import static otava.library.utils.UrlUtils.*;
 import static otava.library.utils.DescriptorUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.MissingNode;
 import org.apache.commons.csv.CSVRecord;
-import otava.library.exceptions.CheckCreationException;
+import otava.library.exceptions.*;
 import otava.library.*;
 import otava.library.documents.*;
-import otava.library.exceptions.CheckRunException;
-import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,7 +23,7 @@ public final class ColumnTitlesCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder();
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            JsonNode tableDescription = findTableDescription(table);
+            JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
             CSVRecord firstLine = table.getFirstLine();
             if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
@@ -60,44 +55,5 @@ public final class ColumnTitlesCheck extends Check {
             }
         }
         return columns;
-    }
-
-    private JsonNode findTableDescription(Table table) throws CheckRunException {
-        String tableName = table.getPreferredName();
-        for (Descriptor desc : descriptors) {
-            String baseUrl = getBaseUrl(desc);
-            List<JsonNode> tableNodes = extractTables(desc);
-            for (JsonNode tableNode : tableNodes) {
-                JsonNode urlNode = tableNode.path("url");
-                try {
-                    if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return tableNode;
-                }
-                catch (MalformedURLException e) {
-                    throw new CheckRunException(Manager.locale().checkRunException(this.getClass().getName()));
-                }
-            }
-        }
-        return MissingNode.getInstance();
-    }
-
-    private boolean isStringInTitle(String value, JsonNode title) {
-        if (title.isTextual() && title.asText().equals(value)) return true;
-        if (title.isArray() && isStringInArray(value, title)) return true;
-        if (title.isObject()) {
-            Iterator<String> fieldNames = title.fieldNames();
-            while (fieldNames.hasNext()) {
-                JsonNode item = title.path(fieldNames.next());
-                if (item.isTextual() && item.asText().equals(value)) return true;
-                if (item.isArray() && isStringInArray(value, item)) return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean isStringInArray(String value, JsonNode arrayNode) {
-        for (int i = 0; i < arrayNode.size(); i++) {
-            if (arrayNode.path(i).isTextual() && arrayNode.path(i).asText().equals(value)) return true;
-        }
-        return false;
     }
 }

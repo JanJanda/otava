@@ -60,4 +60,14 @@ public final class CzechLocale implements Locale {
     public String missingCol(String colName, String descName) {
         return "Sloupec " + colName + " chybí v popsané tabulce " + descName;
     }
+
+    @Override
+    public String badValueInPrimKey(String tableUrl) {
+        return "Neplatná hodnota v definici primárního klíče pro tabulku s URL " + tableUrl;
+    }
+
+    @Override
+    public String missingPrimKeyTitles(String colName, String tableUrl) {
+        return "Nelze najít názvy pro sloupec primárního klíče jménem " + colName + " pro tabulku s URL " + tableUrl;
+    }
 }

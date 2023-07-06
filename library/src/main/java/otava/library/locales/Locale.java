@@ -13,4 +13,6 @@ public interface Locale {
     String emptyTable(String tableName);
     String missingColDesc(String colName, String tableName);
     String missingCol(String colName, String descName);
+    String badValueInPrimKey(String tableUrl);
+    String missingPrimKeyTitles(String colName, String tableUrl);
 }

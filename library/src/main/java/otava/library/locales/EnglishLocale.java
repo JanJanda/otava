@@ -60,4 +60,14 @@ public final class EnglishLocale implements Locale {
     public String missingCol(String colName, String descName) {
         return "Column " + colName + " is not in described table " + descName;
     }
+
+    @Override
+    public String badValueInPrimKey(String tableUrl) {
+        return "Invalid value in primary key definition for the table with URL " + tableUrl;
+    }
+
+    @Override
+    public String missingPrimKeyTitles(String colName, String tableUrl) {
+        return "Cannot find titles of primary key column with name " + colName + " for the table with URL " + tableUrl;
+    }
 }
