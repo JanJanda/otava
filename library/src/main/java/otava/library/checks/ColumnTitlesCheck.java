@@ -4,6 +4,7 @@ import static otava.library.utils.UrlUtils.*;
 import static otava.library.utils.DescriptorUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
+import org.apache.commons.csv.CSVRecord;
 import otava.library.exceptions.CheckCreationException;
 import otava.library.*;
 import otava.library.documents.*;
@@ -29,7 +30,7 @@ public final class ColumnTitlesCheck extends Check {
         for (Table table : tables) {
             JsonNode tableDescription = findTableDescription(table);
             List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
-            String[] firstLine = table.getFirstLine();
+            CSVRecord firstLine = table.getFirstLine();
             if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
             else {
                 for (String tableColName : firstLine) {

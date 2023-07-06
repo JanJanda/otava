@@ -9,12 +9,13 @@ import otava.library.exceptions.ValidatorFileException;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Iterator;
 import java.util.List;
 
 public final class LocalInMemoryTable implements Table {
     private final String fileName;
     private final String alias;
-    private String[][] cells;
+    private List<CSVRecord> records;
 
     public LocalInMemoryTable(String fileName, CSVFormat csvFormat, String alias) throws IOException {
         this.fileName = fileName;
@@ -24,14 +25,8 @@ public final class LocalInMemoryTable implements Table {
 
     private void fillCells(CSVFormat csvFormat) throws IOException {
         try (InputStreamReader reader = makeReader(fileName);
-             CSVParser csvParser = csvFormat.parse(reader)) {
-            List<CSVRecord> records = csvParser.getRecords();
-            cells = new String[records.size()][];
-            int index = 0;
-            for (CSVRecord record : records) {
-                cells[index] = record.values();
-                index++;
-            }
+             CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
+            records = csvParser.getRecords();
         }
     }
 
@@ -52,23 +47,23 @@ public final class LocalInMemoryTable implements Table {
 
     @Override
     public int getWidth() {
-        if (cells.length > 0) return cells[0].length;
+        if (records.size() > 0) return records.get(0).size();
         else return 0;
     }
 
     @Override
     public int getHeight() {
-        return cells.length;
+        return records.size();
     }
 
     @Override
     public String getCell(int row, int column) {
-        return cells[row][column];
+        return records.get(row).get(column);
     }
 
     @Override
-    public String[] getFirstLine() {
-        if (cells.length > 0) return cells[0].clone();
+    public CSVRecord getFirstLine() {
+        if (records.size() > 0) return records.get(0);
         return null;
     }
 
@@ -80,5 +75,10 @@ public final class LocalInMemoryTable implements Table {
         catch (FileNotFoundException e) {
             throw new ValidatorFileException(Manager.locale().missingFile(fileName));
         }
+    }
+
+    @Override
+    public Iterator<CSVRecord> iterator() {
+        return records.stream().iterator();
     }
 }
