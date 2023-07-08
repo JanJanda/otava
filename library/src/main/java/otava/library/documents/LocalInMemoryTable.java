@@ -15,7 +15,7 @@ import java.util.List;
 public final class LocalInMemoryTable implements Table {
     private final String fileName;
     private final String alias;
-    private List<CSVRecord> records;
+    private List<CSVRecord> csvRecords;
 
     public LocalInMemoryTable(String fileName, CSVFormat csvFormat, String alias) throws IOException {
         this.fileName = fileName;
@@ -26,7 +26,7 @@ public final class LocalInMemoryTable implements Table {
     private void fillCells(CSVFormat csvFormat) throws IOException {
         try (InputStreamReader reader = makeReader(fileName);
              CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
-            records = csvParser.getRecords();
+            csvRecords = csvParser.getRecords();
         }
     }
 
@@ -47,23 +47,23 @@ public final class LocalInMemoryTable implements Table {
 
     @Override
     public int getWidth() {
-        if (records.size() > 0) return records.get(0).size();
+        if (csvRecords.size() > 0) return csvRecords.get(0).size();
         else return 0;
     }
 
     @Override
     public int getHeight() {
-        return records.size();
+        return csvRecords.size();
     }
 
     @Override
     public String getCell(int row, int column) {
-        return records.get(row).get(column);
+        return csvRecords.get(row).get(column);
     }
 
     @Override
     public CSVRecord getFirstLine() {
-        if (records.size() > 0) return records.get(0);
+        if (csvRecords.size() > 0) return csvRecords.get(0);
         return null;
     }
 
@@ -79,6 +79,23 @@ public final class LocalInMemoryTable implements Table {
 
     @Override
     public Iterator<CSVRecord> iterator() {
-        return records.stream().iterator();
+        return csvRecords.stream().iterator();
+    }
+
+    @Override
+    public boolean areValuesInColumns(String[] values, int[] columns, long ignoreRow) {
+        for (CSVRecord record : csvRecords) {
+            if (record.getRecordNumber() != ignoreRow) {
+                boolean match = true;
+                for (int i = 0; i < columns.length; i++) {
+                    if (!values[i].equals(record.get(columns[i]))) {
+                        match = false;
+                        break;
+                    }
+                }
+                if (match) return true;
+            }
+        }
+        return false;
     }
 }

@@ -10,4 +10,5 @@ public interface Table extends Document, Iterable<CSVRecord> {
     String getCell(int row, int column);
     CSVRecord getFirstLine();
     InputStreamReader getReader() throws ValidatorFileException;
+    boolean areValuesInColumns(String[] values, int[] columns, long ignoreRow);
 }
