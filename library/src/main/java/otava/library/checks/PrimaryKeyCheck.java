@@ -12,6 +12,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * This class checks the defined primary keys of the tables. The values of the primary key must be unique.
+ */
 public final class PrimaryKeyCheck extends Check {
     public PrimaryKeyCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(ColumnTitlesCheck.class));
@@ -22,25 +25,49 @@ public final class PrimaryKeyCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder();
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
-            String[] primaryKey = extractPrimaryKey(tableDescription, resultBuilder);
-            List<JsonNode> titleNodes = new ArrayList<>();
-            for (String pkColumn : primaryKey) {
-                JsonNode titles = getTitlesForName(pkColumn, tableDescription);
-                if (titles.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingPrimKeyTitles(pkColumn, tableDescription.path("url").asText()));
-                else titleNodes.add(titles);
-            }
-            List<Integer> pkColIndices = new ArrayList<>();
-            CSVRecord firstLine = table.getFirstLine();
-            for (JsonNode titleNode : titleNodes) {
-                int index = findColumnWithTitle(firstLine, titleNode);
-                if (index == -1) throw new CheckRunException(Manager.locale().checkRunException(this.getClass().getName()));
-                else pkColIndices.add(index);
-            }
-
+            List<JsonNode> titleNodes = extractTitleNodes(table, resultBuilder);
+            List<Integer> pkColIndices = findPrimKeyColumns(table, titleNodes);
+            checkPrimKeyValues(table, pkColIndices, resultBuilder);
         }
+        return resultBuilder.build();
+    }
 
-        return null;
+    private List<JsonNode> extractTitleNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {
+        JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
+        String[] primaryKey = extractPrimaryKey(tableDescription, resultBuilder);
+        List<JsonNode> titleNodes = new ArrayList<>();
+        for (String pkColumn : primaryKey) {
+            JsonNode titles = getTitlesForName(pkColumn, tableDescription);
+            if (titles.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingPrimKeyTitles(pkColumn, tableDescription.path("url").asText()));
+            else titleNodes.add(titles);
+        }
+        return titleNodes;
+    }
+
+    private List<Integer> findPrimKeyColumns(Table table, List<JsonNode> titleNodes) throws CheckRunException {
+        List<Integer> pkColIndices = new ArrayList<>();
+        CSVRecord firstLine = table.getFirstLine();
+        for (JsonNode titleNode : titleNodes) {
+            int index = findColumnWithTitle(firstLine, titleNode);
+            if (index == -1) throw new CheckRunException(Manager.locale().checkRunException(this.getClass().getName()));
+            else pkColIndices.add(index);
+        }
+        return pkColIndices;
+    }
+
+    private void checkPrimKeyValues(Table table, List<Integer> pkColIndices, Result.Builder resultBuilder) {
+        int[] columns = new int[pkColIndices.size()];
+        for (int i = 0; i < columns.length; i++) columns[i] = pkColIndices.get(i);
+        String[] values = new String[columns.length];
+        for (CSVRecord row : table) {
+            for (int i = 0; i < columns.length; i++) {
+                values[i] = row.get(columns[i]);
+            }
+            if (table.areValuesInColumns(values, columns, row.getRecordNumber())) {
+                resultBuilder.setFatal().addMessage(Manager.locale().invalidPrimKey(table.getName())).build();
+                return;
+            }
+        }
     }
 
     private String[] extractPrimaryKey(JsonNode tableDescription, Result.Builder resultBuilder) {

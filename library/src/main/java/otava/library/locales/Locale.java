@@ -15,4 +15,5 @@ public interface Locale {
     String missingCol(String colName, String descName);
     String badValueInPrimKey(String tableUrl);
     String missingPrimKeyTitles(String colName, String tableUrl);
+    String invalidPrimKey(String tableName);
 }

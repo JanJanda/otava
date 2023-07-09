@@ -70,4 +70,9 @@ public final class EnglishLocale implements Locale {
     public String missingPrimKeyTitles(String colName, String tableUrl) {
         return "Cannot find titles of primary key column with name " + colName + " for the table with URL " + tableUrl;
     }
+
+    @Override
+    public String invalidPrimKey(String tableName) {
+        return "Primary key does not have unique values in the table " + tableName;
+    }
 }
