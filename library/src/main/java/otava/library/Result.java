@@ -7,11 +7,13 @@ public final class Result {
     public final boolean isFatal;
     public final boolean isOk;
     public final boolean isSkipped;
+    public final int numberOfMsg;
     private final String[] messages;
 
     private Result(Builder b) {
         isFatal = b.fatal;
         messages = b.listMessages.toArray(new String[0]);
+        numberOfMsg = messages.length;
         isOk = messages.length == 0 && !isFatal;
         isSkipped = b.skipped;
     }

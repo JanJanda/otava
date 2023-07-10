@@ -25,14 +25,14 @@ public final class PrimaryKeyCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder();
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            List<JsonNode> titleNodes = extractTitleNodes(table, resultBuilder);
+            List<JsonNode> titleNodes = findTitleNodes(table, resultBuilder);
             List<Integer> pkColIndices = findPrimKeyColumns(table, titleNodes);
             checkPrimKeyValues(table, pkColIndices, resultBuilder);
         }
         return resultBuilder.build();
     }
 
-    private List<JsonNode> extractTitleNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {
+    private List<JsonNode> findTitleNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {
         JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
         String[] primaryKey = extractPrimaryKey(tableDescription, resultBuilder);
         List<JsonNode> titleNodes = new ArrayList<>();
@@ -56,8 +56,11 @@ public final class PrimaryKeyCheck extends Check {
     }
 
     private void checkPrimKeyValues(Table table, List<Integer> pkColIndices, Result.Builder resultBuilder) {
+        if (pkColIndices.isEmpty()) return;
         int[] columns = new int[pkColIndices.size()];
-        for (int i = 0; i < columns.length; i++) columns[i] = pkColIndices.get(i);
+        for (int i = 0; i < columns.length; i++) {
+            columns[i] = pkColIndices.get(i);
+        }
         String[] values = new String[columns.length];
         for (CSVRecord row : table) {
             for (int i = 0; i < columns.length; i++) {
