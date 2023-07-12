@@ -75,4 +75,9 @@ public final class EnglishLocale implements Locale {
     public String invalidPrimKey(String tableName) {
         return "Primary key does not have unique values in the table " + tableName;
     }
+
+    @Override
+    public String emptyRequiredColumn(String tableName) {
+        return "Required column in the table " + tableName + " has empty cells.";
+    }
 }

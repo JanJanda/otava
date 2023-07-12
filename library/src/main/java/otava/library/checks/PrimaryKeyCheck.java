@@ -101,11 +101,4 @@ public final class PrimaryKeyCheck extends Check {
         }
         return MissingNode.getInstance();
     }
-
-    private int findColumnWithTitle(CSVRecord firstLine, JsonNode titles) {
-        for (int i = 0; i < firstLine.size(); i++) {
-            if (isStringInTitle(firstLine.get(i), titles)) return i;
-        }
-        return -1;
-    }
 }

@@ -75,4 +75,9 @@ public final class CzechLocale implements Locale {
     public String invalidPrimKey(String tableName) {
         return "Primární klíč nemá unikátní hodnoty v tabulce " + tableName;
     }
+
+    @Override
+    public String emptyRequiredColumn(String tableName) {
+        return "Požadovaný sloupec v tabulce " + tableName + " má prázdné buňky.";
+    }
 }

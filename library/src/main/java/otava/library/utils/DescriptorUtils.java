@@ -1,18 +1,16 @@
 package otava.library.utils;
 
+import static otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
+import org.apache.commons.csv.CSVRecord;
 import otava.library.Manager;
 import otava.library.documents.*;
 import otava.library.exceptions.CheckRunException;
-
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import static otava.library.utils.UrlUtils.getBaseUrl;
-import static otava.library.utils.UrlUtils.resolveUrl;
 
 public final class DescriptorUtils {
     private DescriptorUtils() {}
@@ -74,5 +72,12 @@ public final class DescriptorUtils {
             if (arrayNode.path(i).isTextual() && arrayNode.path(i).asText().equals(value)) return true;
         }
         return false;
+    }
+
+    public static int findColumnWithTitle(CSVRecord firstLine, JsonNode titles) {
+        for (int i = 0; i < firstLine.size(); i++) {
+            if (isStringInTitle(firstLine.get(i), titles)) return i;
+        }
+        return -1;
     }
 }
