@@ -9,8 +9,8 @@ import otava.library.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class RequiredColumnCheck extends Check {
-    public RequiredColumnCheck(CheckFactory f) throws CheckCreationException {
+public final class RequiredColumnsCheck extends Check {
+    public RequiredColumnsCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(ColumnTitlesCheck.class));
     }
 
