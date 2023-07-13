@@ -72,4 +72,16 @@ class RequiredColumnsCheckTests {
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
         assertTrue(rcc.validate().isSkipped);
     }
+
+    @Test
+    void noRequiredColumns() throws Exception {
+        Table[] tables = {createTable("table008.csv", "https://example.org/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata018.json", "https://example.org/metadata.json")};
+        SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
+        RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
+        Result result = rcc.validate();
+        assertTrue(result.isOk);
+        assertFalse(result.isFatal);
+        assertFalse(result.isSkipped);
+    }
 }

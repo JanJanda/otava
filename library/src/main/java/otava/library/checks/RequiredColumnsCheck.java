@@ -35,7 +35,10 @@ public final class RequiredColumnsCheck extends Check {
             for (int i = 0; i < colsDesc.size(); i++) {
                 JsonNode col = colsDesc.path(i);
                 JsonNode reqValue = col.path("required");
-                if (reqValue.isBoolean() && reqValue.asBoolean()) reqCols.add(col);
+                JsonNode virtualValue = col.path("virtual");
+                boolean isRequired = reqValue.isBoolean() && reqValue.asBoolean();
+                boolean isVirtual = virtualValue.isBoolean() && virtualValue.asBoolean();
+                if (isRequired && !isVirtual) reqCols.add(col);
             }
         }
         return reqCols;
