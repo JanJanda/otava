@@ -1,5 +1,6 @@
 package otava.library.checks;
 
+import static otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import otava.library.*;
@@ -7,8 +8,7 @@ import otava.library.documents.*;
 
 class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        LocalInMemoryTable table = df.getLocalTable("src/test/resources/tables/" + tableName, null);
+        LocalInMemoryTable table = createTable(tableName, null);
         DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});
         SingletonCheckFactory scf = new SingletonCheckFactory(tables, null);
         return scf.getInstance(LineBreaksCheck.class);

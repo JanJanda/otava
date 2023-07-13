@@ -1,5 +1,6 @@
 package otava.library.checks;
 
+import static otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -8,8 +9,7 @@ import otava.library.documents.*;
 
 class ContextCheckTests {
     private ContextCheck createCheck(String descName) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        LocalDescriptor ld = df.getLocalDescriptor("src/test/resources/metadata/" + descName, null);
+        LocalDescriptor ld = createDescriptor(descName, null);
         DocsGroup<Descriptor> descs = new DocsGroup<>(new Descriptor[]{ld});
         SingletonCheckFactory scf = new SingletonCheckFactory(null, descs);
         return scf.getInstance(ContextCheck.class);
