@@ -1,21 +1,12 @@
 package otava.library.checks;
 
+import static otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 import otava.library.*;
 import otava.library.documents.*;
 
 class TableDescriptorCheckTests {
-    private LocalInMemoryTable createTable(String name, String alias) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        return df.getLocalTable("src/test/resources/tables/" + name, alias);
-    }
-
-    private LocalDescriptor createDescriptor(String name, String alias) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        return df.getLocalDescriptor("src/test/resources/metadata/" + name, alias);
-    }
-
     @Test
     void tableWithDescriptor() throws Exception {
         Table[] tables = {createTable("table004.csv", "https://example.org/tree-ops.csv")};

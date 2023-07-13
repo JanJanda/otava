@@ -1,5 +1,6 @@
 package otava.library.checks;
 
+import static otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,16 +9,6 @@ import otava.library.*;
 import otava.library.documents.*;
 
 class PrimaryKeyCheckTests {
-    private LocalInMemoryTable createTable(String name, String alias) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        return df.getLocalTable("src/test/resources/tables/" + name, alias);
-    }
-
-    private LocalDescriptor createDescriptor(String name, String alias) throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        return df.getLocalDescriptor("src/test/resources/metadata/" + name, alias);
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"metadata001.json", "metadata014.json", "metadata015.json"})
     void primKeys(String fileName) throws Exception {

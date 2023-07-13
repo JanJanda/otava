@@ -1,15 +1,14 @@
 package otava.library.documents;
 
+import static otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import otava.library.DocumentFactory;
 
 class LocalInMemoryTableTests {
     private LocalInMemoryTable makeTable() throws Exception {
-        DocumentFactory df = new DocumentFactory();
-        return df.getLocalTable("src/test/resources/tables/table001.csv", null);
+        return createTable("table001.csv", null);
     }
 
     @Test
