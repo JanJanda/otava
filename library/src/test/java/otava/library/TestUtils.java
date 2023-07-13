@@ -1,7 +1,6 @@
 package otava.library;
 
-import otava.library.documents.LocalDescriptor;
-import otava.library.documents.LocalInMemoryTable;
+import otava.library.documents.*;
 
 public final class TestUtils {
     private TestUtils() {}

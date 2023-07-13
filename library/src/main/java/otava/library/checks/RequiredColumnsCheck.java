@@ -9,6 +9,9 @@ import otava.library.exceptions.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class checks required columns in tables. Cells of the required columns cannot be empty.
+ */
 public final class RequiredColumnsCheck extends Check {
     public RequiredColumnsCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(ColumnTitlesCheck.class));
