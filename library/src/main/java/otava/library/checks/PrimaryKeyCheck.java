@@ -1,6 +1,7 @@
 package otava.library.checks;
 
 import static otava.library.utils.DescriptorUtils.*;
+import static otava.library.utils.TableUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
 import org.apache.commons.csv.CSVRecord;
@@ -66,7 +67,7 @@ public final class PrimaryKeyCheck extends Check {
             for (int i = 0; i < columns.length; i++) {
                 values[i] = row.get(columns[i]);
             }
-            if (table.areValuesInColumns(values, columns, row.getRecordNumber())) {
+            if (areValuesInColumns(table, values, columns, row.getRecordNumber())) {
                 resultBuilder.setFatal().addMessage(Manager.locale().invalidPrimKey(table.getName())).build();
                 return;
             }

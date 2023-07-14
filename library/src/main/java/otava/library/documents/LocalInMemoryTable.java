@@ -81,21 +81,4 @@ public final class LocalInMemoryTable implements Table {
     public Iterator<CSVRecord> iterator() {
         return csvRecords.stream().iterator();
     }
-
-    @Override
-    public boolean areValuesInColumns(String[] values, int[] columns, long ignoreRow) {
-        for (CSVRecord record : csvRecords) {
-            if (record.getRecordNumber() != ignoreRow) {
-                boolean match = true;
-                for (int i = 0; i < columns.length; i++) {
-                    if (!values[i].equals(record.get(columns[i]))) {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match) return true;
-            }
-        }
-        return false;
-    }
 }
