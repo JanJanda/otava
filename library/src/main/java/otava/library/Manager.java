@@ -4,7 +4,7 @@ import otava.library.checks.*;
 import otava.library.documents.*;
 import otava.library.exceptions.ValidatorException;
 import otava.library.locales.*;
-import java.io.IOException;
+import java.util.Set;
 
 public final class Manager {
     private static Locale currentLocale = new EnglishLocale();
@@ -19,12 +19,20 @@ public final class Manager {
         return currentLocale;
     }
 
-    public Result validateLocalTable(String tablePath) throws ValidatorException, IOException {
+    public Set<Result> manualLocalValidation(String[] tableFileNames, String[] tableAliases,
+                                              String[] descriptorFileNames, String[] descriptorAliases) throws ValidatorException {
         DocumentFactory documentFactory = new DocumentFactory();
-        LocalInMemoryTable table = documentFactory.getLocalTable(tablePath, null);
-        DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});
-        SingletonCheckFactory scf = new SingletonCheckFactory(tables, null);
-        LineBreaksCheck validator = scf.getInstance(LineBreaksCheck.class);
-        return validator.validate();
+        Table[] tables = new Table[tableFileNames.length];
+        for (int i = 0; i < tableFileNames.length; i++) {
+            tables[i] = documentFactory.getLocalTable(tableFileNames[i], tableAliases[i]);
+        }
+        Descriptor[] descriptors = new Descriptor[descriptorFileNames.length];
+        for (int i = 0; i < descriptorFileNames.length; i++) {
+            descriptors[i] = documentFactory.getLocalDescriptor(descriptorFileNames[i], descriptorAliases[i]);
+        }
+        SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descriptors));
+        RootCheck rootCheck = scf.getInstance(RootCheck.class);
+        rootCheck.validate();
+        return rootCheck.getAllResults();
     }
 }

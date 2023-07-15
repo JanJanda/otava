@@ -3,6 +3,9 @@ package otava.library.documents;
 import static otava.library.utils.FileUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import otava.library.Manager;
+import otava.library.exceptions.ValidatorFileException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
@@ -11,16 +14,22 @@ public final class LocalDescriptor implements Descriptor {
     private final String alias;
     private JsonNode root;
 
-    public LocalDescriptor(String fileName, String alias) throws IOException {
+    public LocalDescriptor(String fileName, String alias) throws ValidatorFileException {
         this.fileName = fileName;
         this.alias = alias;
         parseFile();
     }
 
-    private void parseFile() throws IOException {
+    private void parseFile() throws ValidatorFileException {
         try (InputStreamReader reader = makeReader(fileName)) {
             ObjectMapper om = new ObjectMapper();
             root = om.readTree(reader);
+        }
+        catch (FileNotFoundException e) {
+            throw new ValidatorFileException(Manager.locale().missingFile(fileName));
+        }
+        catch (IOException e) {
+            throw new ValidatorFileException(Manager.locale().ioException());
         }
     }
 

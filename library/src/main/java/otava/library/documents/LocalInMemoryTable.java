@@ -17,16 +17,22 @@ public final class LocalInMemoryTable implements Table {
     private final String alias;
     private List<CSVRecord> csvRecords;
 
-    public LocalInMemoryTable(String fileName, CSVFormat csvFormat, String alias) throws IOException {
+    public LocalInMemoryTable(String fileName, CSVFormat csvFormat, String alias) throws ValidatorFileException {
         this.fileName = fileName;
         this.alias = alias;
         fillCells(csvFormat);
     }
 
-    private void fillCells(CSVFormat csvFormat) throws IOException {
+    private void fillCells(CSVFormat csvFormat) throws ValidatorFileException {
         try (InputStreamReader reader = makeReader(fileName);
              CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
             csvRecords = csvParser.getRecords();
+        }
+        catch (FileNotFoundException e) {
+            throw new ValidatorFileException(Manager.locale().missingFile(fileName));
+        }
+        catch (IOException e) {
+            throw new ValidatorFileException(Manager.locale().ioException());
         }
     }
 
