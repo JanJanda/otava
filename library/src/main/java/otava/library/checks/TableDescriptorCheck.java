@@ -21,7 +21,7 @@ public final class TableDescriptorCheck extends Check {
 
     @Override
     protected Result performValidation() {
-        Result.Builder resultBuilder = new Result.Builder();
+        Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         List<String> extractedUrls = extractAndResolveTableUrls(resultBuilder);
         for (Table table : tables) {

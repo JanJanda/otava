@@ -19,7 +19,7 @@ public final class LineBreaksCheck extends Check {
 
     @Override
     protected Result performValidation() throws ValidatorFileException {
-        Result.Builder resultBuilder = new Result.Builder();
+        Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         for (Table table : tables) {
             if (lineBreaksWrong(table)) resultBuilder.addMessage(Manager.locale().badLineSeparators(table.getName()));
         }

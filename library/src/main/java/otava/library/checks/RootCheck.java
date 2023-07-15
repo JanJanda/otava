@@ -14,6 +14,6 @@ public final class RootCheck extends Check {
 
     @Override
     protected Result performValidation() {
-        return new Result.Builder().setSkipped().build();
+        return new Result.Builder(this.getClass().getName()).setSkipped().build();
     }
 }

@@ -20,7 +20,7 @@ public final class ColumnTitlesCheck extends Check {
 
     @Override
     protected Result performValidation() throws CheckRunException {
-        Result.Builder resultBuilder = new Result.Builder();
+        Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
             JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());

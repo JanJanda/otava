@@ -8,6 +8,7 @@ public final class Result {
     public final boolean isOk;
     public final boolean isSkipped;
     public final int numberOfMsg;
+    public final String originCheck;
     private final String[] messages;
 
     private Result(Builder b) {
@@ -16,10 +17,12 @@ public final class Result {
         numberOfMsg = messages.length;
         isOk = messages.length == 0 && !isFatal;
         isSkipped = b.skipped;
+        originCheck = b.origin;
     }
 
     public String asText() {
         StringBuilder result = new StringBuilder();
+        result.append(originCheck).append("\n");
         for (String message : messages) result.append(message).append("\n");
         return result.toString();
     }
@@ -36,6 +39,11 @@ public final class Result {
         private boolean fatal = false;
         private boolean skipped = false;
         private final List<String> listMessages = new ArrayList<>();
+        private final String origin;
+
+        public Builder(String originCheck) {
+            origin = originCheck;
+        }
 
         public Builder setFatal() {
             fatal = true;

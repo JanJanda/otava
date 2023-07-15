@@ -23,7 +23,7 @@ public final class PrimaryKeyCheck extends Check {
 
     @Override
     protected Result performValidation() throws CheckRunException {
-        Result.Builder resultBuilder = new Result.Builder();
+        Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
             List<JsonNode> titleNodes = findTitleNodes(table, resultBuilder);
