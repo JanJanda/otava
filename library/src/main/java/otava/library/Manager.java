@@ -19,6 +19,15 @@ public final class Manager {
         return currentLocale;
     }
 
+    /**
+     * Validates provided tables together with their respective descriptors.
+     * @param tableFileNames Names of the tables in the filesystem
+     * @param tableAliases Aliases of the respective tables - {@code tableAliases[i]} belongs to {@code tableFileNames[i]} so these arrays must have the same length. This array cannot be {@code null}, but it can contain {@code null} if a particular alias is not necessary.
+     * @param descriptorFileNames Names of the descriptors in the filesystem.
+     * @param descriptorAliases Same as the parameter {@code tableFileNames}, but this one is for descriptors.
+     * @return Set of validation results. One result for each validation check.
+     * @throws ValidatorException If the validation cannot be performed.
+     */
     public Set<Result> manualLocalValidation(String[] tableFileNames, String[] tableAliases,
                                               String[] descriptorFileNames, String[] descriptorAliases) throws ValidatorException {
         DocumentFactory documentFactory = new DocumentFactory();
