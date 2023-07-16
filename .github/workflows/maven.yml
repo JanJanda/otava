@@ -15,5 +15,4 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
     - name: Test library
-      working-directory: library
       run: mvn test
