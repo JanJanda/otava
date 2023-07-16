@@ -23,6 +23,7 @@ public final class Result {
     public String asText() {
         StringBuilder result = new StringBuilder();
         result.append(originCheck).append("\n");
+        if (isOk) result.append("ok");
         for (String message : messages) result.append(message).append("\n");
         return result.toString();
     }
