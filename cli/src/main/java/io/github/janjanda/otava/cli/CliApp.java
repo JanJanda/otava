@@ -3,23 +3,36 @@ package io.github.janjanda.otava.cli;
 import io.github.janjanda.otava.library.Manager;
 import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
-import java.io.IOException;
+import io.github.janjanda.otava.library.locales.CzechLocale;
+import org.apache.commons.cli.*;
 import java.util.Set;
 
 public class CliApp {
-    public static void main(String[] args) throws IOException {
-        Manager m = new Manager();
-        String[] tables = {"library/src/test/resources/tables/table004.csv"};
-        String[] tableAlias = {"https://example.org/tree-ops.csv"};
-        String[] descriptors = {"library/src/test/resources/metadata/metadata001.json"};
-        String[] descAlias = {"https://example.org/metadata001.json"};
+    public static void main(String[] args) {
+        Option tableNames = Option.builder("t").hasArgs().build();
+        Option tableAliases = Option.builder("T").hasArgs().build();
+        Option descriptorNames = Option.builder("d").hasArgs().build();
+        Option descriptorAliases = Option.builder("D").hasArgs().build();
+        Option language = Option.builder("l").hasArg().build();
+        Options options = new Options();
+        options.addOption(tableNames).addOption(tableAliases).addOption(descriptorNames).addOption(descriptorAliases).addOption(language);
+        CommandLineParser parser = new DefaultParser();
         try {
-            Set<Result> results = m.manualLocalValidation(tables, tableAlias, descriptors, descAlias);
+            CommandLine line = parser.parse(options, args);
+            String[] tables = line.getOptionValues(tableNames);
+            String[] tAliases = line.getOptionValues(tableAliases);
+            String[] descriptors = line.getOptionValues(descriptorNames);
+            String[] dAliases = line.getOptionValues(descriptorAliases);
+            String lang = line.getOptionValue(language);
+            Manager m;
+            if (lang != null && lang.equals("cs")) m = new Manager(new CzechLocale());
+            else m = new Manager();
+            Set<Result> results = m.manualLocalValidation(tables, tAliases, descriptors, dAliases);
             for (Result result : results) {
                 System.out.println(result.asText());
             }
         }
-        catch (ValidatorException e) {
+        catch (ParseException | ValidatorException e) {
             System.out.println(e.getMessage());
         }
     }
