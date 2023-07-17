@@ -8,7 +8,14 @@ The [CSV on the Web](https://www.w3.org/TR/2016/NOTE-tabular-data-primer-2016022
 
 ## Status of development
 
-The library part of this project is currently being developed. It cannot be directly executed, but there are automatic unit tests with great coverage. It is possible to execute individual parts of the library in the tests. The tests can be modified to try different behavior. There are also resources for the tests. It is easy to find the files because the project follows the [Standard Maven Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html). The command `mvn test` executes the tests.
+The library part of this project is currently being developed. There are automatic unit tests with great coverage. It is possible to execute individual parts of the library in the tests. The tests can be modified to try different behavior. There are also resources for the tests. It is easy to find the files because the project follows the [Standard Maven Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html). The command `mvn test` executes the tests.
+
+The command line interface is also currently being developed. It can be built and executed with the following commands.
+
+```
+mvn package
+java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -t library/src/test/resources/tables/table004.csv -T https://example.org/tree-ops.csv -d library/src/test/resources/metadata/metadata001.json -D https://example.org/metadata001.json -l cs
+```
 
 ## Progress
 
