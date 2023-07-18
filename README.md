@@ -14,6 +14,7 @@ The command line interface is also currently being developed. It can be built an
 
 ```
 mvn package
+java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -h
 java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -t library/src/test/resources/tables/table004.csv -T https://example.org/tree-ops.csv -d library/src/test/resources/metadata/metadata001.json -D https://example.org/metadata001.json -l cs
 ```
 
