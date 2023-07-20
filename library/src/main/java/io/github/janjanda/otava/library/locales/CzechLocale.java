@@ -80,4 +80,14 @@ public final class CzechLocale implements Locale {
     public String emptyRequiredColumn(String tableName) {
         return "Požadovaný sloupec v tabulce " + tableName + " má prázdné buňky.";
     }
+
+    @Override
+    public String fatal() {
+        return "fatální";
+    }
+
+    @Override
+    public String skipped() {
+        return "vynechaný";
+    }
 }

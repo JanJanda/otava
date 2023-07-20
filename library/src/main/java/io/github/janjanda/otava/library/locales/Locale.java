@@ -17,4 +17,6 @@ public interface Locale {
     String missingPrimKeyTitles(String colName, String tableUrl);
     String invalidPrimKey(String tableName);
     String emptyRequiredColumn(String tableName);
+    String fatal();
+    String skipped();
 }

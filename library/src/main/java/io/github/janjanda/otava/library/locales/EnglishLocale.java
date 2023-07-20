@@ -80,4 +80,14 @@ public final class EnglishLocale implements Locale {
     public String emptyRequiredColumn(String tableName) {
         return "Required column in the table " + tableName + " has empty cells.";
     }
+
+    @Override
+    public String fatal() {
+        return "fatal";
+    }
+
+    @Override
+    public String skipped() {
+        return "skipped";
+    }
 }
