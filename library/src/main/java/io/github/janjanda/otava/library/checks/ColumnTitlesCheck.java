@@ -9,7 +9,6 @@ import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.exceptions.CheckRunException;
 import io.github.janjanda.otava.library.utils.DescriptorUtils;
 import org.apache.commons.csv.CSVRecord;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +26,7 @@ public final class ColumnTitlesCheck extends Check {
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
             JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
-            List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
+            List<JsonNode> descColumns = DescriptorUtils.extractNonVirtualColumns(tableDescription.path("tableSchema"));
             CSVRecord firstLine = table.getFirstLine();
             if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
             else {
@@ -45,18 +44,5 @@ public final class ColumnTitlesCheck extends Check {
             }
         }
         return resultBuilder.build();
-    }
-
-    private List<JsonNode> extractNonVirtualColumns(JsonNode tableSchema) {
-        List<JsonNode> columns = new ArrayList<>();
-        JsonNode colsNode = tableSchema.path("columns");
-        if (colsNode.isArray()) {
-            for (int i = 0; i < colsNode.size(); i++) {
-                JsonNode column = colsNode.path(i);
-                JsonNode virtualNode = column.path("virtual");
-                if (!virtualNode.isBoolean() || !virtualNode.asBoolean()) columns.add(column);
-            }
-        }
-        return columns;
     }
 }

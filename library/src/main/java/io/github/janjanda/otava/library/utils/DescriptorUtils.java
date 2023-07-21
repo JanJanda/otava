@@ -82,4 +82,17 @@ public final class DescriptorUtils {
         }
         return -1;
     }
+
+    public static List<JsonNode> extractNonVirtualColumns(JsonNode tableSchema) {
+        List<JsonNode> columns = new ArrayList<>();
+        JsonNode colsNode = tableSchema.path("columns");
+        if (colsNode.isArray()) {
+            for (int i = 0; i < colsNode.size(); i++) {
+                JsonNode column = colsNode.path(i);
+                JsonNode virtualNode = column.path("virtual");
+                if (!virtualNode.isBoolean() || !virtualNode.asBoolean()) columns.add(column);
+            }
+        }
+        return columns;
+    }
 }
