@@ -19,4 +19,5 @@ public interface Locale {
     String emptyRequiredColumn(String tableName);
     String fatal();
     String skipped();
+    String badDatatype(String tableName, String row, String colIndex);
 }

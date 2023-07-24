@@ -90,4 +90,9 @@ public final class CzechLocale implements Locale {
     public String skipped() {
         return "vynechaný";
     }
+
+    @Override
+    public String badDatatype(String tableName, String row, String colIndex) {
+        return "Nesprávná hodnota pro datový typ v tabulce " + tableName + " řádek " + row + " index sloupce " + colIndex + ".";
+    }
 }

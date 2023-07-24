@@ -90,4 +90,9 @@ public final class EnglishLocale implements Locale {
     public String skipped() {
         return "skipped";
     }
+
+    @Override
+    public String badDatatype(String tableName, String row, String colIndex) {
+        return "Incorrect value for datatype in the table " + tableName + " row " + row + " column index " + colIndex + ".";
+    }
 }
