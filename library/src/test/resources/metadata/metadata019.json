@@ -30,7 +30,10 @@
       "name": "g",
       "titles": "G",
       "datatype": "integer"
-      }
-    ]
+    }, {
+      "name": "h",
+      "titles": "H",
+      "datatype": "time"
+    }]
   }
 }

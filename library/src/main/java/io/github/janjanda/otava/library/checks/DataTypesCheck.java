@@ -12,9 +12,7 @@ import io.github.janjanda.otava.library.utils.DescriptorUtils;
 import org.apache.commons.csv.CSVRecord;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
@@ -80,6 +78,7 @@ public final class DataTypesCheck extends Check {
             if (textual.equals("datetime") && !isDateTime(value) && !isOffsetDateTime(value)) return false;
             if (textual.equals("number") && !isNumber(value)) return false;
             if (textual.equals("integer") && !isInteger(value)) return false;
+            if (textual.equals("time") && !isTime(value) && !isOffsetTime(value)) return false;
         }
         if (dataType.isObject()) {
             JsonNode baseNode = dataType.path("base");
@@ -90,6 +89,7 @@ public final class DataTypesCheck extends Check {
             if (base.equals("string")) return checkString(value, dataType);
             if (base.equals("date")) return checkDate(value, dataType);
             if (base.equals("datetime")) return checkDateTime(value, dataType) || checkOffsetDateTime(value, dataType);
+            if (base.equals("time")) return checkTime(value, dataType) || checkOffsetTime(value, dataType);
         }
         return true;
     }
@@ -154,6 +154,26 @@ public final class DataTypesCheck extends Check {
             return true;
         }
         catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isTime(String value) {
+        try {
+            LocalTime.parse(value);
+            return true;
+        }
+        catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private boolean isOffsetTime(String value) {
+        try {
+            OffsetTime.parse(value);
+            return true;
+        }
+        catch (DateTimeParseException e) {
             return false;
         }
     }
@@ -231,6 +251,36 @@ public final class DataTypesCheck extends Check {
             String format = formatNode.asText();
             try {
                 OffsetDateTime.parse(value, DateTimeFormatter.ofPattern(format));
+            }
+            catch (DateTimeParseException e) {
+                return false;
+            }
+            catch (IllegalArgumentException ignored) {}
+        }
+        return true;
+    }
+
+    private boolean checkTime(String value, JsonNode dataType) {
+        JsonNode formatNode = dataType.path("format");
+        if (formatNode.isTextual()) {
+            String format = formatNode.asText();
+            try {
+                LocalTime.parse(value, DateTimeFormatter.ofPattern(format));
+            }
+            catch (DateTimeParseException e) {
+                return false;
+            }
+            catch (IllegalArgumentException ignored) {}
+        }
+        return true;
+    }
+
+    private boolean checkOffsetTime(String value, JsonNode dataType) {
+        JsonNode formatNode = dataType.path("format");
+        if (formatNode.isTextual()) {
+            String format = formatNode.asText();
+            try {
+                OffsetTime.parse(value, DateTimeFormatter.ofPattern(format));
             }
             catch (DateTimeParseException e) {
                 return false;
