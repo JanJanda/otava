@@ -64,7 +64,7 @@ public final class DataTypesCheck extends Check {
 
     private void checkRow(CSVRecord row, JsonNode[] dataTypes, Result.Builder resultBuilder, String tableName) {
         for (int i = 0; i < dataTypes.length; i++) {
-            if (!okValue(row.get(i), dataTypes[i])) resultBuilder.addMessage(Manager.locale().badDatatype(tableName, Long.toString(row.getRecordNumber()), Integer.toString(i)));
+            if (!okValue(row.get(i), dataTypes[i])) resultBuilder.addMessage(Manager.locale().badDatatype(tableName, Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
         }
     }
 

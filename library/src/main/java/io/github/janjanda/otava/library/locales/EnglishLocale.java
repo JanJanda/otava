@@ -92,7 +92,7 @@ public final class EnglishLocale implements Locale {
     }
 
     @Override
-    public String badDatatype(String tableName, String row, String colIndex) {
-        return "Incorrect value for data type in the table " + tableName + " row " + row + " column index " + colIndex + ".";
+    public String badDatatype(String tableName, String row, String column) {
+        return "Incorrect value for data type in the table " + tableName + " row " + row + " column " + column + ".";
     }
 }
