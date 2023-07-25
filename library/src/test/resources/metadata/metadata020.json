@@ -1,0 +1,49 @@
+{
+  "@context": "http://www.w3.org/ns/csvw",
+  "url": "tree-ops.csv",
+  "tableSchema": {
+    "columns": [{
+      "name": "a",
+      "titles": "A",
+      "datatype": {
+        "base": "number",
+        "maxExclusive": "10"
+      }
+    }, {
+      "name": "b",
+      "titles": "B",
+      "datatype": {
+        "base": "integer",
+        "minimum": "3"
+      }
+    }, {
+      "name": "c",
+      "titles": "C",
+      "datatype": {
+        "base": "string",
+        "format": "[a-z]{2}"
+      }
+    },{
+      "name": "d",
+      "titles": "D",
+      "datatype": {
+        "base": "date",
+        "format": "dd/MM/yyyy"
+      }
+    },{
+      "name": "e",
+      "titles": "E",
+      "datatype": {
+        "base": "datetime",
+        "format": "dd-MM-yyyy HH/mm.ss"
+      }
+    }, {
+      "name": "f",
+      "titles": "F",
+      "datatype": {
+        "base": "time",
+        "format": "H m s"
+      }
+    }]
+  }
+}

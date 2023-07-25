@@ -31,4 +31,29 @@ public class DataTypesCheckTests {
         assertFalse(result.isSkipped);
         assertEquals(7, result.numberOfMsg);
     }
+
+    @Test
+    void goodComplexDataTypes() throws Exception {
+        Table[] tables = {createTable("table011.csv", "https://example.org/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata020.json", "https://example.org/metadata020.json")};
+        SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
+        DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
+        Result result = dc.validate();
+        assertTrue(result.isOk);
+        assertFalse(result.isFatal);
+        assertFalse(result.isSkipped);
+    }
+
+    @Test
+    void badComplexDataTypes() throws Exception {
+        Table[] tables = {createTable("table012.csv", "https://example.org/tree-ops.csv")};
+        Descriptor[] descs = {createDescriptor("metadata020.json", "https://example.org/metadata020.json")};
+        SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
+        DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
+        Result result = dc.validate();
+        assertFalse(result.isOk);
+        assertFalse(result.isFatal);
+        assertFalse(result.isSkipped);
+        assertEquals(6, result.numberOfMsg);
+    }
 }
