@@ -17,7 +17,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
 
@@ -206,9 +205,7 @@ public final class DataTypesCheck extends Check {
         JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
             try {
-                Pattern p = Pattern.compile(formatNode.asText());
-                Matcher m = p.matcher(value);
-                if (!m.matches()) return false;
+                if (!Pattern.matches(formatNode.asText(), value)) return false;
             }
             catch (PatternSyntaxException ignored) {}
         }
@@ -218,9 +215,8 @@ public final class DataTypesCheck extends Check {
     private boolean checkDate(String value, JsonNode dataType) {
         JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
-            String format = formatNode.asText();
             try {
-                LocalDate.parse(value, DateTimeFormatter.ofPattern(format));
+                LocalDate.parse(value, DateTimeFormatter.ofPattern(formatNode.asText()));
             }
             catch (DateTimeParseException e) {
                 return false;
@@ -233,9 +229,8 @@ public final class DataTypesCheck extends Check {
     private boolean checkDateTime(String value, JsonNode dataType) {
         JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
-            String format = formatNode.asText();
             try {
-                LocalDateTime.parse(value, DateTimeFormatter.ofPattern(format));
+                LocalDateTime.parse(value, DateTimeFormatter.ofPattern(formatNode.asText()));
             }
             catch (DateTimeParseException e) {
                 return false;
@@ -248,9 +243,8 @@ public final class DataTypesCheck extends Check {
     private boolean checkOffsetDateTime(String value, JsonNode dataType) {
         JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
-            String format = formatNode.asText();
             try {
-                OffsetDateTime.parse(value, DateTimeFormatter.ofPattern(format));
+                OffsetDateTime.parse(value, DateTimeFormatter.ofPattern(formatNode.asText()));
             }
             catch (DateTimeParseException e) {
                 return false;
@@ -263,9 +257,8 @@ public final class DataTypesCheck extends Check {
     private boolean checkTime(String value, JsonNode dataType) {
         JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
-            String format = formatNode.asText();
             try {
-                LocalTime.parse(value, DateTimeFormatter.ofPattern(format));
+                LocalTime.parse(value, DateTimeFormatter.ofPattern(formatNode.asText()));
             }
             catch (DateTimeParseException e) {
                 return false;
@@ -278,9 +271,8 @@ public final class DataTypesCheck extends Check {
     private boolean checkOffsetTime(String value, JsonNode dataType) {
         JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
-            String format = formatNode.asText();
             try {
-                OffsetTime.parse(value, DateTimeFormatter.ofPattern(format));
+                OffsetTime.parse(value, DateTimeFormatter.ofPattern(formatNode.asText()));
             }
             catch (DateTimeParseException e) {
                 return false;
