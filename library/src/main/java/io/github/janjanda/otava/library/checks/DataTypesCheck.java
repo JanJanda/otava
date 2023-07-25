@@ -1,6 +1,7 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.MissingNode;
 import io.github.janjanda.otava.library.CheckFactory;
 import io.github.janjanda.otava.library.Manager;
 import io.github.janjanda.otava.library.Result;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,10 +25,10 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * This class checks whether values in tables match their defined data types. Most common data types are supported.
- * @see <a href="https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#datatypes">Datatypes</a>
+ * @see <a href="https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#datatypes">Data types</a>
  */
-public final class DatatypeCheck extends Check {
-    public DatatypeCheck(CheckFactory f) throws CheckCreationException {
+public final class DataTypesCheck extends Check {
+    public DataTypesCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(ColumnTitlesCheck.class));
     }
 
@@ -37,39 +39,41 @@ public final class DatatypeCheck extends Check {
         for (Table table : tables) {
             JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> columns = DescriptorUtils.extractNonVirtualColumns(tableDescription.path("tableSchema"));
-            JsonNode[] datatypes = extractAndSortDatatypes(columns, table);
-            checkDatatypes(datatypes, table, resultBuilder);
+            JsonNode[] dataTypes = extractAndSortDataTypes(columns, table);
+            checkDataTypes(dataTypes, table, resultBuilder);
         }
         return resultBuilder.build();
     }
 
-    private JsonNode[] extractAndSortDatatypes(List<JsonNode> columns, Table table) {
-        JsonNode[] datatypes = new JsonNode[columns.size()];
+    private JsonNode[] extractAndSortDataTypes(List<JsonNode> columns, Table table) {
         CSVRecord firstLine = table.getFirstLine();
+        JsonNode[] dataTypes = new JsonNode[firstLine.size()];
+        Arrays.fill(dataTypes, MissingNode.getInstance());
         for (JsonNode column : columns) {
             int colIndex = DescriptorUtils.findColumnWithTitle(firstLine, column.path("titles"));
-            datatypes[colIndex] = column.path("datatype");
+            dataTypes[colIndex] = column.path("datatype");
         }
-        return datatypes;
+        return dataTypes;
     }
 
-    private void checkDatatypes(JsonNode[] datatypes, Table table, Result.Builder resultBuilder) {
+    private void checkDataTypes(JsonNode[] dataTypes, Table table, Result.Builder resultBuilder) {
         boolean notFirstLine = false;
         for (CSVRecord row : table) {
-            if (notFirstLine) checkRow(row, datatypes, resultBuilder, table.getName());
+            if (notFirstLine) checkRow(row, dataTypes, resultBuilder, table.getName());
             notFirstLine = true;
         }
     }
 
-    private void checkRow(CSVRecord row, JsonNode[] datatypes, Result.Builder resultBuilder, String tableName) {
-        for (int i = 0; i < datatypes.length; i++) {
-            if (!okValue(row.get(i), datatypes[i])) resultBuilder.addMessage(Manager.locale().badDatatype(tableName, Long.toString(row.getRecordNumber()), Integer.toString(i)));
+    private void checkRow(CSVRecord row, JsonNode[] dataTypes, Result.Builder resultBuilder, String tableName) {
+        for (int i = 0; i < dataTypes.length; i++) {
+            if (!okValue(row.get(i), dataTypes[i])) resultBuilder.addMessage(Manager.locale().badDatatype(tableName, Long.toString(row.getRecordNumber()), Integer.toString(i)));
         }
     }
 
-    private boolean okValue(String value, JsonNode datatype) {
-        if (datatype.isTextual()) {
-            String textual = datatype.asText();
+    private boolean okValue(String value, JsonNode dataType) {
+        if (value.isEmpty()) return true;
+        if (dataType.isTextual()) {
+            String textual = dataType.asText();
             if (textual.equals("anyURI") && !isURI(value)) return false;
             if (textual.equals("boolean") && !isBoolean(value)) return false;
             if (textual.equals("date") && !isDate(value)) return false;
@@ -77,15 +81,15 @@ public final class DatatypeCheck extends Check {
             if (textual.equals("number") && !isNumber(value)) return false;
             if (textual.equals("integer") && !isInteger(value)) return false;
         }
-        if (datatype.isObject()) {
-            JsonNode baseNode = datatype.path("base");
+        if (dataType.isObject()) {
+            JsonNode baseNode = dataType.path("base");
             String base = "string";
             if (baseNode.isTextual()) base = baseNode.asText();
-            if (base.equals("number")) return checkNumber(value, datatype);
-            if (base.equals("integer")) return isInteger(value) && checkNumber(value, datatype);
-            if (base.equals("string")) return checkString(value, datatype);
-            if (base.equals("date")) return checkDate(value, datatype);
-            if (base.equals("datetime")) return checkDateTime(value, datatype) || checkOffsetDateTime(value, datatype);
+            if (base.equals("number")) return checkNumber(value, dataType);
+            if (base.equals("integer")) return isInteger(value) && checkNumber(value, dataType);
+            if (base.equals("string")) return checkString(value, dataType);
+            if (base.equals("date")) return checkDate(value, dataType);
+            if (base.equals("datetime")) return checkDateTime(value, dataType) || checkOffsetDateTime(value, dataType);
         }
         return true;
     }
@@ -154,32 +158,32 @@ public final class DatatypeCheck extends Check {
         }
     }
 
-    private boolean checkNumber(String value, JsonNode datatype) {
+    private boolean checkNumber(String value, JsonNode dataType) {
         if (!isNumber(value)) return false;
         double numValue = Double.parseDouble(value);
-        String min = datatype.path("minimum").asText();
+        String min = dataType.path("minimum").asText();
         if (isNumber(min) && Double.parseDouble(min) > numValue) return false;
-        String minInc = datatype.path("minInclusive").asText();
+        String minInc = dataType.path("minInclusive").asText();
         if (isNumber(minInc) && Double.parseDouble(minInc) > numValue) return false;
-        String max = datatype.path("maximum").asText();
+        String max = dataType.path("maximum").asText();
         if (isNumber(max) && Double.parseDouble(max) < numValue) return false;
-        String maxInc = datatype.path("maxInclusive").asText();
+        String maxInc = dataType.path("maxInclusive").asText();
         if (isNumber(maxInc) && Double.parseDouble(maxInc) < numValue) return false;
-        String minEx = datatype.path("minExclusive").asText();
+        String minEx = dataType.path("minExclusive").asText();
         if (isNumber(minEx) && Double.parseDouble(minEx) >= numValue) return false;
-        String maxEx = datatype.path("maxExclusive").asText();
+        String maxEx = dataType.path("maxExclusive").asText();
         if (isNumber(maxEx) && Double.parseDouble(maxEx) <= numValue) return false;
         return true;
     }
 
-    private boolean checkString(String value, JsonNode datatype) {
-        String length = datatype.path("length").asText();
+    private boolean checkString(String value, JsonNode dataType) {
+        String length = dataType.path("length").asText();
         if (isInteger(length) && Integer.parseInt(length) != value.length()) return false;
-        String minLength = datatype.path("minLength").asText();
+        String minLength = dataType.path("minLength").asText();
         if (isInteger(minLength) && Integer.parseInt(minLength) > value.length()) return false;
-        String maxLength = datatype.path("maxLength").asText();
+        String maxLength = dataType.path("maxLength").asText();
         if (isInteger(maxLength) && Integer.parseInt(maxLength) < value.length()) return false;
-        JsonNode formatNode = datatype.path("format");
+        JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
             try {
                 Pattern p = Pattern.compile(formatNode.asText());
@@ -191,8 +195,8 @@ public final class DatatypeCheck extends Check {
         return true;
     }
 
-    private boolean checkDate(String value, JsonNode datatype) {
-        JsonNode formatNode = datatype.path("format");
+    private boolean checkDate(String value, JsonNode dataType) {
+        JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
             String format = formatNode.asText();
             try {
@@ -206,8 +210,8 @@ public final class DatatypeCheck extends Check {
         return true;
     }
 
-    private boolean checkDateTime(String value, JsonNode datatype) {
-        JsonNode formatNode = datatype.path("format");
+    private boolean checkDateTime(String value, JsonNode dataType) {
+        JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
             String format = formatNode.asText();
             try {
@@ -221,8 +225,8 @@ public final class DatatypeCheck extends Check {
         return true;
     }
 
-    private boolean checkOffsetDateTime(String value, JsonNode datatype) {
-        JsonNode formatNode = datatype.path("format");
+    private boolean checkOffsetDateTime(String value, JsonNode dataType) {
+        JsonNode formatNode = dataType.path("format");
         if (formatNode.isTextual()) {
             String format = formatNode.asText();
             try {

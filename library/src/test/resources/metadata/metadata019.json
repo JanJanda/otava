@@ -1,0 +1,36 @@
+{
+  "@context": "http://www.w3.org/ns/csvw",
+  "url": "tree-ops.csv",
+  "tableSchema": {
+    "columns": [{
+      "name": "a",
+      "titles": "A",
+      "datatype": "string"
+    }, {
+      "name": "b",
+      "titles": "B",
+      "datatype": "anyURI"
+    }, {
+      "name": "c",
+      "titles": "C",
+      "datatype": "boolean"
+    },{
+      "name": "d",
+      "titles": "D",
+      "datatype": "date"
+    },{
+      "name": "e",
+      "titles": "E",
+      "datatype": "datetime"
+    }, {
+      "name": "f",
+      "titles": "F",
+      "datatype": "number"
+    }, {
+      "name": "g",
+      "titles": "G",
+      "datatype": "integer"
+      }
+    ]
+  }
+}

@@ -65,7 +65,7 @@ public final class RequiredColumnsCheck extends Check {
         if (reqColIndices.isEmpty()) return true;
         for (CSVRecord row : table) {
             for (Integer i : reqColIndices) {
-                if (row.get(i).equals("")) return false;
+                if (row.get(i).isEmpty()) return false;
             }
         }
         return true;
