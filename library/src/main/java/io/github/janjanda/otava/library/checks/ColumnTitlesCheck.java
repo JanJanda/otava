@@ -28,19 +28,16 @@ public final class ColumnTitlesCheck extends Check {
             JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> descColumns = DescriptorUtils.extractNonVirtualColumns(tableDescription.path("tableSchema"));
             CSVRecord firstLine = table.getFirstLine();
-            if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
-            else {
-                for (String tableColName : firstLine) {
-                    int indexFound = -1;
-                    for (int i = 0; i < descColumns.size(); i++) {
-                        if (DescriptorUtils.isStringInTitle(tableColName, descColumns.get(i).path("titles"))) indexFound = i;
-                    }
-                    if (indexFound == -1) resultBuilder.addMessage(Manager.locale().missingColDesc(tableColName, table.getName()));
-                    else descColumns.remove(indexFound);
+            for (String tableColName : firstLine) {
+                int indexFound = -1;
+                for (int i = 0; i < descColumns.size(); i++) {
+                    if (DescriptorUtils.isStringInTitle(tableColName, descColumns.get(i).path("titles"))) indexFound = i;
                 }
-                for (JsonNode missedCol : descColumns) {
-                    resultBuilder.setFatal().addMessage(Manager.locale().missingCol(missedCol.path("name").asText(), tableDescription.path("url").asText()));
-                }
+                if (indexFound == -1) resultBuilder.addMessage(Manager.locale().missingColDesc(tableColName, table.getName()));
+                else descColumns.remove(indexFound);
+            }
+            for (JsonNode missedCol : descColumns) {
+                resultBuilder.setFatal().addMessage(Manager.locale().missingCol(missedCol.path("name").asText(), tableDescription.path("url").asText()));
             }
         }
         return resultBuilder.build();

@@ -20,4 +20,5 @@ public interface Locale {
     String fatal();
     String skipped();
     String badDatatype(String tableName, String row, String column);
+    String badRowSize(String tableName, String row);
 }

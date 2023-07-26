@@ -95,4 +95,9 @@ public final class EnglishLocale implements Locale {
     public String badDatatype(String tableName, String row, String column) {
         return "Incorrect value for data type in the table " + tableName + " row " + row + " column " + column + ".";
     }
+
+    @Override
+    public String badRowSize(String tableName, String row) {
+        return "Row " + row + " in the table " + tableName + " has incorrect number of cells.";
+    }
 }

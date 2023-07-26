@@ -95,4 +95,9 @@ public final class CzechLocale implements Locale {
     public String badDatatype(String tableName, String row, String column) {
         return "Nesprávná hodnota pro datový typ v tabulce " + tableName + " řádek " + row + " sloupec " + column + ".";
     }
+
+    @Override
+    public String badRowSize(String tableName, String row) {
+        return "Řádek " + row + " v tabulce " + tableName + " má chybný počet buněk.";
+    }
 }
