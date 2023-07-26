@@ -4,6 +4,7 @@ import io.github.janjanda.otava.library.checks.RootCheck;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.documents.DocsGroup;
 import io.github.janjanda.otava.library.documents.Table;
+import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.locales.EnglishLocale;
 import io.github.janjanda.otava.library.locales.Locale;
@@ -46,5 +47,11 @@ public final class Manager {
         RootCheck rootCheck = scf.getInstance(RootCheck.class);
         rootCheck.validate();
         return rootCheck.getAllResults();
+    }
+
+    public String printCheckTree() throws CheckCreationException {
+        SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
+        RootCheck rootCheck = scf.getInstance(RootCheck.class);
+        return rootCheck.printTree();
     }
 }

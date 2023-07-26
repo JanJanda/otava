@@ -11,19 +11,25 @@ public class CliApp {
     public static void main(String[] args) {
         final String csTag = "cs";
         Option help = new Option("h", "print this message");
+        Option tree = new Option("tree", "print check tree");
         Option tableNames = Option.builder("t").hasArgs().argName("file names").desc("file names of tables").build();
         Option tableAliases = Option.builder("T").hasArgs().argName("aliases").desc("aliases of the tables").build();
         Option descriptorNames = Option.builder("d").hasArgs().argName("file names").desc("file names of descriptors").build();
         Option descriptorAliases = Option.builder("D").hasArgs().argName("aliases").desc("aliases of the descriptors").build();
         Option language = Option.builder("l").hasArg().argName("language tag").desc("change the language of the result, use " + csTag + " for Czech").build();
         Options options = new Options();
-        options.addOption(help).addOption(tableNames).addOption(tableAliases).addOption(descriptorNames).addOption(descriptorAliases).addOption(language);
+        options.addOption(help).addOption(tree).addOption(tableNames).addOption(tableAliases).addOption(descriptorNames).addOption(descriptorAliases).addOption(language);
         CommandLineParser parser = new DefaultParser();
         try {
             CommandLine line = parser.parse(options, args);
             if (line.hasOption(help)) {
                 HelpFormatter helpFormatter = new HelpFormatter();
                 helpFormatter.printHelp("otava-cli", options, true);
+                return;
+            }
+            if (line.hasOption(tree)) {
+                Manager manager = new Manager();
+                System.out.println(manager.printCheckTree());
                 return;
             }
             String[] tables = line.getOptionValues(tableNames);

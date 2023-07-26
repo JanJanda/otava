@@ -52,4 +52,23 @@ public abstract class Check {
     }
 
     protected abstract Result performValidation() throws ValidatorException;
+
+    public final String printTree() {
+        StringBuilder sb = new StringBuilder();
+        printTreeRecursive(sb, "", true, true);
+        return sb.toString();
+    }
+
+    private void printTreeRecursive(StringBuilder sb, String padding, boolean isLast, boolean isRoot) {
+        String extraPadding = "";
+        String turn = "";
+        if (!isRoot) {
+            turn = isLast ? "└──" : "├──";
+            extraPadding = isLast ? "   " : "│  ";
+        }
+        sb.append(padding).append(turn).append(this.getClass().getSimpleName()).append("\n");
+        for (int i = 0; i < preChecks.length; i++) {
+            preChecks[i].printTreeRecursive(sb, padding + extraPadding, i == preChecks.length - 1, false);
+        }
+    }
 }
