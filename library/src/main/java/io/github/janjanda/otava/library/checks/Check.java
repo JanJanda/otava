@@ -15,9 +15,9 @@ import java.util.Set;
  * A validation check needs to implement {@link #performValidation()} and return a result.
  */
 public abstract class Check {
-    protected final Check[] preChecks;
     protected final DocsGroup<Table> tables;
     protected final DocsGroup<Descriptor> descriptors;
+    private final Check[] preChecks;
     private Result result;
 
     protected Check(DocsGroup<Table> tables, DocsGroup<Descriptor> descriptors, Check... preChecks) {

@@ -22,6 +22,11 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * This class checks whether values in tables match their defined data types. Most common data types are supported.
+ * It supports the following built-in data types: {@code string}, {@code anyURI}, {@code boolean}, {@code date}, {@code datetime}, {@code number}, {@code integer}, {@code time}.
+ * It also supports derived data types. The bases {@code number} and {@code integer} support minimum and maximum constraints (both inclusive and exclusive).
+ * The base {@code string} supports length, minimum length, maximum length and format constraints. The format expects a regular expression.
+ * The bases {@code date}, {@code time} and {@code datetime} support format constraint. The format expects a datetime formatter pattern.
+ * Unsupported features and invalid constraints are ignored because they may still be reasonable outside the scope of this validator.
  * @see <a href="https://www.w3.org/TR/2015/REC-tabular-metadata-20151217/#datatypes">Data types</a>
  */
 public final class DataTypesCheck extends Check {
@@ -56,14 +61,14 @@ public final class DataTypesCheck extends Check {
     private void checkDataTypes(JsonNode[] dataTypes, Table table, Result.Builder resultBuilder) {
         boolean notFirstLine = false;
         for (CSVRecord row : table) {
-            if (notFirstLine) checkRow(row, dataTypes, resultBuilder, table.getName());
+            if (notFirstLine) {
+                for (int i = 0; i < dataTypes.length; i++) {
+                    if (!okValue(row.get(i), dataTypes[i])) {
+                        resultBuilder.addMessage(Manager.locale().badDatatype(table.getName(), Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
+                    }
+                }
+            }
             notFirstLine = true;
-        }
-    }
-
-    private void checkRow(CSVRecord row, JsonNode[] dataTypes, Result.Builder resultBuilder, String tableName) {
-        for (int i = 0; i < dataTypes.length; i++) {
-            if (!okValue(row.get(i), dataTypes[i])) resultBuilder.addMessage(Manager.locale().badDatatype(tableName, Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
         }
     }
 

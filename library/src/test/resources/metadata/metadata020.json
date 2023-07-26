@@ -14,7 +14,7 @@
       "titles": "B",
       "datatype": {
         "base": "integer",
-        "minimum": "3"
+        "minimum": 3
       }
     }, {
       "name": "c",
