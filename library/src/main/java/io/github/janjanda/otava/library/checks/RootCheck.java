@@ -10,7 +10,7 @@ import io.github.janjanda.otava.library.exceptions.CheckCreationException;
  */
 public final class RootCheck extends Check {
     public RootCheck(CheckFactory f) throws CheckCreationException {
-        super(f.getTables(), f.getDescriptors(), f.getInstance(RequiredColumnsCheck.class), f.getInstance(PrimaryKeyCheck.class), f.getInstance(DataTypesCheck.class));
+        super(f.getTables(), f.getDescriptors(), f.getInstance(RequiredColumnsCheck.class), f.getInstance(DataTypesCheck.class), f.getInstance(ForeignKeyCheck.class));
     }
 
     @Override

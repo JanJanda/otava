@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This class checks the defined primary keys of the tables. The values of the primary key must be unique.
+ * This class checks the defined primary keys of the tables. Values of a primary key must be unique.
  */
 public final class PrimaryKeyCheck extends Check {
     public PrimaryKeyCheck(CheckFactory f) throws CheckCreationException {
