@@ -100,4 +100,14 @@ public final class EnglishLocale implements Locale {
     public String badRowSize(String tableName, String row) {
         return "Row " + row + " in the table " + tableName + " has incorrect number of cells.";
     }
+
+    @Override
+    public String badColRefInFKey(String tableUrl) {
+        return "Incorrect value in column reference in foreign key in the table with URL " + tableUrl;
+    }
+
+    @Override
+    public String missingFKeyTitles(String name, String tableUrl) {
+        return "Cannot find titles for foreign key reference column with name " + name + " for the table with URL " + tableUrl;
+    }
 }

@@ -13,6 +13,6 @@ class ManagerTests {
         String[] descriptors = {"src/test/resources/metadata/metadata001.json"};
         String[] descAlias = {"https://example.org/metadata001.json"};
         Set<Result> results = m.manualLocalValidation(tables, tableAlias, descriptors, descAlias);
-        assertEquals(9, results.size());
+        assertEquals(10, results.size());
     }
 }

@@ -100,4 +100,14 @@ public final class CzechLocale implements Locale {
     public String badRowSize(String tableName, String row) {
         return "Řádek " + row + " v tabulce " + tableName + " má chybný počet buněk.";
     }
+
+    @Override
+    public String badColRefInFKey(String tableUrl) {
+        return "Chybná hodnota v column reference v cizím klíči v tabulce s URL " + tableUrl;
+    }
+
+    @Override
+    public String missingFKeyTitles(String name, String tableUrl) {
+        return "Nelze najít názvy pro referencovaný sloupec cizího klíče se jménem " + name + " pro tabulku s URL " + tableUrl;
+    }
 }

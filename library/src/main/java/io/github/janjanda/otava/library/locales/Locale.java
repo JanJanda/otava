@@ -21,4 +21,6 @@ public interface Locale {
     String skipped();
     String badDatatype(String tableName, String row, String column);
     String badRowSize(String tableName, String row);
+    String badColRefInFKey(String tableUrl);
+    String missingFKeyTitles(String name, String tableUrl);
 }

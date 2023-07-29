@@ -3,6 +3,7 @@ package io.github.janjanda.otava.library.utils;
 import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.documents.DocsGroup;
 import io.github.janjanda.otava.library.documents.Table;
@@ -10,9 +11,7 @@ import io.github.janjanda.otava.library.exceptions.CheckRunException;
 import org.apache.commons.csv.CSVRecord;
 import io.github.janjanda.otava.library.Manager;
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public final class DescriptorUtils {
     private DescriptorUtils() {}
@@ -94,5 +93,43 @@ public final class DescriptorUtils {
             }
         }
         return columns;
+    }
+
+    public static String[] extractColumnReference(JsonNode columnReference, Result.Builder resultBuilder, String errorMessage) {
+        if (columnReference.isTextual()) return new String[]{columnReference.asText()};
+        if (columnReference.isArray()) {
+            Set<String> cols = new HashSet<>();
+            for (int i = 0; i < columnReference.size(); i++) {
+                if (columnReference.path(i).isTextual()) cols.add(columnReference.path(i).asText());
+                else resultBuilder.addMessage(errorMessage);
+            }
+            return cols.toArray(new String[0]);
+        }
+        resultBuilder.addMessage(errorMessage);
+        return new String[0];
+    }
+
+    public static JsonNode getTitlesForName(String name, JsonNode tableDescription) {
+        JsonNode cols = tableDescription.path("tableSchema").path("columns");
+        if (cols.isArray()) {
+            for (int i = 0; i < cols.size(); i++) {
+                JsonNode nameNode = cols.path(i).path("name");
+                JsonNode virtualNode = cols.path(i).path("virtual");
+                boolean validColumn = (!virtualNode.isBoolean() || !virtualNode.asBoolean()) && nameNode.isTextual() && nameNode.asText().equals(name);
+                if (validColumn) return cols.path(i).path("titles");
+            }
+        }
+        return MissingNode.getInstance();
+    }
+
+    public static List<Integer> findColumnsWithTitles(List<JsonNode> titleNodes, Table table, String caller) throws CheckRunException {
+        List<Integer> colIndices = new ArrayList<>();
+        CSVRecord firstLine = table.getFirstLine();
+        for (JsonNode titleNode : titleNodes) {
+            int index = findColumnWithTitle(firstLine, titleNode);
+            if (index == -1) throw new CheckRunException(Manager.locale().checkRunException(caller));
+            else colIndices.add(index);
+        }
+        return colIndices;
     }
 }
