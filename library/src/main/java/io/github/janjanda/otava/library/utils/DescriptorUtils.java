@@ -32,22 +32,40 @@ public final class DescriptorUtils {
         return tableNodes;
     }
 
-    public static JsonNode findTableDescription(Table table, DocsGroup<Descriptor> descriptors) throws MalformedURLException {
+    public static Pair<Descriptor, JsonNode> findTableDescriptorAndDescription(Table table, DocsGroup<Descriptor> descriptors) throws MalformedURLException {
         String tableName = table.getPreferredName();
         for (Descriptor desc : descriptors) {
             String baseUrl = getBaseUrl(desc);
             List<JsonNode> tableNodes = extractTables(desc);
             for (JsonNode tableNode : tableNodes) {
                 JsonNode urlNode = tableNode.path("url");
-                if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return tableNode;
+                if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return new Pair<>(desc, tableNode);
             }
         }
-        return MissingNode.getInstance();
+        return new Pair<>(null, MissingNode.getInstance());
+    }
+
+    public static Pair<Descriptor, JsonNode> findTableDescriptorAndDescriptionWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
+        try {
+            return findTableDescriptorAndDescription(table, descriptors);
+        }
+        catch (MalformedURLException e) {
+            throw new CheckRunException(Manager.locale().checkRunException(cause));
+        }
+    }
+
+    public static Descriptor findTableDescriptorWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
+        try {
+            return findTableDescriptorAndDescription(table, descriptors).first;
+        }
+        catch (MalformedURLException e) {
+            throw new CheckRunException(Manager.locale().checkRunException(cause));
+        }
     }
 
     public static JsonNode findTableDescriptionWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
         try {
-            return findTableDescription(table, descriptors);
+            return findTableDescriptorAndDescription(table, descriptors).second;
         }
         catch (MalformedURLException e) {
             throw new CheckRunException(Manager.locale().checkRunException(cause));

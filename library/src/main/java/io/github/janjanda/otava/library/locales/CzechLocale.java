@@ -110,4 +110,24 @@ public final class CzechLocale implements Locale {
     public String missingFKeyTitles(String name, String tableUrl) {
         return "Nelze najít názvy pro referencovaný sloupec cizího klíče se jménem " + name + " pro tabulku s URL " + tableUrl;
     }
+
+    @Override
+    public String badRefTableUrl(String url, String tableUrl) {
+        return "Nelze rezolvovat URL " + url + " v cizím klíči v tabulce s URL " + tableUrl;
+    }
+
+    @Override
+    public String missingFKeyTable(String tableUrl) {
+        return "Chybí referencovaná tabulka v cizím klíči v tabulce s URL " + tableUrl;
+    }
+
+    @Override
+    public String badNumOfFKeyCols(String tableUrl) {
+        return "Musí být stejný počet platných sloupců a referencovaných sloupců v cizím klíči v tabulce s URL " + tableUrl;
+    }
+
+    @Override
+    public String fKeyViolation(String tableUrl, String refTableUrl) {
+        return "Cizí klíč je porušen v tabulce " + tableUrl + " protože příslušné hodnoty chybí v referencované tabulce " + refTableUrl;
+    }
 }

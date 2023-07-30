@@ -53,12 +53,14 @@ public final class PrimaryKeyCheck extends Check {
         }
         String[] values = new String[columns.length];
         for (CSVRecord row : table) {
-            for (int i = 0; i < columns.length; i++) {
-                values[i] = row.get(columns[i]);
-            }
-            if (TableUtils.areValuesInColumns(table, values, columns, row.getRecordNumber())) {
-                resultBuilder.setFatal().addMessage(Manager.locale().invalidPrimKey(table.getName())).build();
-                return;
+            if (row.getRecordNumber() != 1) {
+                for (int i = 0; i < columns.length; i++) {
+                    values[i] = row.get(columns[i]);
+                }
+                if (TableUtils.areValuesInColumns(table, values, columns, row.getRecordNumber())) {
+                    resultBuilder.setFatal().addMessage(Manager.locale().invalidPrimKey(table.getName())).build();
+                    return;
+                }
             }
         }
     }

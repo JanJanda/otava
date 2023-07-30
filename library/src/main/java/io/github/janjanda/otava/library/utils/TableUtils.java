@@ -7,7 +7,7 @@ public final class TableUtils {
     private TableUtils() {}
 
     /**
-     * Checks whether there are specified values in all specified columns of the table.
+     * Checks whether there are specified values in all specified columns of the table. Skips the first row.
      * @param values Specified values of individual cells.
      * @param columns The columns where the values should be. The value {@code values[i]} should be in the column {@code columns[i]}. Both arrays should have the same length. Column numbers are 0-based.
      * @param ignoreRow This row in the table is ignored during the search. Row number is 1-based.
@@ -15,7 +15,7 @@ public final class TableUtils {
      */
     public static boolean areValuesInColumns(Table table, String[] values, int[] columns, long ignoreRow) {
         for (CSVRecord record : table) {
-            if (record.getRecordNumber() != ignoreRow) {
+            if (record.getRecordNumber() != ignoreRow && record.getRecordNumber() != 1) {
                 boolean match = true;
                 for (int i = 0; i < columns.length; i++) {
                     if (!values[i].equals(record.get(columns[i]))) {

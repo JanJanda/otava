@@ -23,4 +23,8 @@ public interface Locale {
     String badRowSize(String tableName, String row);
     String badColRefInFKey(String tableUrl);
     String missingFKeyTitles(String name, String tableUrl);
+    String badRefTableUrl(String url, String tableUrl);
+    String missingFKeyTable(String tableUrl);
+    String badNumOfFKeyCols(String tableUrl);
+    String fKeyViolation(String tableUrl, String refTableUrl);
 }

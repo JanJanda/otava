@@ -110,4 +110,24 @@ public final class EnglishLocale implements Locale {
     public String missingFKeyTitles(String name, String tableUrl) {
         return "Cannot find titles for foreign key reference column with name " + name + " for the table with URL " + tableUrl;
     }
+
+    @Override
+    public String badRefTableUrl(String url, String tableUrl) {
+        return "Cannot resolve URL " + url + " in the foreign key in the table with URL " + tableUrl;
+    }
+
+    @Override
+    public String missingFKeyTable(String tableUrl) {
+        return "Missing resource table in the foreign key in the table with URL " + tableUrl;
+    }
+
+    @Override
+    public String badNumOfFKeyCols(String tableUrl) {
+        return "There must be the same number of valid columns and referenced columns in the foreign key in the table with URL " + tableUrl;
+    }
+
+    @Override
+    public String fKeyViolation(String tableUrl, String refTableUrl) {
+        return "Foreign key violated in the table " + tableUrl + " because values are missing in the referenced table " + refTableUrl;
+    }
 }
