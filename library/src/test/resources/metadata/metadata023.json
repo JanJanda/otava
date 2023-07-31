@@ -1,0 +1,13 @@
+{
+  "@context": "http://www.w3.org/ns/csvw",
+  "url": "reference.csv",
+  "tableSchema": {
+    "columns": [{
+      "name": "A"
+    }, {
+      "name": "B"
+    }, {
+      "name": "C"
+    }]
+  }
+}
