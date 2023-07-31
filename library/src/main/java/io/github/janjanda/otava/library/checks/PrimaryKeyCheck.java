@@ -26,23 +26,23 @@ public final class PrimaryKeyCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            List<JsonNode> titleNodes = findTitleNodes(table, resultBuilder);
-            List<Integer> pkColIndices = DescriptorUtils.findColumnsWithTitles(titleNodes, table, this.getClass().getName());
+            List<JsonNode> columnNodes = findColumnNodes(table, resultBuilder);
+            List<Integer> pkColIndices = DescriptorUtils.findColumnsWithDescriptions(columnNodes, table, this.getClass().getName());
             checkPrimKeyValues(table, pkColIndices, resultBuilder);
         }
         return resultBuilder.build();
     }
 
-    private List<JsonNode> findTitleNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {
+    private List<JsonNode> findColumnNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {
         JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
         String[] primaryKey = extractPrimaryKey(tableDescription, resultBuilder);
-        List<JsonNode> titleNodes = new ArrayList<>();
+        List<JsonNode> columnNodes = new ArrayList<>();
         for (String pkColumn : primaryKey) {
-            JsonNode titles = DescriptorUtils.getTitlesForName(pkColumn, tableDescription);
-            if (titles.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingPrimKeyTitles(pkColumn, tableDescription.path("url").asText()));
-            else titleNodes.add(titles);
+            JsonNode columnNode = DescriptorUtils.findColumnForName(pkColumn, tableDescription);
+            if (columnNode.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingPrimKeyTitles(pkColumn, tableDescription.path("url").asText()));
+            else columnNodes.add(columnNode);
         }
-        return titleNodes;
+        return columnNodes;
     }
 
     private void checkPrimKeyValues(Table table, List<Integer> pkColIndices, Result.Builder resultBuilder) {

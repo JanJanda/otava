@@ -107,8 +107,8 @@ public final class CzechLocale implements Locale {
     }
 
     @Override
-    public String missingFKeyTitles(String name, String tableUrl) {
-        return "Nelze najít názvy pro referencovaný sloupec cizího klíče se jménem " + name + " pro tabulku s URL " + tableUrl;
+    public String missingFKeyColDesc(String name, String tableUrl) {
+        return "Nelze najít popis pro referencovaný sloupec cizího klíče se jménem " + name + " pro tabulku s URL " + tableUrl;
     }
 
     @Override

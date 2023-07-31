@@ -22,7 +22,7 @@ public interface Locale {
     String badDatatype(String tableName, String row, String column);
     String badRowSize(String tableName, String row);
     String badColRefInFKey(String tableUrl);
-    String missingFKeyTitles(String name, String tableUrl);
+    String missingFKeyColDesc(String name, String tableUrl);
     String badRefTableUrl(String url, String tableUrl);
     String missingFKeyTable(String tableUrl);
     String badNumOfFKeyCols(String tableUrl);

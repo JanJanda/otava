@@ -7,7 +7,7 @@ import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.exceptions.CheckRunException;
-import io.github.janjanda.otava.library.utils.DescriptorUtils;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import org.apache.commons.csv.CSVRecord;
 import java.util.List;
 
@@ -25,13 +25,14 @@ public final class ColumnTitlesCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
-            List<JsonNode> descColumns = DescriptorUtils.extractNonVirtualColumns(tableDescription.path("tableSchema"));
+            JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
+            List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
             CSVRecord firstLine = table.getFirstLine();
             for (String tableColName : firstLine) {
                 int indexFound = -1;
                 for (int i = 0; i < descColumns.size(); i++) {
-                    if (DescriptorUtils.isStringInTitle(tableColName, descColumns.get(i).path("titles"))) indexFound = i;
+                    JsonNode colDesc = descColumns.get(i);
+                    if (isStringInName(tableColName, colDesc.path("name")) || isStringInTitle(tableColName, colDesc.path("titles"))) indexFound = i;
                 }
                 if (indexFound == -1) resultBuilder.addMessage(Manager.locale().missingColDesc(tableColName, table.getName()));
                 else descColumns.remove(indexFound);

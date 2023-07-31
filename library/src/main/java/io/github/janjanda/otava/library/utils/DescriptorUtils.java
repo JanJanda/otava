@@ -72,6 +72,10 @@ public final class DescriptorUtils {
         }
     }
 
+    public static boolean isStringInName(String value, JsonNode name) {
+        return name.isTextual() && name.asText().equals(value);
+    }
+
     public static boolean isStringInTitle(String value, JsonNode title) {
         if (title.isTextual() && title.asText().equals(value)) return true;
         if (title.isArray() && isStringInArray(value, title)) return true;
@@ -93,9 +97,10 @@ public final class DescriptorUtils {
         return false;
     }
 
-    public static int findColumnWithTitle(CSVRecord firstLine, JsonNode titles) {
+    public static int findColumnWithDescription(CSVRecord firstLine, JsonNode colDescription) {
         for (int i = 0; i < firstLine.size(); i++) {
-            if (isStringInTitle(firstLine.get(i), titles)) return i;
+            String colTitle = firstLine.get(i);
+            if (isStringInName(colTitle, colDescription.path("name")) || isStringInTitle(colTitle, colDescription.path("titles"))) return i;
         }
         return -1;
     }
@@ -127,24 +132,24 @@ public final class DescriptorUtils {
         return new String[0];
     }
 
-    public static JsonNode getTitlesForName(String name, JsonNode tableDescription) {
+    public static JsonNode findColumnForName(String name, JsonNode tableDescription) {
         JsonNode cols = tableDescription.path("tableSchema").path("columns");
         if (cols.isArray()) {
             for (int i = 0; i < cols.size(); i++) {
                 JsonNode nameNode = cols.path(i).path("name");
                 JsonNode virtualNode = cols.path(i).path("virtual");
                 boolean validColumn = (!virtualNode.isBoolean() || !virtualNode.asBoolean()) && nameNode.isTextual() && nameNode.asText().equals(name);
-                if (validColumn) return cols.path(i).path("titles");
+                if (validColumn) return cols.path(i);
             }
         }
         return MissingNode.getInstance();
     }
 
-    public static List<Integer> findColumnsWithTitles(List<JsonNode> titleNodes, Table table, String caller) throws CheckRunException {
+    public static List<Integer> findColumnsWithDescriptions(List<JsonNode> colsDescriptions, Table table, String caller) throws CheckRunException {
         List<Integer> colIndices = new ArrayList<>();
         CSVRecord firstLine = table.getFirstLine();
-        for (JsonNode titleNode : titleNodes) {
-            int index = findColumnWithTitle(firstLine, titleNode);
+        for (JsonNode colDesc : colsDescriptions) {
+            int index = findColumnWithDescription(firstLine, colDesc);
             if (index == -1) throw new CheckRunException(Manager.locale().checkRunException(caller));
             else colIndices.add(index);
         }

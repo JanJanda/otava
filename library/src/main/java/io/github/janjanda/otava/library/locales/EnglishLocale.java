@@ -107,8 +107,8 @@ public final class EnglishLocale implements Locale {
     }
 
     @Override
-    public String missingFKeyTitles(String name, String tableUrl) {
-        return "Cannot find titles for foreign key reference column with name " + name + " for the table with URL " + tableUrl;
+    public String missingFKeyColDesc(String name, String tableUrl) {
+        return "Cannot find description for foreign key reference column with name " + name + " for the table with URL " + tableUrl;
     }
 
     @Override

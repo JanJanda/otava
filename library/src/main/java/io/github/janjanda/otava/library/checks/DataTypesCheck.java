@@ -52,7 +52,7 @@ public final class DataTypesCheck extends Check {
         JsonNode[] dataTypes = new JsonNode[firstLine.size()];
         Arrays.fill(dataTypes, MissingNode.getInstance());
         for (JsonNode column : columns) {
-            int colIndex = DescriptorUtils.findColumnWithTitle(firstLine, column.path("titles"));
+            int colIndex = DescriptorUtils.findColumnWithDescription(firstLine, column);
             dataTypes[colIndex] = column.path("datatype");
         }
         return dataTypes;

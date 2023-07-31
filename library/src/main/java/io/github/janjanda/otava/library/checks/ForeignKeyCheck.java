@@ -36,13 +36,13 @@ public final class ForeignKeyCheck extends Check {
             JsonNode tableDescription = tableMeta.second;
             JsonNode[] foreignKeys = extractForeignKeys(tableDescription);
             for (JsonNode foreignKey : foreignKeys) {
-                List<JsonNode> fKeyTitles = findColumnTitles(foreignKey.path("columnReference"), tableDescription, resultBuilder);
-                List<Integer> fKeyColIndices = DescriptorUtils.findColumnsWithTitles(fKeyTitles, table, this.getClass().getName());
+                List<JsonNode> fKeyCols = findColumnDescriptions(foreignKey.path("columnReference"), tableDescription, resultBuilder);
+                List<Integer> fKeyColIndices = DescriptorUtils.findColumnsWithDescriptions(fKeyCols, table, this.getClass().getName());
                 Table referencedTable = findReferencedTable(foreignKey, tableDescriptor, tableDescription.path("url").asText(), resultBuilder);
                 if (referencedTable != null) {
                     JsonNode refTableDescription = DescriptorUtils.findTableDescriptionWithExc(referencedTable, descriptors, this.getClass().getName());
-                    List<JsonNode> refTableTitles = findColumnTitles(foreignKey.path("reference").path("columnReference"), refTableDescription, resultBuilder);
-                    List<Integer> refTableColIndices = DescriptorUtils.findColumnsWithTitles(refTableTitles, referencedTable, this.getClass().getName());
+                    List<JsonNode> refTableCols = findColumnDescriptions(foreignKey.path("reference").path("columnReference"), refTableDescription, resultBuilder);
+                    List<Integer> refTableColIndices = DescriptorUtils.findColumnsWithDescriptions(refTableCols, referencedTable, this.getClass().getName());
                     checkForeignKey(table, fKeyColIndices, referencedTable, refTableColIndices, resultBuilder, tableDescription.path("url").asText());
                 }
             }
@@ -60,15 +60,15 @@ public final class ForeignKeyCheck extends Check {
         return extracted;
     }
 
-    private List<JsonNode> findColumnTitles(JsonNode columnReference, JsonNode tableDescription, Result.Builder resultBuilder) {
+    private List<JsonNode> findColumnDescriptions(JsonNode columnReference, JsonNode tableDescription, Result.Builder resultBuilder) {
         String[] referencedCols = DescriptorUtils.extractColumnReference(columnReference, resultBuilder, Manager.locale().badColRefInFKey(tableDescription.path("url").asText()));
-        List<JsonNode> titleNodes = new ArrayList<>();
+        List<JsonNode> columnNodes = new ArrayList<>();
         for (String name : referencedCols) {
-            JsonNode titles = DescriptorUtils.getTitlesForName(name, tableDescription);
-            if (titles.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingFKeyTitles(name, tableDescription.path("url").asText()));
-            else titleNodes.add(titles);
+            JsonNode column = DescriptorUtils.findColumnForName(name, tableDescription);
+            if (column.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingFKeyColDesc(name, tableDescription.path("url").asText()));
+            else columnNodes.add(column);
         }
-        return titleNodes;
+        return columnNodes;
     }
 
     private Table findReferencedTable(JsonNode foreignKey, Descriptor descriptor, String tableUrl, Result.Builder resultBuilder) {
@@ -104,7 +104,7 @@ public final class ForeignKeyCheck extends Check {
                 for (int i = 0; i < values.length; i++) {
                     values[i] = row.get(columns.get(i));
                 }
-                if (TableUtils.areValuesInColumns(refTable, values, referenceCols, 1)) {
+                if (!TableUtils.areValuesInColumns(refTable, values, referenceCols, 1)) {
                     resultBuilder.addMessage(Manager.locale().fKeyViolation(tableUrl, refTable.getPreferredName()));
                     return;
                 }

@@ -27,7 +27,7 @@ public final class RequiredColumnsCheck extends Check {
         for (Table table : tables) {
             JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> reqCols = findRequiredColumns(tableDescription);
-            List<Integer> reqColIndices = getReqColIndices(table, reqCols);
+            List<Integer> reqColIndices = DescriptorUtils.findColumnsWithDescriptions(reqCols, table, this.getClass().getName());
             boolean columnsOk = reqColsNotEmpty(table, reqColIndices);
             if (!columnsOk) resultBuilder.setFatal().addMessage(Manager.locale().emptyRequiredColumn(table.getName()));
         }
@@ -48,17 +48,6 @@ public final class RequiredColumnsCheck extends Check {
             }
         }
         return reqCols;
-    }
-
-    private List<Integer> getReqColIndices(Table table, List<JsonNode> reqCols) throws CheckRunException {
-        List<Integer> reqColInds = new ArrayList<>();
-        CSVRecord firstLine = table.getFirstLine();
-        for (JsonNode reqCol : reqCols) {
-            int colIndex = DescriptorUtils.findColumnWithTitle(firstLine, reqCol.path("titles"));
-            if (colIndex == -1) throw new CheckRunException(this.getClass().getName());
-            else reqColInds.add(colIndex);
-        }
-        return reqColInds;
     }
 
     private boolean reqColsNotEmpty(Table table, List<Integer> reqColIndices) {
