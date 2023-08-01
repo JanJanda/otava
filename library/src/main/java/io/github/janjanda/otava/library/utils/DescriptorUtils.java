@@ -3,15 +3,16 @@ package io.github.janjanda.otava.library.utils;
 import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
-import io.github.janjanda.otava.library.Result;
-import io.github.janjanda.otava.library.documents.Descriptor;
-import io.github.janjanda.otava.library.documents.DocsGroup;
-import io.github.janjanda.otava.library.documents.Table;
+import io.github.janjanda.otava.library.*;
+import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.CheckRunException;
 import org.apache.commons.csv.CSVRecord;
-import io.github.janjanda.otava.library.Manager;
 import java.net.MalformedURLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public final class DescriptorUtils {
     private DescriptorUtils() {}
@@ -132,7 +133,7 @@ public final class DescriptorUtils {
         return new String[0];
     }
 
-    public static JsonNode findColumnForName(String name, JsonNode tableDescription) {
+    public static JsonNode findNonVirtColumnForName(String name, JsonNode tableDescription) {
         JsonNode cols = tableDescription.path("tableSchema").path("columns");
         if (cols.isArray()) {
             for (int i = 0; i < cols.size(); i++) {

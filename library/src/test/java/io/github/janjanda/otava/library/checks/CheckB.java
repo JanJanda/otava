@@ -1,7 +1,6 @@
 package io.github.janjanda.otava.library.checks;
 
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.*;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 
 public class CheckB extends Check {

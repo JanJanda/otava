@@ -1,8 +1,6 @@
 package io.github.janjanda.otava.library.checks;
 
-import io.github.janjanda.otava.library.documents.Descriptor;
-import io.github.janjanda.otava.library.documents.DocsGroup;
-import io.github.janjanda.otava.library.documents.Table;
+import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.Result;
 import java.util.HashSet;

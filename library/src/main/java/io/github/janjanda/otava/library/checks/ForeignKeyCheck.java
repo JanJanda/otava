@@ -2,16 +2,13 @@ package io.github.janjanda.otava.library.checks;
 
 import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
-import io.github.janjanda.otava.library.documents.Descriptor;
-import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.exceptions.CheckRunException;
-import io.github.janjanda.otava.library.utils.DescriptorUtils;
+import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.*;
+import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.exceptions.*;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import io.github.janjanda.otava.library.utils.Pair;
-import io.github.janjanda.otava.library.utils.TableUtils;
+import static io.github.janjanda.otava.library.utils.TableUtils.*;
 import org.apache.commons.csv.CSVRecord;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -31,18 +28,18 @@ public final class ForeignKeyCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            Pair<Descriptor, JsonNode> tableMeta = DescriptorUtils.findTableDescriptorAndDescriptionWithExc(table, descriptors, this.getClass().getName());
+            Pair<Descriptor, JsonNode> tableMeta = findTableDescriptorAndDescriptionWithExc(table, descriptors, this.getClass().getName());
             Descriptor tableDescriptor = tableMeta.first;
             JsonNode tableDescription = tableMeta.second;
             JsonNode[] foreignKeys = extractForeignKeys(tableDescription);
             for (JsonNode foreignKey : foreignKeys) {
                 List<JsonNode> fKeyCols = findColumnDescriptions(foreignKey.path("columnReference"), tableDescription, resultBuilder);
-                List<Integer> fKeyColIndices = DescriptorUtils.findColumnsWithDescriptions(fKeyCols, table, this.getClass().getName());
+                List<Integer> fKeyColIndices = findColumnsWithDescriptions(fKeyCols, table, this.getClass().getName());
                 Table referencedTable = findReferencedTable(foreignKey, tableDescriptor, tableDescription.path("url").asText(), resultBuilder);
                 if (referencedTable != null) {
-                    JsonNode refTableDescription = DescriptorUtils.findTableDescriptionWithExc(referencedTable, descriptors, this.getClass().getName());
+                    JsonNode refTableDescription = findTableDescriptionWithExc(referencedTable, descriptors, this.getClass().getName());
                     List<JsonNode> refTableCols = findColumnDescriptions(foreignKey.path("reference").path("columnReference"), refTableDescription, resultBuilder);
-                    List<Integer> refTableColIndices = DescriptorUtils.findColumnsWithDescriptions(refTableCols, referencedTable, this.getClass().getName());
+                    List<Integer> refTableColIndices = findColumnsWithDescriptions(refTableCols, referencedTable, this.getClass().getName());
                     checkForeignKey(table, fKeyColIndices, referencedTable, refTableColIndices, resultBuilder, tableDescription.path("url").asText());
                 }
             }
@@ -61,11 +58,11 @@ public final class ForeignKeyCheck extends Check {
     }
 
     private List<JsonNode> findColumnDescriptions(JsonNode columnReference, JsonNode tableDescription, Result.Builder resultBuilder) {
-        String[] referencedCols = DescriptorUtils.extractColumnReference(columnReference, resultBuilder, Manager.locale().badColRefInFKey(tableDescription.path("url").asText()));
+        String[] referencedCols = extractColumnReference(columnReference, resultBuilder, locale().badColRefInFKey(tableDescription.path("url").asText()));
         List<JsonNode> columnNodes = new ArrayList<>();
         for (String name : referencedCols) {
-            JsonNode column = DescriptorUtils.findColumnForName(name, tableDescription);
-            if (column.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingFKeyColDesc(name, tableDescription.path("url").asText()));
+            JsonNode column = findNonVirtColumnForName(name, tableDescription);
+            if (column.isMissingNode()) resultBuilder.addMessage(locale().missingFKeyColDesc(name, tableDescription.path("url").asText()));
             else columnNodes.add(column);
         }
         return columnNodes;
@@ -81,17 +78,17 @@ public final class ForeignKeyCheck extends Check {
                     if (refTableUrl.equals(table.getPreferredName())) return table;
                 }
             } catch (MalformedURLException e) {
-                resultBuilder.addMessage(Manager.locale().badRefTableUrl(resourceTextual, tableUrl));
+                resultBuilder.addMessage(locale().badRefTableUrl(resourceTextual, tableUrl));
                 return null;
             }
         }
-        resultBuilder.addMessage(Manager.locale().missingFKeyTable(tableUrl));
+        resultBuilder.addMessage(locale().missingFKeyTable(tableUrl));
         return null;
     }
 
     private void checkForeignKey(Table table, List<Integer> columns, Table refTable, List<Integer> refCols, Result.Builder resultBuilder, String tableUrl) {
         if (columns.size() != refCols.size()) {
-            resultBuilder.addMessage(Manager.locale().badNumOfFKeyCols(tableUrl));
+            resultBuilder.addMessage(locale().badNumOfFKeyCols(tableUrl));
             return;
         }
         int[] referenceCols = new int[refCols.size()];
@@ -104,8 +101,8 @@ public final class ForeignKeyCheck extends Check {
                 for (int i = 0; i < values.length; i++) {
                     values[i] = row.get(columns.get(i));
                 }
-                if (!TableUtils.areValuesInColumns(refTable, values, referenceCols, 1)) {
-                    resultBuilder.addMessage(Manager.locale().fKeyViolation(tableUrl, refTable.getPreferredName()));
+                if (!areValuesInColumns(refTable, values, referenceCols, 1)) {
+                    resultBuilder.addMessage(locale().fKeyViolation(tableUrl, refTable.getPreferredName()));
                     return;
                 }
             }

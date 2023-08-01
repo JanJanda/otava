@@ -1,14 +1,12 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.*;
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.exceptions.CheckRunException;
-import io.github.janjanda.otava.library.utils.DescriptorUtils;
-import io.github.janjanda.otava.library.utils.TableUtils;
+import io.github.janjanda.otava.library.exceptions.*;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
+import static io.github.janjanda.otava.library.utils.TableUtils.*;
 import org.apache.commons.csv.CSVRecord;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,19 +25,19 @@ public final class PrimaryKeyCheck extends Check {
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
             List<JsonNode> columnNodes = findColumnNodes(table, resultBuilder);
-            List<Integer> pkColIndices = DescriptorUtils.findColumnsWithDescriptions(columnNodes, table, this.getClass().getName());
+            List<Integer> pkColIndices = findColumnsWithDescriptions(columnNodes, table, this.getClass().getName());
             checkPrimKeyValues(table, pkColIndices, resultBuilder);
         }
         return resultBuilder.build();
     }
 
     private List<JsonNode> findColumnNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {
-        JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
+        JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
         String[] primaryKey = extractPrimaryKey(tableDescription, resultBuilder);
         List<JsonNode> columnNodes = new ArrayList<>();
         for (String pkColumn : primaryKey) {
-            JsonNode columnNode = DescriptorUtils.findColumnForName(pkColumn, tableDescription);
-            if (columnNode.isMissingNode()) resultBuilder.addMessage(Manager.locale().missingPrimKeyTitles(pkColumn, tableDescription.path("url").asText()));
+            JsonNode columnNode = findNonVirtColumnForName(pkColumn, tableDescription);
+            if (columnNode.isMissingNode()) resultBuilder.addMessage(locale().missingPrimKeyTitles(pkColumn, tableDescription.path("url").asText()));
             else columnNodes.add(columnNode);
         }
         return columnNodes;
@@ -57,8 +55,8 @@ public final class PrimaryKeyCheck extends Check {
                 for (int i = 0; i < columns.length; i++) {
                     values[i] = row.get(columns[i]);
                 }
-                if (TableUtils.areValuesInColumns(table, values, columns, row.getRecordNumber())) {
-                    resultBuilder.setFatal().addMessage(Manager.locale().invalidPrimKey(table.getName())).build();
+                if (areValuesInColumns(table, values, columns, row.getRecordNumber())) {
+                    resultBuilder.setFatal().addMessage(locale().invalidPrimKey(table.getName())).build();
                     return;
                 }
             }
@@ -68,6 +66,6 @@ public final class PrimaryKeyCheck extends Check {
     private String[] extractPrimaryKey(JsonNode tableDescription, Result.Builder resultBuilder) {
         JsonNode primaryKey = tableDescription.path("tableSchema").path("primaryKey");
         if (primaryKey.isMissingNode()) return new String[0];
-        return DescriptorUtils.extractColumnReference(primaryKey, resultBuilder, Manager.locale().badValueInPrimKey(tableDescription.path("url").asText()));
+        return extractColumnReference(primaryKey, resultBuilder, locale().badValueInPrimKey(tableDescription.path("url").asText()));
     }
 }

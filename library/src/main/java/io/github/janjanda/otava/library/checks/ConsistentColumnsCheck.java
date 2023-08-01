@@ -1,8 +1,7 @@
 package io.github.janjanda.otava.library.checks;
 
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.*;
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import org.apache.commons.csv.CSVRecord;
@@ -23,11 +22,11 @@ public final class ConsistentColumnsCheck extends Check {
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
             CSVRecord firstLine = table.getFirstLine();
-            if (firstLine == null) resultBuilder.setFatal().addMessage(Manager.locale().emptyTable(table.getName()));
+            if (firstLine == null) resultBuilder.setFatal().addMessage(locale().emptyTable(table.getName()));
             else {
                 int numberOfCols = firstLine.size();
                 for (CSVRecord row : table) {
-                    if (row.size() != numberOfCols) resultBuilder.setFatal().addMessage(Manager.locale().badRowSize(table.getName(), Long.toString(row.getRecordNumber())));
+                    if (row.size() != numberOfCols) resultBuilder.setFatal().addMessage(locale().badRowSize(table.getName(), Long.toString(row.getRecordNumber())));
                 }
             }
         }

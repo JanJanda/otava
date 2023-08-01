@@ -1,12 +1,10 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.*;
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.exceptions.CheckRunException;
+import io.github.janjanda.otava.library.exceptions.*;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import org.apache.commons.csv.CSVRecord;
 import java.util.List;
@@ -34,11 +32,11 @@ public final class ColumnTitlesCheck extends Check {
                     JsonNode colDesc = descColumns.get(i);
                     if (isStringInName(tableColName, colDesc.path("name")) || isStringInTitle(tableColName, colDesc.path("titles"))) indexFound = i;
                 }
-                if (indexFound == -1) resultBuilder.addMessage(Manager.locale().missingColDesc(tableColName, table.getName()));
+                if (indexFound == -1) resultBuilder.addMessage(locale().missingColDesc(tableColName, table.getName()));
                 else descColumns.remove(indexFound);
             }
             for (JsonNode missedCol : descColumns) {
-                resultBuilder.setFatal().addMessage(Manager.locale().missingCol(missedCol.path("name").asText(), tableDescription.path("url").asText()));
+                resultBuilder.setFatal().addMessage(locale().missingCol(missedCol.path("name").asText(), tableDescription.path("url").asText()));
             }
         }
         return resultBuilder.build();

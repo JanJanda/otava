@@ -2,11 +2,8 @@ package io.github.janjanda.otava.library.checks;
 
 import static io.github.janjanda.otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
-import io.github.janjanda.otava.library.Result;
-import io.github.janjanda.otava.library.SingletonCheckFactory;
-import io.github.janjanda.otava.library.documents.Descriptor;
-import io.github.janjanda.otava.library.documents.DocsGroup;
-import io.github.janjanda.otava.library.documents.Table;
+import io.github.janjanda.otava.library.*;
+import io.github.janjanda.otava.library.documents.*;
 import org.junit.jupiter.api.Test;
 
 class ColumnTitlesCheckTests {
@@ -16,7 +13,10 @@ class ColumnTitlesCheckTests {
         Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
-        assertTrue(ctc.validate().isOk);
+        Result result = ctc.validate();
+        assertTrue(result.isOk);
+        assertFalse(result.isFatal);
+        assertFalse(result.isSkipped);
     }
 
     @Test

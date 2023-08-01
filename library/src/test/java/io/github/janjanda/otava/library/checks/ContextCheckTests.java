@@ -1,11 +1,8 @@
 package io.github.janjanda.otava.library.checks;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import io.github.janjanda.otava.library.SingletonCheckFactory;
-import io.github.janjanda.otava.library.TestUtils;
-import io.github.janjanda.otava.library.documents.Descriptor;
-import io.github.janjanda.otava.library.documents.DocsGroup;
-import io.github.janjanda.otava.library.documents.LocalDescriptor;
+import io.github.janjanda.otava.library.*;
+import io.github.janjanda.otava.library.documents.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 

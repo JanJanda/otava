@@ -2,13 +2,11 @@ package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.*;
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.exceptions.CheckRunException;
-import io.github.janjanda.otava.library.utils.DescriptorUtils;
+import io.github.janjanda.otava.library.exceptions.*;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import org.apache.commons.csv.CSVRecord;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -39,8 +37,8 @@ public final class DataTypesCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
-            JsonNode tableDescription = DescriptorUtils.findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
-            List<JsonNode> columns = DescriptorUtils.extractNonVirtualColumns(tableDescription.path("tableSchema"));
+            JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
+            List<JsonNode> columns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
             JsonNode[] dataTypes = extractAndSortDataTypes(columns, table);
             checkDataTypes(dataTypes, table, resultBuilder);
         }
@@ -52,7 +50,7 @@ public final class DataTypesCheck extends Check {
         JsonNode[] dataTypes = new JsonNode[firstLine.size()];
         Arrays.fill(dataTypes, MissingNode.getInstance());
         for (JsonNode column : columns) {
-            int colIndex = DescriptorUtils.findColumnWithDescription(firstLine, column);
+            int colIndex = findColumnWithDescription(firstLine, column);
             dataTypes[colIndex] = column.path("datatype");
         }
         return dataTypes;
@@ -64,7 +62,7 @@ public final class DataTypesCheck extends Check {
             if (notFirstLine) {
                 for (int i = 0; i < dataTypes.length; i++) {
                     if (!okValue(row.get(i), dataTypes[i])) {
-                        resultBuilder.addMessage(Manager.locale().badDatatype(table.getName(), Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
+                        resultBuilder.addMessage(locale().badDatatype(table.getName(), Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
                     }
                 }
             }

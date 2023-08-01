@@ -1,13 +1,9 @@
 package io.github.janjanda.otava.library;
 
 import io.github.janjanda.otava.library.checks.RootCheck;
-import io.github.janjanda.otava.library.documents.Descriptor;
-import io.github.janjanda.otava.library.documents.DocsGroup;
-import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.exceptions.ValidatorException;
-import io.github.janjanda.otava.library.locales.EnglishLocale;
-import io.github.janjanda.otava.library.locales.Locale;
+import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.exceptions.*;
+import io.github.janjanda.otava.library.locales.*;
 import java.util.Set;
 
 public final class Manager {

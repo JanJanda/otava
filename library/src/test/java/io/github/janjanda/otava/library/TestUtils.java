@@ -1,7 +1,6 @@
 package io.github.janjanda.otava.library;
 
-import io.github.janjanda.otava.library.documents.LocalDescriptor;
-import io.github.janjanda.otava.library.documents.LocalInMemoryTable;
+import io.github.janjanda.otava.library.documents.*;
 
 public final class TestUtils {
     private TestUtils() {}

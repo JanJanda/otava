@@ -1,8 +1,7 @@
 package io.github.janjanda.otava.library.checks;
 
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.*;
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import java.io.IOException;
@@ -23,7 +22,7 @@ public final class LineBreaksCheck extends Check {
     protected Result performValidation() throws ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         for (Table table : tables) {
-            if (lineBreaksWrong(table)) resultBuilder.addMessage(Manager.locale().badLineSeparators(table.getName()));
+            if (lineBreaksWrong(table)) resultBuilder.addMessage(locale().badLineSeparators(table.getName()));
         }
         return resultBuilder.build();
     }
@@ -41,7 +40,7 @@ public final class LineBreaksCheck extends Check {
             return false;
         }
         catch (IOException e) {
-            throw new ValidatorFileException(Manager.locale().ioException());
+            throw new ValidatorFileException(locale().ioException());
         }
     }
 }

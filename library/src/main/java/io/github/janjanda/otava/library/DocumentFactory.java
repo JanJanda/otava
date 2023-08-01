@@ -1,7 +1,6 @@
 package io.github.janjanda.otava.library;
 
-import io.github.janjanda.otava.library.documents.LocalDescriptor;
-import io.github.janjanda.otava.library.documents.LocalInMemoryTable;
+import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import org.apache.commons.csv.CSVFormat;
 

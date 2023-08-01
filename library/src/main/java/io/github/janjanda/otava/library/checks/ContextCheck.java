@@ -1,9 +1,8 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.CheckFactory;
-import io.github.janjanda.otava.library.Manager;
-import io.github.janjanda.otava.library.Result;
+import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.*;
 import io.github.janjanda.otava.library.documents.Descriptor;
 
 /**
@@ -19,7 +18,7 @@ public final class ContextCheck extends Check {
     protected Result performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         for (Descriptor descriptor : descriptors) {
-            if (!correctContext(descriptor)) resultBuilder.addMessage(Manager.locale().badContext(descriptor.getName())).setFatal();
+            if (!correctContext(descriptor)) resultBuilder.addMessage(locale().badContext(descriptor.getName())).setFatal();
         }
         return resultBuilder.build();
     }
