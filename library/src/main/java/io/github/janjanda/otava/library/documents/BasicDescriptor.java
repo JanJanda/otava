@@ -10,17 +10,15 @@ import java.io.InputStreamReader;
 public final class BasicDescriptor implements Descriptor {
     private final String fileName;
     private final String alias;
-    private final ReaderMaker readerMaker;
     private JsonNode root;
 
     public BasicDescriptor(String fileName, String alias, ReaderMaker readerMaker) throws ValidatorFileException {
         this.fileName = fileName;
         this.alias = alias;
-        this.readerMaker = readerMaker;
-        parseFile();
+        parseFile(readerMaker);
     }
 
-    private void parseFile() throws ValidatorFileException {
+    private void parseFile(ReaderMaker readerMaker) throws ValidatorFileException {
         try (InputStreamReader reader = readerMaker.makeReader(fileName)) {
             ObjectMapper om = new ObjectMapper();
             root = om.readTree(reader);

@@ -1,6 +1,7 @@
 package io.github.janjanda.otava.library.utils;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
@@ -12,7 +13,7 @@ public final class FileUtils {
 
     public static final Charset usedCharset = StandardCharsets.UTF_8;
 
-    public static InputStreamReader makeFileReader(String fileName) throws IOException {
+    public static InputStreamReader makeFileReader(String fileName) throws FileNotFoundException {
         return new InputStreamReader(new FileInputStream(fileName), usedCharset);
     }
 

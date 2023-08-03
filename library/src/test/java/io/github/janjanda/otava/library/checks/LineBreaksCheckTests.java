@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws Exception {
-        LocalInMemoryTable table = createTable(tableName, null);
+        InMemoryTable table = createTable(tableName, null);
         DocsGroup<Table> tables = new DocsGroup<>(new Table[]{table});
         SingletonCheckFactory scf = new SingletonCheckFactory(tables, null);
         return scf.getInstance(LineBreaksCheck.class);

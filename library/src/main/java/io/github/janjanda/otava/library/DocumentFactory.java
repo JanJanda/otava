@@ -6,13 +6,13 @@ import io.github.janjanda.otava.library.utils.FileUtils;
 import org.apache.commons.csv.CSVFormat;
 
 public final class DocumentFactory {
-    private final CSVFormat csvFormat= CSVFormat.Builder.create().setDelimiter(',').setQuote('"').setRecordSeparator('\n').setIgnoreEmptyLines(false).build();
+    private final CSVFormat csvFormat = CSVFormat.Builder.create().setDelimiter(',').setQuote('"').setRecordSeparator('\n').setIgnoreEmptyLines(false).build();
 
-    public LocalInMemoryTable getLocalTable(String path, String alias) throws ValidatorFileException {
-        return new LocalInMemoryTable(path, csvFormat, alias);
+    public InMemoryTable getLocalTable(String path, String alias) throws ValidatorFileException {
+        return new InMemoryTable(path, alias, csvFormat, FileUtils::makeFileReader);
     }
 
-    public BasicDescriptor getBasicDescriptor(String path, String alias) throws ValidatorFileException {
+    public BasicDescriptor getLocalDescriptor(String path, String alias) throws ValidatorFileException {
         return new BasicDescriptor(path, alias, FileUtils::makeFileReader);
     }
 }

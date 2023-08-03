@@ -4,10 +4,10 @@ import static io.github.janjanda.otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static io.github.janjanda.otava.library.utils.TableUtils.*;
 import org.junit.jupiter.api.Test;
-import io.github.janjanda.otava.library.documents.LocalInMemoryTable;
+import io.github.janjanda.otava.library.documents.InMemoryTable;
 
 class TableUtilsTests {
-    private LocalInMemoryTable makeTable() throws Exception {
+    private InMemoryTable makeTable() throws Exception {
         return createTable("table001.csv", null);
     }
 

@@ -1,6 +1,5 @@
 package io.github.janjanda.otava.library.documents;
 
-import static io.github.janjanda.otava.library.utils.FileUtils.*;
 import static io.github.janjanda.otava.library.Manager.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -11,19 +10,21 @@ import java.io.InputStreamReader;
 import java.util.Iterator;
 import java.util.List;
 
-public final class LocalInMemoryTable implements Table {
+public final class InMemoryTable implements Table {
     private final String fileName;
     private final String alias;
+    private final ReaderMaker readerMaker;
     private List<CSVRecord> csvRecords;
 
-    public LocalInMemoryTable(String fileName, CSVFormat csvFormat, String alias) throws ValidatorFileException {
+    public InMemoryTable(String fileName, String alias, CSVFormat csvFormat, ReaderMaker readerMaker) throws ValidatorFileException {
         this.fileName = fileName;
         this.alias = alias;
+        this.readerMaker = readerMaker;
         fillCells(csvFormat);
     }
 
     private void fillCells(CSVFormat csvFormat) throws ValidatorFileException {
-        try (InputStreamReader reader = makeFileReader(fileName);
+        try (InputStreamReader reader = readerMaker.makeReader(fileName);
              CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
             csvRecords = csvParser.getRecords();
         }
@@ -72,7 +73,7 @@ public final class LocalInMemoryTable implements Table {
     @Override
     public InputStreamReader getReader() throws ValidatorFileException {
         try {
-            return makeFileReader(fileName);
+            return readerMaker.makeReader(fileName);
         }
         catch (IOException e) {
             throw new ValidatorFileException(locale().ioException(fileName));

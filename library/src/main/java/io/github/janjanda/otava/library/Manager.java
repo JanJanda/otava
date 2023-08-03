@@ -37,7 +37,7 @@ public final class Manager {
         }
         Descriptor[] descriptors = new Descriptor[descriptorFileNames.length];
         for (int i = 0; i < descriptorFileNames.length; i++) {
-            descriptors[i] = documentFactory.getBasicDescriptor(descriptorFileNames[i], descriptorAliases[i]);
+            descriptors[i] = documentFactory.getLocalDescriptor(descriptorFileNames[i], descriptorAliases[i]);
         }
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descriptors));
         RootCheck rootCheck = scf.getInstance(RootCheck.class);
