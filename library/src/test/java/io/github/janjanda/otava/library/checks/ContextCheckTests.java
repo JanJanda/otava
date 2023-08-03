@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class ContextCheckTests {
     private ContextCheck createCheck(String descName) throws Exception {
-        LocalDescriptor ld = TestUtils.createDescriptor(descName, null);
-        DocsGroup<Descriptor> descs = new DocsGroup<>(new Descriptor[]{ld});
+        BasicDescriptor bd = TestUtils.createDescriptor(descName, null);
+        DocsGroup<Descriptor> descs = new DocsGroup<>(new Descriptor[]{bd});
         SingletonCheckFactory scf = new SingletonCheckFactory(null, descs);
         return scf.getInstance(ContextCheck.class);
     }

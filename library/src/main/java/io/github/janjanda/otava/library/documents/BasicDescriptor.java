@@ -1,35 +1,32 @@
 package io.github.janjanda.otava.library.documents;
 
-import static io.github.janjanda.otava.library.utils.FileUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.janjanda.otava.library.Manager;
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public final class LocalDescriptor implements Descriptor {
+public final class BasicDescriptor implements Descriptor {
     private final String fileName;
     private final String alias;
+    private final ReaderMaker readerMaker;
     private JsonNode root;
 
-    public LocalDescriptor(String fileName, String alias) throws ValidatorFileException {
+    public BasicDescriptor(String fileName, String alias, ReaderMaker readerMaker) throws ValidatorFileException {
         this.fileName = fileName;
         this.alias = alias;
+        this.readerMaker = readerMaker;
         parseFile();
     }
 
     private void parseFile() throws ValidatorFileException {
-        try (InputStreamReader reader = makeReader(fileName)) {
+        try (InputStreamReader reader = readerMaker.makeReader(fileName)) {
             ObjectMapper om = new ObjectMapper();
             root = om.readTree(reader);
         }
-        catch (FileNotFoundException e) {
-            throw new ValidatorFileException(Manager.locale().missingFile(fileName));
-        }
         catch (IOException e) {
-            throw new ValidatorFileException(Manager.locale().ioException());
+            throw new ValidatorFileException(locale().ioException(fileName));
         }
     }
 

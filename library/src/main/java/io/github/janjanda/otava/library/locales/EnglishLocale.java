@@ -7,13 +7,8 @@ public final class EnglishLocale implements Locale {
     }
 
     @Override
-    public String ioException() {
-        return "Error when reading file.";
-    }
-
-    @Override
-    public String missingFile(String fileName) {
-        return "File " + fileName + " is missing.";
+    public String ioException(String fileName) {
+        return "Error when reading the file " + fileName;
     }
 
     @Override

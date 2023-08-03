@@ -1,12 +1,11 @@
 package io.github.janjanda.otava.library.documents;
 
 import static io.github.janjanda.otava.library.utils.FileUtils.*;
-import io.github.janjanda.otava.library.Manager;
+import static io.github.janjanda.otava.library.Manager.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
@@ -24,15 +23,12 @@ public final class LocalInMemoryTable implements Table {
     }
 
     private void fillCells(CSVFormat csvFormat) throws ValidatorFileException {
-        try (InputStreamReader reader = makeReader(fileName);
+        try (InputStreamReader reader = makeFileReader(fileName);
              CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
             csvRecords = csvParser.getRecords();
         }
-        catch (FileNotFoundException e) {
-            throw new ValidatorFileException(Manager.locale().missingFile(fileName));
-        }
         catch (IOException e) {
-            throw new ValidatorFileException(Manager.locale().ioException());
+            throw new ValidatorFileException(locale().ioException(fileName));
         }
     }
 
@@ -76,10 +72,10 @@ public final class LocalInMemoryTable implements Table {
     @Override
     public InputStreamReader getReader() throws ValidatorFileException {
         try {
-            return makeReader(fileName);
+            return makeFileReader(fileName);
         }
-        catch (FileNotFoundException e) {
-            throw new ValidatorFileException(Manager.locale().missingFile(fileName));
+        catch (IOException e) {
+            throw new ValidatorFileException(locale().ioException(fileName));
         }
     }
 

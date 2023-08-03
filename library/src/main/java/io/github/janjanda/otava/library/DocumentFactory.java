@@ -2,6 +2,7 @@ package io.github.janjanda.otava.library;
 
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
+import io.github.janjanda.otava.library.utils.FileUtils;
 import org.apache.commons.csv.CSVFormat;
 
 public final class DocumentFactory {
@@ -11,7 +12,7 @@ public final class DocumentFactory {
         return new LocalInMemoryTable(path, csvFormat, alias);
     }
 
-    public LocalDescriptor getLocalDescriptor(String path, String alias) throws ValidatorFileException {
-        return new LocalDescriptor(path, alias);
+    public BasicDescriptor getBasicDescriptor(String path, String alias) throws ValidatorFileException {
+        return new BasicDescriptor(path, alias, FileUtils::makeFileReader);
     }
 }

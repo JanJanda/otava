@@ -1,6 +1,7 @@
 package io.github.janjanda.otava.library.utils;
 
 import static io.github.janjanda.otava.library.utils.UrlUtils.*;
+import static io.github.janjanda.otava.library.Manager.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
 import io.github.janjanda.otava.library.*;
@@ -51,7 +52,7 @@ public final class DescriptorUtils {
             return findTableDescriptorAndDescription(table, descriptors);
         }
         catch (MalformedURLException e) {
-            throw new CheckRunException(Manager.locale().checkRunException(cause));
+            throw new CheckRunException(locale().checkRunException(cause));
         }
     }
 
@@ -60,7 +61,7 @@ public final class DescriptorUtils {
             return findTableDescriptorAndDescription(table, descriptors).first;
         }
         catch (MalformedURLException e) {
-            throw new CheckRunException(Manager.locale().checkRunException(cause));
+            throw new CheckRunException(locale().checkRunException(cause));
         }
     }
 
@@ -69,7 +70,7 @@ public final class DescriptorUtils {
             return findTableDescriptorAndDescription(table, descriptors).second;
         }
         catch (MalformedURLException e) {
-            throw new CheckRunException(Manager.locale().checkRunException(cause));
+            throw new CheckRunException(locale().checkRunException(cause));
         }
     }
 
@@ -151,7 +152,7 @@ public final class DescriptorUtils {
         CSVRecord firstLine = table.getFirstLine();
         for (JsonNode colDesc : colsDescriptions) {
             int index = findColumnWithDescription(firstLine, colDesc);
-            if (index == -1) throw new CheckRunException(Manager.locale().checkRunException(caller));
+            if (index == -1) throw new CheckRunException(locale().checkRunException(caller));
             else colIndices.add(index);
         }
         return colIndices;

@@ -1,5 +1,6 @@
 package io.github.janjanda.otava.library;
 
+import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.checks.Check;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
@@ -44,7 +45,7 @@ public final class SingletonCheckFactory implements CheckFactory {
             return check;
         }
         catch (ReflectiveOperationException e) {
-            throw new CheckCreationException(Manager.locale().checkCreationFail(type.getName()));
+            throw new CheckCreationException(locale().checkCreationFail(type.getName()));
         }
     }
 }

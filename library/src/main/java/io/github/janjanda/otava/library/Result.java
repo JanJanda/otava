@@ -1,5 +1,6 @@
 package io.github.janjanda.otava.library;
 
+import static io.github.janjanda.otava.library.Manager.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +25,8 @@ public final class Result {
         StringBuilder result = new StringBuilder();
         result.append(originCheck).append("\n");
         if (isOk) result.append("ok").append("\n");
-        if (isFatal) result.append(Manager.locale().fatal()).append("\n");
-        if (isSkipped) result.append(Manager.locale().skipped()).append("\n");
+        if (isFatal) result.append(locale().fatal()).append("\n");
+        if (isSkipped) result.append(locale().skipped()).append("\n");
         for (String message : messages) result.append(message).append("\n");
         return result.toString();
     }

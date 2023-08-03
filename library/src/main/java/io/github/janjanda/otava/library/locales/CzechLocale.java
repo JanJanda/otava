@@ -7,13 +7,8 @@ public final class CzechLocale implements Locale {
     }
 
     @Override
-    public String ioException() {
-        return "Chyba při čtení souboru.";
-    }
-
-    @Override
-    public String missingFile(String fileName) {
-        return "Chybí soubor " + fileName;
+    public String ioException(String fileName) {
+        return "Chyba při čtení souboru " + fileName;
     }
 
     @Override

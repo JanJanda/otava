@@ -40,7 +40,7 @@ public final class LineBreaksCheck extends Check {
             return false;
         }
         catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException());
+            throw new ValidatorFileException(locale().ioException(table.getName()));
         }
     }
 }

@@ -2,8 +2,7 @@ package io.github.janjanda.otava.library.locales;
 
 public interface Locale {
     String badLineSeparators(String tableName);
-    String ioException();
-    String missingFile(String fileName);
+    String ioException(String fileName);
     String checkCreationFail(String typeName);
     String badContext(String descriptorName);
     String missingDesc(String tableName);
