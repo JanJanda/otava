@@ -1,36 +1,25 @@
 package io.github.janjanda.otava.library.documents;
 
 import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
-import java.util.List;
 
-public final class InMemoryTable implements Table {
+public final class RemoteTable implements Table {
     private final String fileName;
     private final String alias;
+    private final CSVFormat csvFormat;
     private final ReaderMaker readerMaker;
-    private List<CSVRecord> csvRecords;
 
-    public InMemoryTable(String fileName, String alias, CSVFormat csvFormat, ReaderMaker readerMaker) throws ValidatorFileException {
+    public RemoteTable(String fileName, String alias, CSVFormat csvFormat, ReaderMaker readerMaker) {
         this.fileName = fileName;
         this.alias = alias;
+        this.csvFormat = csvFormat;
         this.readerMaker = readerMaker;
-        fillCells(csvFormat);
-    }
-
-    private void fillCells(CSVFormat csvFormat) throws ValidatorFileException {
-        try (InputStreamReader reader = readerMaker.makeReader(fileName);
-             CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
-            csvRecords = csvParser.getRecords();
-        }
-        catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException(fileName));
-        }
     }
 
     @Override
@@ -50,8 +39,15 @@ public final class InMemoryTable implements Table {
 
     @Override
     public CSVRecord getFirstLine() {
-        if (csvRecords.size() > 0) return csvRecords.get(0);
-        return null;
+        try (InputStreamReader reader = readerMaker.makeReader(fileName);
+             CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
+            Iterator<CSVRecord> i = csvParser.iterator();
+            if (i.hasNext()) return i.next();
+            return null;
+        }
+        catch (IOException e) {
+            return null;
+        }
     }
 
     @Override
@@ -66,6 +62,12 @@ public final class InMemoryTable implements Table {
 
     @Override
     public Iterator<CSVRecord> iterator() {
-        return csvRecords.stream().iterator();
+        try {
+            CSVParser csvParser = CSVParser.parse(readerMaker.makeReader(fileName), csvFormat);
+            return csvParser.iterator();
+        }
+        catch (IOException e) {
+            return null;
+        }
     }
 }

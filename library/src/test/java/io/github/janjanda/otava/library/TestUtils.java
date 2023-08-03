@@ -7,11 +7,11 @@ public final class TestUtils {
 
     public static InMemoryTable createTable(String name, String alias) throws Exception {
         DocumentFactory df = new DocumentFactory();
-        return df.getLocalTable("src/test/resources/tables/" + name, alias);
+        return df.makeLocalInMemoryTable("src/test/resources/tables/" + name, alias);
     }
 
     public static BasicDescriptor createDescriptor(String name, String alias) throws Exception {
         DocumentFactory df = new DocumentFactory();
-        return df.getLocalDescriptor("src/test/resources/metadata/" + name, alias);
+        return df.makeLocalDescriptor("src/test/resources/metadata/" + name, alias);
     }
 }

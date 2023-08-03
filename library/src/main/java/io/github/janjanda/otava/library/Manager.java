@@ -33,11 +33,11 @@ public final class Manager {
         DocumentFactory documentFactory = new DocumentFactory();
         Table[] tables = new Table[tableFileNames.length];
         for (int i = 0; i < tableFileNames.length; i++) {
-            tables[i] = documentFactory.getLocalTable(tableFileNames[i], tableAliases[i]);
+            tables[i] = documentFactory.makeLocalInMemoryTable(tableFileNames[i], tableAliases[i]);
         }
         Descriptor[] descriptors = new Descriptor[descriptorFileNames.length];
         for (int i = 0; i < descriptorFileNames.length; i++) {
-            descriptors[i] = documentFactory.getLocalDescriptor(descriptorFileNames[i], descriptorAliases[i]);
+            descriptors[i] = documentFactory.makeLocalDescriptor(descriptorFileNames[i], descriptorAliases[i]);
         }
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descriptors));
         RootCheck rootCheck = scf.getInstance(RootCheck.class);
