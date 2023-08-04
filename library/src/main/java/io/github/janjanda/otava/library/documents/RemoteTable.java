@@ -1,7 +1,7 @@
 package io.github.janjanda.otava.library.documents;
 
 import static io.github.janjanda.otava.library.Manager.*;
-import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
+import io.github.janjanda.otava.library.exceptions.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -38,7 +38,7 @@ public final class RemoteTable implements Table {
     }
 
     @Override
-    public CSVRecord getFirstLine() {
+    public CSVRecord getFirstLine() throws ValidatorFileException {
         try (InputStreamReader reader = readerMaker.makeReader(fileName);
              CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
             Iterator<CSVRecord> i = csvParser.iterator();
@@ -46,7 +46,7 @@ public final class RemoteTable implements Table {
             return null;
         }
         catch (IOException e) {
-            return null;
+            throw new ValidatorFileException(locale().ioException(fileName));
         }
     }
 
@@ -67,7 +67,7 @@ public final class RemoteTable implements Table {
             return csvParser.iterator();
         }
         catch (IOException e) {
-            return null;
+            throw new FileIteratorException(locale().ioException(fileName));
         }
     }
 }

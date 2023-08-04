@@ -4,6 +4,7 @@ import io.github.janjanda.otava.library.*;
 import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import org.apache.commons.csv.CSVRecord;
 
 /**
@@ -17,7 +18,7 @@ public final class ConsistentColumnsCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result performValidation() throws ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {

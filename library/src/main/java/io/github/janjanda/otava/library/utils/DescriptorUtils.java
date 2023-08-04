@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.MissingNode;
 import io.github.janjanda.otava.library.*;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.CheckRunException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import org.apache.commons.csv.CSVRecord;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -147,7 +148,7 @@ public final class DescriptorUtils {
         return MissingNode.getInstance();
     }
 
-    public static List<Integer> findColumnsWithDescriptions(List<JsonNode> colsDescriptions, Table table, String caller) throws CheckRunException {
+    public static List<Integer> findColumnsWithDescriptions(List<JsonNode> colsDescriptions, Table table, String caller) throws ValidatorFileException, CheckRunException {
         List<Integer> colIndices = new ArrayList<>();
         CSVRecord firstLine = table.getFirstLine();
         for (JsonNode colDesc : colsDescriptions) {

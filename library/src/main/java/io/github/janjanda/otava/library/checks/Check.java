@@ -1,7 +1,7 @@
 package io.github.janjanda.otava.library.checks;
 
 import io.github.janjanda.otava.library.documents.*;
-import io.github.janjanda.otava.library.exceptions.ValidatorException;
+import io.github.janjanda.otava.library.exceptions.*;
 import io.github.janjanda.otava.library.Result;
 import java.util.HashSet;
 import java.util.Set;
@@ -45,7 +45,12 @@ public abstract class Check {
     public final Result validate() throws ValidatorException {
         if (result != null) return result;
         for (Check pc : preChecks) pc.validate();
-        result = performValidation();
+        try {
+            result = performValidation();
+        }
+        catch (FileIteratorException e) {
+            throw new ValidatorFileException(e.getMessage());
+        }
         return result;
     }
 

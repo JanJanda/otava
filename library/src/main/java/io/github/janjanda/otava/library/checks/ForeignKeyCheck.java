@@ -24,7 +24,7 @@ public final class ForeignKeyCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException {
+    protected Result performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {

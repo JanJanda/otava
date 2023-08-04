@@ -33,7 +33,7 @@ public final class DataTypesCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException {
+    protected Result performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Table table : tables) {
@@ -45,7 +45,7 @@ public final class DataTypesCheck extends Check {
         return resultBuilder.build();
     }
 
-    private JsonNode[] extractAndSortDataTypes(List<JsonNode> columns, Table table) {
+    private JsonNode[] extractAndSortDataTypes(List<JsonNode> columns, Table table) throws ValidatorFileException {
         CSVRecord firstLine = table.getFirstLine();
         JsonNode[] dataTypes = new JsonNode[firstLine.size()];
         Arrays.fill(dataTypes, MissingNode.getInstance());
