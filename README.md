@@ -31,8 +31,8 @@ java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -t library/src/t
   - [x] Add unit tests
   - [x] Configure CI testing
   - [x] Create satisfactory set of validation checks
-  - [ ] ***Finish data model***
-  - [ ] Extend file discovery possibilities
+  - [x] Finish data model
+  - [ ] **Extend file discovery possibilities**
   - [ ] Create unified library interface
   - [ ] Inspect test coverage
   - [ ] Review code
