@@ -29,7 +29,7 @@ public class CliApp {
             }
             if (line.hasOption(tree)) {
                 Manager manager = new Manager();
-                System.out.println(manager.printCheckTree());
+                System.out.println(manager.printFullValidationTree());
                 return;
             }
             String[] tables = line.getOptionValues(tableNames);

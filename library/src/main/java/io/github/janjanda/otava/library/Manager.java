@@ -1,22 +1,27 @@
 package io.github.janjanda.otava.library;
 
-import io.github.janjanda.otava.library.checks.RootCheck;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.github.janjanda.otava.library.checks.FullRootCheck;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.*;
 import io.github.janjanda.otava.library.locales.*;
+import io.github.janjanda.otava.library.utils.DescriptorUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public final class Manager {
     private static Locale currentLocale = new EnglishLocale();
 
+    public static Locale locale() {
+        return currentLocale;
+    }
+
     public Manager() {}
 
     public Manager(Locale locale) {
         currentLocale = locale;
-    }
-
-    public static Locale locale() {
-        return currentLocale;
     }
 
     /**
@@ -40,14 +45,18 @@ public final class Manager {
             descriptors[i] = documentFactory.makeLocalDescriptor(descriptorFileNames[i], descriptorAliases[i]);
         }
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descriptors));
-        RootCheck rootCheck = scf.getInstance(RootCheck.class);
+        FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
         rootCheck.validate();
         return rootCheck.getAllResults();
     }
 
-    public String printCheckTree() throws CheckCreationException {
+    public Result[] fullValidation(ValidationSuite validationSuite) throws ValidatorException {
+        return null;
+    }
+
+    public String printFullValidationTree() throws CheckCreationException {
         SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
-        RootCheck rootCheck = scf.getInstance(RootCheck.class);
+        FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
         return rootCheck.printTree();
     }
 }
