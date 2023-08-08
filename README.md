@@ -33,7 +33,7 @@ java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -t library/src/t
   - [x] Create satisfactory set of validation checks
   - [x] Finish data model
   - [x] Extend file discovery possibilities
-  - [ ] **Create unified library interface**
+  - [x] Create unified library interface
   - [ ] Inspect test coverage
   - [ ] Review code
   - [ ] Add documentation
