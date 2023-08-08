@@ -4,73 +4,57 @@ import java.util.List;
 import java.util.ArrayList;
 
 public final class ValidationSuite {
-    private final Resource[] passiveTables;
-    private final Resource[] activeTables;
-    private final Resource[] passiveDescriptors;
-    private final Resource[] activeDescriptors;
+    private final TableResource[] passiveTables;
+    private final TableResource[] activeTables;
+    private final DescResource[] passiveDescriptors;
+    private final DescResource[] activeDescriptors;
 
     private ValidationSuite(Builder b) {
-        passiveTables = b.passiveTables.toArray(new Resource[0]);
-        activeTables = b.activeTables.toArray(new Resource[0]);
-        passiveDescriptors = b.passiveDescriptors.toArray(new Resource[0]);
-        activeDescriptors = b.activeDescriptors.toArray(new Resource[0]);
+        passiveTables = b.passiveTables.toArray(new TableResource[0]);
+        activeTables = b.activeTables.toArray(new TableResource[0]);
+        passiveDescriptors = b.passiveDescriptors.toArray(new DescResource[0]);
+        activeDescriptors = b.activeDescriptors.toArray(new DescResource[0]);
     }
 
-    public int getPassiveTablesLength() {
-        return passiveTables.length;
+    public TableResource[] getPassiveTables() {
+        return passiveTables.clone();
     }
 
-    public Resource getPassiveTable(int index) {
-        return passiveTables[index];
+    public TableResource[] getActiveTables() {
+        return activeTables.clone();
     }
 
-    public int getActiveTablesLength() {
-        return activeTables.length;
+    public DescResource[] getPassiveDescriptors() {
+        return passiveDescriptors.clone();
     }
 
-    public Resource getActiveTable(int index) {
-        return activeTables[index];
-    }
-
-    public int getPassiveDescriptorsLength() {
-        return passiveDescriptors.length;
-    }
-
-    public Resource getPassiveDescriptor(int index) {
-        return passiveDescriptors[index];
-    }
-
-    public int getActiveDescriptorsLength() {
-        return activeDescriptors.length;
-    }
-
-    public Resource getActiveDescriptor(int index) {
-        return activeDescriptors[index];
+    public DescResource[] getActiveDescriptors() {
+        return activeDescriptors.clone();
     }
 
     public static final class Builder {
-        private final List<Resource> passiveTables = new ArrayList<>();
-        private final List<Resource> activeTables = new ArrayList<>();
-        private final List<Resource> passiveDescriptors = new ArrayList<>();
-        private final List<Resource> activeDescriptors = new ArrayList<>();
+        private final List<TableResource> passiveTables = new ArrayList<>();
+        private final List<TableResource> activeTables = new ArrayList<>();
+        private final List<DescResource> passiveDescriptors = new ArrayList<>();
+        private final List<DescResource> activeDescriptors = new ArrayList<>();
 
         public Builder addPassiveTable(String name, String alias, boolean isLocal, boolean outOfMemory) {
-            passiveTables.add(new Resource(name, alias, isLocal, outOfMemory));
+            passiveTables.add(new TableResource(name, alias, isLocal, outOfMemory));
             return this;
         }
 
         public Builder addActiveTable(String name, String alias, boolean isLocal, boolean outOfMemory) {
-            activeTables.add(new Resource(name, alias, isLocal, outOfMemory));
+            activeTables.add(new TableResource(name, alias, isLocal, outOfMemory));
             return this;
         }
 
-        public Builder addPassiveDescriptor(String name, String alias, boolean isLocal, boolean outOfMemory) {
-            passiveDescriptors.add(new Resource(name, alias, isLocal, outOfMemory));
+        public Builder addPassiveDescriptor(String name, String alias, boolean isLocal) {
+            passiveDescriptors.add(new DescResource(name, alias, isLocal));
             return this;
         }
 
-        public Builder addActiveDescriptor(String name, String alias, boolean isLocal, boolean outOfMemory) {
-            activeDescriptors.add(new Resource(name, alias, isLocal, outOfMemory));
+        public Builder addActiveDescriptor(String name, String alias, boolean isLocal) {
+            activeDescriptors.add(new DescResource(name, alias, isLocal));
             return this;
         }
 
@@ -79,17 +63,7 @@ public final class ValidationSuite {
         }
     }
 
-    public static final class Resource {
-        public final String name;
-        public final String alias;
-        public final boolean isLocal;
-        public final boolean outOfMemory;
+    public record TableResource(String name, String alias, boolean isLocal, boolean outOfMemory) {}
 
-        public Resource(String name, String alias, boolean isLocal, boolean outOfMemory) {
-            this.name = name;
-            this.alias = alias;
-            this.isLocal = isLocal;
-            this.outOfMemory = outOfMemory;
-        }
-    }
+    public record DescResource(String name, String alias, boolean isLocal) {}
 }

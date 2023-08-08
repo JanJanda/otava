@@ -1,12 +1,14 @@
 package io.github.janjanda.otava.library;
 
+import static io.github.janjanda.otava.library.ValidationSuite.*;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
+import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.janjanda.otava.library.checks.FullRootCheck;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.*;
 import io.github.janjanda.otava.library.locales.*;
-import io.github.janjanda.otava.library.utils.DescriptorUtils;
-
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -14,12 +16,20 @@ import java.util.Set;
 public final class Manager {
     private static Locale currentLocale = new EnglishLocale();
 
+    /**
+     * Gets the value of the static variable with the current locale. The locale is in a static variable, and it affects the entire program.
+     * @return current locale
+     */
     public static Locale locale() {
         return currentLocale;
     }
 
     public Manager() {}
 
+    /**
+     * Creates an instance of the class and sets the locale. The locale is in a static variable, and it affects the entire program.
+     * @param locale an instance of a locale
+     */
     public Manager(Locale locale) {
         currentLocale = locale;
     }
@@ -33,6 +43,7 @@ public final class Manager {
      * @return Set of validation results. One result for each validation check.
      * @throws ValidatorException If the validation cannot be performed.
      */
+    @Deprecated
     public Set<Result> manualLocalValidation(String[] tableFileNames, String[] tableAliases,
                                               String[] descriptorFileNames, String[] descriptorAliases) throws ValidatorException {
         DocumentFactory documentFactory = new DocumentFactory();
@@ -50,10 +61,89 @@ public final class Manager {
         return rootCheck.getAllResults();
     }
 
+    /**
+     * Performs full validation with the provided validation suite.
+     * @param validationSuite specifications of validated files
+     * @return results of individual validation checks
+     * @throws ValidatorException If the validation cannot be performed.
+     */
     public Result[] fullValidation(ValidationSuite validationSuite) throws ValidatorException {
-        return null;
+        DocumentFactory df = new DocumentFactory();
+        List<Table> tables = createTables(validationSuite.getActiveTables(), df);
+        List<Descriptor> descriptors = createDescriptors(validationSuite.getActiveDescriptors(), df);
+        DescResource[] descResources = createDescResources(tables);
+        TableResource[] tableResources = createTableResources(descriptors);
+        tables.addAll(createTables(tableResources, df));
+        descriptors.addAll(createDescriptors(descResources, df));
+        tables.addAll(createTables(validationSuite.getPassiveTables(), df));
+        descriptors.addAll(createDescriptors(validationSuite.getPassiveDescriptors(), df));
+        DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
+        DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
+        SingletonCheckFactory scf = new SingletonCheckFactory(tableGroup, descGroup);
+        FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
+        rootCheck.validate();
+        Set<Result> results = rootCheck.getAllResults();
+        return results.toArray(new Result[0]);
     }
 
+    private List<Table> createTables(TableResource[] specs, DocumentFactory df) throws ValidatorFileException {
+        List<Table> tables = new ArrayList<>();
+        for (TableResource spec : specs) {
+            if (spec.isLocal()) {
+                if (spec.outOfMemory()) tables.add(df.makeLocalRemoteTable(spec.name(), spec.alias()));
+                else tables.add(df.makeLocalInMemoryTable(spec.name(), spec.alias()));
+            }
+            else {
+                if (spec.outOfMemory()) tables.add(df.makeOnlineRemoteTable(spec.name(), spec.alias()));
+                else tables.add(df.makeOnlineInMemoryTable(spec.name(), spec.alias()));
+            }
+        }
+        return tables;
+    }
+
+    private List<Descriptor> createDescriptors(DescResource[] specs, DocumentFactory df) throws ValidatorFileException {
+        List<Descriptor> descriptors = new ArrayList<>();
+        for (DescResource spec : specs) {
+            if (spec.isLocal()) descriptors.add(df.makeLocalDescriptor(spec.name(), spec.alias()));
+            else descriptors.add(df.makeOnlineDescriptor(spec.name(), spec.alias()));
+        }
+        return descriptors;
+    }
+
+    private DescResource[] createDescResources(List<Table> activeTables) {
+        List<DescResource> resources = new ArrayList<>();
+        for (Table activeTable : activeTables) {
+            resources.add(new DescResource(activeTable.getPreferredName() + "-metadata.json", null, false));
+        }
+        return resources.toArray(new DescResource[0]);
+    }
+
+    private TableResource[] createTableResources(List<Descriptor> activeDescs) throws ValidatorFileException {
+        List<TableResource> resources = new ArrayList<>();
+        for (Descriptor activeDesc : activeDescs) {
+            String baseUrl = getBaseUrl(activeDesc);
+            List<JsonNode> extractedTables = extractTables(activeDesc);
+            for (JsonNode extractedTable : extractedTables) {
+                JsonNode urlNode = extractedTable.path("url");
+                if (urlNode.isTextual()) {
+                    try {
+                        String url = resolveUrl(baseUrl, urlNode.asText());
+                        resources.add(new TableResource(url, null, false, true));
+                    }
+                    catch (MalformedURLException e) {
+                        throw new ValidatorFileException(locale().malformedUrl(urlNode.asText(), baseUrl, activeDesc.getName()));
+                    }
+                }
+            }
+        }
+        return resources.toArray(new TableResource[0]);
+    }
+
+    /**
+     * Creates a string that graphically shows the dependencies in the full validation tree;
+     * @return graphical representation of the tree
+     * @throws CheckCreationException If the full validation tree cannot be created.
+     */
     public String printFullValidationTree() throws CheckCreationException {
         SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
         FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
