@@ -3,11 +3,11 @@ package io.github.janjanda.otava.library;
 import static io.github.janjanda.otava.library.ValidationSuite.*;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import static io.github.janjanda.otava.library.utils.UrlUtils.*;
-import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.checks.FullRootCheck;
+import io.github.janjanda.otava.library.checks.*;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.*;
 import io.github.janjanda.otava.library.locales.*;
+import com.fasterxml.jackson.databind.JsonNode;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +59,40 @@ public final class Manager {
         FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
         rootCheck.validate();
         return rootCheck.getAllResults();
+    }
+
+    /**
+     * Validates only tables without descriptors. Only passive tables from the validation suite are validated.
+     * @param validationSuite specification of validated files, only passive tables are read
+     * @return results of individual validation checks
+     * @throws ValidatorException If the validation cannot be performed.
+     */
+    public Result[] tablesOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+        DocumentFactory df = new DocumentFactory();
+        List<Table> tables = createTables(validationSuite.getPassiveTables(), df);
+        DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
+        SingletonCheckFactory scf = new SingletonCheckFactory(tableGroup, null);
+        ConsistentColumnsCheck ccc = scf.getInstance(ConsistentColumnsCheck.class);
+        ccc.validate();
+        Set<Result> results = ccc.getAllResults();
+        return results.toArray(new Result[0]);
+    }
+
+    /**
+     * Validate only descriptors without tables. Only passive descriptors from the validation suite are validated.
+     * @param validationSuite specification of validate files, only passive descriptors are read
+     * @return results of individual validation checks
+     * @throws ValidatorException If the validation cannot be performed.
+     */
+    public Result[] descriptorsOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+        DocumentFactory df = new DocumentFactory();
+        List<Descriptor> descriptors = createDescriptors(validationSuite.getPassiveDescriptors(), df);
+        DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
+        SingletonCheckFactory scf = new SingletonCheckFactory(null, descGroup);
+        ContextCheck cc = scf.getInstance(ContextCheck.class);
+        cc.validate();
+        Set<Result> results = cc.getAllResults();
+        return results.toArray(new Result[0]);
     }
 
     /**

@@ -8,8 +8,8 @@ import java.net.URL;
 public final class UrlUtils {
     private UrlUtils() {}
 
-    public static String resolveUrl(String context, String spec) throws MalformedURLException {
-        return new URL(new URL(context), spec).toString();
+    public static String resolveUrl(String base, String spec) throws MalformedURLException {
+        return new URL(new URL(base), spec).toString();
     }
 
     public static String getBaseUrl(Descriptor desc) {
