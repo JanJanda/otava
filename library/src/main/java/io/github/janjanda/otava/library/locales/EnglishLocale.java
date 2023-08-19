@@ -48,7 +48,7 @@ public final class EnglishLocale implements Locale {
 
     @Override
     public String missingColDesc(String colName, String tableName) {
-        return "Column " + colName + " in table " + tableName + " does not have a description.";
+        return "Column " + colName + " in table " + tableName + " does not have any description.";
     }
 
     @Override

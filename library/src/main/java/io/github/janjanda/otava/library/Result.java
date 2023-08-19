@@ -1,10 +1,14 @@
 package io.github.janjanda.otava.library;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import static io.github.janjanda.otava.library.Manager.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class Result {
+public final class Result implements Outcome {
     public final boolean isFatal;
     public final boolean isOk;
     public final boolean isSkipped;
@@ -21,6 +25,7 @@ public final class Result {
         originCheck = b.origin;
     }
 
+    @Override
     public String asText() {
         StringBuilder result = new StringBuilder();
         result.append(originCheck).append("\n");
@@ -31,10 +36,26 @@ public final class Result {
         return result.toString();
     }
 
+    @Override
     public String asJson() {
-        return null;
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode root = objectMapper.createObjectNode()
+                .put("check", originCheck)
+                .put("fatal", isFatal)
+                .put("ok", isOk)
+                .put("skipped", isSkipped);
+        ArrayNode msgs = root.putArray("messages");
+        for (String msg : messages) {
+            msgs.add(msg);
+        }
+        try {
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
+        } catch (JsonProcessingException e) {
+            return "Cannot write the result as JSON.";
+        }
     }
 
+    @Override
     public String asTurtle() {
         return null;
     }
