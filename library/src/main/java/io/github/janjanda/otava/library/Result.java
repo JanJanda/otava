@@ -51,13 +51,22 @@ public final class Result implements Outcome {
         try {
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
         } catch (JsonProcessingException e) {
-            return "Cannot write the result as JSON.";
+            return "Cannot write a result as JSON.";
         }
     }
 
     @Override
     public String asTurtle() {
-        return null;
+        String label = "_:r" + random.nextInt(10000);
+        StringBuilder output = new StringBuilder();
+        output.append(label).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .");
+        output.append(label).append(" <").append(rdfPrefix).append("fatal> ").append(isFatal).append(" .");
+        output.append(label).append(" <").append(rdfPrefix).append("ok> ").append(isOk).append(" .");
+        output.append(label).append(" <").append(rdfPrefix).append("skipped> ").append(isSkipped).append(" .");
+        for (String msg : messages) {
+            output.append(label).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(locale().langTag()).append(" .");
+        }
+        return output.toString();
     }
 
     public static final class Builder {

@@ -2,6 +2,11 @@ package io.github.janjanda.otava.library.locales;
 
 public final class EnglishLocale implements Locale {
     @Override
+    public String langTag() {
+        return "en";
+    }
+
+    @Override
     public String badLineSeparators(String tableName) {
         return "Table " + tableName + " has incorrect line breaks.";
     }

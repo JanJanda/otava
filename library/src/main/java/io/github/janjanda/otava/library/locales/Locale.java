@@ -1,6 +1,7 @@
 package io.github.janjanda.otava.library.locales;
 
 public interface Locale {
+    String langTag();
     String badLineSeparators(String tableName);
     String ioException(String fileName);
     String checkCreationFail(String typeName);

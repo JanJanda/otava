@@ -11,9 +11,13 @@ import com.fasterxml.jackson.databind.JsonNode;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 public final class Manager {
+    public static final String rdfPrefix = "https://janjanda.github.io/otava/";
+    public static final Random random = new Random();
+
     private static Locale currentLocale = new EnglishLocale();
 
     /**
@@ -27,7 +31,7 @@ public final class Manager {
     public Manager() {}
 
     /**
-     * Creates an instance of the class and sets the locale. The locale is in a static variable, and it affects the entire program.
+     * Creates an instance of the class and sets the locale. The locale is in a static variable, and it affects the entire program. The locale must be set at most once.
      * @param locale an instance of a locale
      */
     public Manager(Locale locale) {

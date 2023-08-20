@@ -2,6 +2,11 @@ package io.github.janjanda.otava.library.locales;
 
 public final class CzechLocale implements Locale {
     @Override
+    public String langTag() {
+        return "cs";
+    }
+
+    @Override
     public String badLineSeparators(String tableName) {
         return "Tabulka " + tableName + " má špatné oddělovače řádků.";
     }
