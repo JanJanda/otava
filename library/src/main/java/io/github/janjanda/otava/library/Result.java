@@ -28,11 +28,11 @@ public final class Result implements Outcome {
     @Override
     public String asText() {
         StringBuilder result = new StringBuilder();
-        result.append(originCheck).append("\n");
-        if (isOk) result.append("ok").append("\n");
-        if (isFatal) result.append(locale().fatal()).append("\n");
-        if (isSkipped) result.append(locale().skipped()).append("\n");
-        for (String message : messages) result.append(message).append("\n");
+        result.append(originCheck).append(System.lineSeparator());
+        if (isOk) result.append("ok").append(System.lineSeparator());
+        if (isFatal) result.append(locale().fatal()).append(System.lineSeparator());
+        if (isSkipped) result.append(locale().skipped()).append(System.lineSeparator());
+        for (String message : messages) result.append(message).append(System.lineSeparator());
         return result.toString();
     }
 
@@ -59,12 +59,12 @@ public final class Result implements Outcome {
     public String asTurtle() {
         String label = "_:r" + random.nextInt(10000);
         StringBuilder output = new StringBuilder();
-        output.append(label).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .");
-        output.append(label).append(" <").append(rdfPrefix).append("fatal> ").append(isFatal).append(" .");
-        output.append(label).append(" <").append(rdfPrefix).append("ok> ").append(isOk).append(" .");
-        output.append(label).append(" <").append(rdfPrefix).append("skipped> ").append(isSkipped).append(" .");
+        output.append(label).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .").append(System.lineSeparator());
+        output.append(label).append(" <").append(rdfPrefix).append("fatal> ").append(isFatal).append(" .").append(System.lineSeparator());
+        output.append(label).append(" <").append(rdfPrefix).append("ok> ").append(isOk).append(" .").append(System.lineSeparator());
+        output.append(label).append(" <").append(rdfPrefix).append("skipped> ").append(isSkipped).append(" .").append(System.lineSeparator());
         for (String msg : messages) {
-            output.append(label).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(locale().langTag()).append(" .");
+            output.append(label).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(locale().langTag()).append(" .").append(System.lineSeparator());
         }
         return output.toString();
     }

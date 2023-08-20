@@ -69,7 +69,7 @@ public abstract class Check {
             turn = isLast ? "└──" : "├──";
             nextPadding += isLast ? "   " : "│  ";
         }
-        result.append(padding).append(turn).append(this.getClass().getSimpleName()).append("\n");
+        result.append(padding).append(turn).append(this.getClass().getSimpleName()).append(System.lineSeparator());
         for (int i = 0; i < preChecks.length; i++) {
             preChecks[i].printTreeRecursive(result, nextPadding, i == preChecks.length - 1, false);
         }
