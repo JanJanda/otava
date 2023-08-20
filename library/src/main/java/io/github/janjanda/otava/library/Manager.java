@@ -17,8 +17,8 @@ import java.util.Set;
 public final class Manager {
     public static final String rdfPrefix = "https://janjanda.github.io/otava/";
     public static final Random random = new Random();
-
     private static Locale currentLocale = new EnglishLocale();
+    private static boolean localeLocked = false;
 
     /**
      * Gets the value of the static variable with the current locale. The locale is in a static variable, and it affects the entire program.
@@ -28,14 +28,24 @@ public final class Manager {
         return currentLocale;
     }
 
-    public Manager() {}
+    /**
+     * Sets the locale of the library. This method must be called before an instance of this class is created, otherwise the locale is not set.
+     * @param locale the locale to set
+     * @return {@code true} if the locale was successfully set, {@code false} otherwise
+     */
+    public static boolean setLocale(Locale locale) {
+        if (!localeLocked) {
+            currentLocale = locale;
+            return true;
+        }
+        return false;
+    }
 
     /**
-     * Creates an instance of the class and sets the locale. The locale is in a static variable, and it affects the entire program. The locale must be set at most once.
-     * @param locale an instance of a locale
+     * Locale cannot be set after this constructor is called.
      */
-    public Manager(Locale locale) {
-        currentLocale = locale;
+    public Manager() {
+        localeLocked = true;
     }
 
     /**

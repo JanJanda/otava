@@ -45,9 +45,8 @@ public class CliApp {
             }
             String[] dAliases = initArrayStart(descriptors.length, line.getOptionValues(descriptorAliases));
             String lang = line.getOptionValue(language);
-            Manager m;
-            if (csTag.equals(lang)) m = new Manager(new CzechLocale());
-            else m = new Manager();
+            if (csTag.equals(lang)) Manager.setLocale(new CzechLocale());
+            Manager m = new Manager();
             Set<Result> results = m.manualLocalValidation(tables, tAliases, descriptors, dAliases);
             for (Result result : results) {
                 System.out.println(result.asText());
