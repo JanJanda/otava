@@ -29,7 +29,6 @@ public class ValidatorException extends Exception implements Outcome {
 
     @Override
     public String asTurtle() {
-        String label = "_:e" + random.nextInt(10000);
-        return label + " <" + rdfPrefix + "message> \"" + getMessage() + "\"@" + locale().langTag() + " ." + System.lineSeparator();
+        return "_:e" + random.nextInt(10000) + " <" + rdfPrefix + "message> \"" + getMessage() + "\"@" + locale().langTag() + " ." + System.lineSeparator();
     }
 }

@@ -24,7 +24,7 @@ public final class BasicDescriptor implements Descriptor {
             root = om.readTree(reader);
         }
         catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException(fileName));
+            throw new ValidatorFileException(locale().ioException(fileName) + System.lineSeparator() + e.getMessage());
         }
     }
 
