@@ -6,6 +6,8 @@ import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import io.github.janjanda.otava.library.checks.*;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.*;
+import io.github.janjanda.otava.library.factories.DocumentFactory;
+import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import io.github.janjanda.otava.library.locales.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import java.net.MalformedURLException;

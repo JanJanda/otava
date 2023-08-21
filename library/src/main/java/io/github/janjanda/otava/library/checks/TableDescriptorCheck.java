@@ -5,6 +5,8 @@ import io.github.janjanda.otava.library.*;
 import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.factories.CheckFactory;
+
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import java.net.MalformedURLException;

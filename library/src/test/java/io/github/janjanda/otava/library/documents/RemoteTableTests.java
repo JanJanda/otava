@@ -1,7 +1,7 @@
 package io.github.janjanda.otava.library.documents;
 
 import static org.junit.jupiter.api.Assertions.*;
-import io.github.janjanda.otava.library.DocumentFactory;
+import io.github.janjanda.otava.library.factories.DocumentFactory;
 import io.github.janjanda.otava.library.exceptions.*;
 import org.apache.commons.csv.CSVRecord;
 import org.junit.jupiter.api.Test;

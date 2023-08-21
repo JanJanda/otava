@@ -1,6 +1,7 @@
 package io.github.janjanda.otava.library;
 
 import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.factories.DocumentFactory;
 
 public final class TestUtils {
     private TestUtils() {}

@@ -7,6 +7,8 @@ import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.*;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 import static io.github.janjanda.otava.library.utils.TableUtils.*;
+
+import io.github.janjanda.otava.library.factories.CheckFactory;
 import org.apache.commons.csv.CSVRecord;
 import java.util.ArrayList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package io.github.janjanda.otava.library;
+package io.github.janjanda.otava.library.factories;
 
 import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;

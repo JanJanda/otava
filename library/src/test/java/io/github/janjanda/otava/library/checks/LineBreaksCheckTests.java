@@ -2,7 +2,7 @@ package io.github.janjanda.otava.library.checks;
 
 import static io.github.janjanda.otava.library.TestUtils.*;
 import static org.junit.jupiter.api.Assertions.*;
-import io.github.janjanda.otava.library.SingletonCheckFactory;
+import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import io.github.janjanda.otava.library.documents.*;
 import org.junit.jupiter.api.Test;
 

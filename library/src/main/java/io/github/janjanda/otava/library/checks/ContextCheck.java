@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.*;
 import io.github.janjanda.otava.library.documents.Descriptor;
+import io.github.janjanda.otava.library.factories.CheckFactory;
 
 /**
  * This class checks the @context fields of the metadata descriptors according to the corresponding W3C Recommendation.

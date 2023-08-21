@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import io.github.janjanda.otava.library.*;
 import static io.github.janjanda.otava.library.TestUtils.*;
 import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import org.junit.jupiter.api.Test;
 
 class RequiredColumnsCheckTests {

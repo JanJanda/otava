@@ -1,4 +1,4 @@
-package io.github.janjanda.otava.library;
+package io.github.janjanda.otava.library.factories;
 
 import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.*;

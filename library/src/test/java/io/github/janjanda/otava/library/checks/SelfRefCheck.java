@@ -2,6 +2,7 @@ package io.github.janjanda.otava.library.checks;
 
 import io.github.janjanda.otava.library.*;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.factories.CheckFactory;
 
 public class SelfRefCheck extends Check {
     public SelfRefCheck(CheckFactory f) throws CheckCreationException {

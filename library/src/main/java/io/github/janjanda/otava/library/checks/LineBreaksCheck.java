@@ -4,6 +4,8 @@ import io.github.janjanda.otava.library.*;
 import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
+import io.github.janjanda.otava.library.factories.CheckFactory;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 
