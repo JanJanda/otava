@@ -1,0 +1,2 @@
+test name,passive table,active table,passive descriptor,active descriptor,validation,result
+Test 001: Simple table,https://w3c.github.io/csvw/tests/test001.csv,,,,table,ok
