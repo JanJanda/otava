@@ -1,2 +1,11 @@
 test name,passive table,active table,passive descriptor,active descriptor,validation,result
 Test 001: Simple table,https://w3c.github.io/csvw/tests/test001.csv,,,,table,ok
+Test 005: Identifier references,https://w3c.github.io/csvw/tests/test005.csv,,,,table,ok
+Test 006: No identifiers,https://w3c.github.io/csvw/tests/test006.csv,,,,table,ok
+Test 007: Joined table with unique identifiers,https://w3c.github.io/csvw/tests/test007.csv,,,,table,ok
+Test 008: Microsyntax - internal field separator,https://w3c.github.io/csvw/tests/test008.csv,,,,table,ok
+Test 009: Microsyntax - formatted time,https://w3c.github.io/csvw/tests/test009.csv,,,,table,ok
+Test 010: Country-codes-and-names example,https://w3c.github.io/csvw/tests/test010.csv,,,,table,ok
+Test 011: tree-ops example with metadata,,https://w3c.github.io/csvw/tests/test011/tree-ops.csv,,,full,ok
+Test 012: tree-ops example with directory metadata,,https://w3c.github.io/csvw/tests/test012/tree-ops.csv,,,full,ok
+Test 013: tree-ops example from user metadata,,https://w3c.github.io/csvw/tests/tree-ops.csv,,,full,ok

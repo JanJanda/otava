@@ -1,8 +1,7 @@
 package io.github.janjanda.otava.library;
 
 import static io.github.janjanda.otava.library.utils.FileUtils.makeFileReader;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -44,8 +43,10 @@ class W3Tests {
         if (data.validation.equals("full")) results = manager.fullValidation(data.suite);
         if (data.validation.equals("table")) results = manager.tablesOnlyValidation(data.suite);
         if (data.validation.equals("desc")) results = manager.descriptorsOnlyValidation(data.suite);
+
         if (data.result.equals("ok")) assertTrue(allNotFatal(results), data.testName);
-        if (data.result.equals("fatal")) assertFalse(allNotFatal(results), data.testName);
+        else if (data.result.equals("fatal")) assertFalse(allNotFatal(results), data.testName);
+        else fail("Invalid test data entry!");
     }
 
     boolean allNotFatal(Result[] results) {
