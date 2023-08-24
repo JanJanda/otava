@@ -9,3 +9,274 @@ Test 010: Country-codes-and-names example,https://w3c.github.io/csvw/tests/test0
 Test 011: tree-ops example with metadata,,https://w3c.github.io/csvw/tests/test011/tree-ops.csv,,,full,ok
 Test 012: tree-ops example with directory metadata,,https://w3c.github.io/csvw/tests/test012/tree-ops.csv,,,full,ok
 Test 013: tree-ops example from user metadata,,https://w3c.github.io/csvw/tests/tree-ops.csv,,,full,ok
+Test 014: tree-ops example with linked metadata,,https://w3c.github.io/csvw/tests/test014/tree-ops.csv,,,full,ok
+Test 015: tree-ops example with user and directory metadata,,https://w3c.github.io/csvw/tests/test015/tree-ops.csv,,,full,ok
+Test 016: tree-ops example with linked and directory metadata,,https://w3c.github.io/csvw/tests/test016/tree-ops.csv,,,full,ok
+Test 017: tree-ops example with file and directory metadata,,https://w3c.github.io/csvw/tests/test017/tree-ops.csv,,,full,ok
+"Test 018: tree-ops example with user,file and directory metadata",,https://w3c.github.io/csvw/tests/test018/tree-ops.csv,,,full,ok
+Test 023: dialect: header=false,,https://w3c.github.io/csvw/tests/tree-ops.csv,,,full,ok
+Test 027: tree-ops minimal output,,https://w3c.github.io/csvw/tests/tree-ops.csv,,,full,ok
+Test 028: countries.csv example,https://w3c.github.io/csvw/tests/countries.csv,,,,table,ok
+Test 029: countries.csv minimal,https://w3c.github.io/csvw/tests/countries.csv,,,,table,ok
+Test 030: countries.json example,,,,https://w3c.github.io/csvw/tests/countries.json,full,ok
+Test 031: countries.json example minimal output,,,,https://w3c.github.io/csvw/tests/countries.json,full,ok
+Test 032: events-listing.csv example,,,,https://w3c.github.io/csvw/tests/test032/csv-metadata.json,full,ok
+Test 033: events-listing.csv minimal output,,,,https://w3c.github.io/csvw/tests/test033/csv-metadata.json,full,ok
+Test 034: roles example,,,,https://w3c.github.io/csvw/tests/test034/csv-metadata.json,full,fail
+Test 035: roles minimal,,,,https://w3c.github.io/csvw/tests/test035/csv-metadata.json,full,fail
+Test 036: tree-ops-ext example,,https://w3c.github.io/csvw/tests/test036/tree-ops-ext.csv,,,full,ok
+Test 037: tree-ops-ext minimal,,https://w3c.github.io/csvw/tests/test037/tree-ops-ext.csv,,,full,ok
+Test 038: inherited properties propagation,,,,https://w3c.github.io/csvw/tests/test038-metadata.json,full,ok
+Test 039: valid inherited properties,,,,https://w3c.github.io/csvw/tests/test039-metadata.json,full,ok
+Test 040: invalid null,,,,https://w3c.github.io/csvw/tests/test040-metadata.json,full,warn
+Test 041: invalid lang,,,,https://w3c.github.io/csvw/tests/test041-metadata.json,full,warn
+Test 042: invalid textDirection,,,,https://w3c.github.io/csvw/tests/test042-metadata.json,full,warn
+Test 043: invalid separator,,,,https://w3c.github.io/csvw/tests/test043-metadata.json,full,warn
+Test 044: invalid ordered,,,,https://w3c.github.io/csvw/tests/test044-metadata.json,full,warn
+Test 045: invalid default,,,,https://w3c.github.io/csvw/tests/test045-metadata.json,full,warn
+Test 046: invalid dataype,,,,https://w3c.github.io/csvw/tests/test046-metadata.json,full,warn
+Test 047: invalid aboutUrl,,,,https://w3c.github.io/csvw/tests/test047-metadata.json,full,warn
+Test 048: invalid propertyUrl,,,,https://w3c.github.io/csvw/tests/test048-metadata.json,full,warn
+Test 049: invalid valueUrl,,,,https://w3c.github.io/csvw/tests/test049-metadata.json,full,warn
+Test 059: dialect: invalid commentPrefix,,,,https://w3c.github.io/csvw/tests/test059-metadata.json,full,warn
+Test 060: dialect: invalid delimiter,,,,https://w3c.github.io/csvw/tests/test060-metadata.json,full,warn
+Test 061: dialect: invalid doubleQuote,,,,https://w3c.github.io/csvw/tests/test061-metadata.json,full,warn
+Test 062: dialect: invalid encoding,,,,https://w3c.github.io/csvw/tests/test062-metadata.json,full,warn
+Test 063: dialect: invalid header,,,,https://w3c.github.io/csvw/tests/test063-metadata.json,full,warn
+Test 065: dialect: invalid headerRowCount,,,,https://w3c.github.io/csvw/tests/test065-metadata.json,full,warn
+Test 066: dialect: invalid lineTerminators,,,,https://w3c.github.io/csvw/tests/test066-metadata.json,full,warn
+Test 067: dialect: invalid quoteChar,,,,https://w3c.github.io/csvw/tests/test067-metadata.json,full,warn
+Test 068: dialect: invalid skipBlankRows,,,,https://w3c.github.io/csvw/tests/test068-metadata.json,full,warn
+Test 069: dialect: invalid skipColumns,,,,https://w3c.github.io/csvw/tests/test069-metadata.json,full,warn
+Test 070: dialect: invalid skipInitialSpace,,,,https://w3c.github.io/csvw/tests/test070-metadata.json,full,warn
+Test 071: dialect: invalid skipRows,,,,https://w3c.github.io/csvw/tests/test071-metadata.json,full,warn
+Test 072: dialect: invalid trim,,,,https://w3c.github.io/csvw/tests/test072-metadata.json,full,warn
+Test 073: invalid @language,,,,https://w3c.github.io/csvw/tests/test073-metadata.json,full,warn
+Test 074: empty tables,,,,https://w3c.github.io/csvw/tests/test074-metadata.json,full,fail
+Test 075: invalid tableGroup tableDirection,,,,https://w3c.github.io/csvw/tests/test075-metadata.json,full,warn
+Test 076: invalid table tableDirection,,,,https://w3c.github.io/csvw/tests/test076-metadata.json,full,warn
+Test 077: invalid tableGroup @id,,,,https://w3c.github.io/csvw/tests/test077-metadata.json,full,fail
+Test 078: invalid table @id,,,,https://w3c.github.io/csvw/tests/test078-metadata.json,full,fail
+Test 079: invalid schema @id,,,,https://w3c.github.io/csvw/tests/test079-metadata.json,full,fail
+Test 080: invalid column @id,,,,https://w3c.github.io/csvw/tests/test080-metadata.json,full,fail
+Test 081: invalid dialect @id,,,,https://w3c.github.io/csvw/tests/test081-metadata.json,full,fail
+Test 082: invalid template @id,,,,https://w3c.github.io/csvw/tests/test082-metadata.json,full,fail
+Test 083: invalid tableGroup @type,,,,https://w3c.github.io/csvw/tests/test083-metadata.json,full,fail
+Test 084: invalid table @type,,,,https://w3c.github.io/csvw/tests/test084-metadata.json,full,fail
+Test 085: invalid schema @type,,,,https://w3c.github.io/csvw/tests/test085-metadata.json,full,fail
+Test 086: invalid column @type,,,,https://w3c.github.io/csvw/tests/test086-metadata.json,full,fail
+Test 087: invalid dialect @type,,,,https://w3c.github.io/csvw/tests/test087-metadata.json,full,fail
+Test 088: invalid transformation @type,,,,https://w3c.github.io/csvw/tests/test088-metadata.json,full,fail
+Test 089: missing tables in TableGroup,,,,https://w3c.github.io/csvw/tests/test089-metadata.json,full,fail
+Test 090: missing url in Table,,,,https://w3c.github.io/csvw/tests/test090-metadata.json,full,fail
+Test 092: invalid JSON,,,,https://w3c.github.io/csvw/tests/test092-metadata.json,full,fail
+Test 093: undefined properties,,,,https://w3c.github.io/csvw/tests/test093-metadata.json,full,warn
+Test 094: inconsistent array values: tables,,,,https://w3c.github.io/csvw/tests/test094-metadata.json,full,warn
+Test 095: inconsistent array values: transformations,,,,https://w3c.github.io/csvw/tests/test095-metadata.json,full,warn
+Test 096: inconsistent array values: columns,,,,https://w3c.github.io/csvw/tests/test096-metadata.json,full,warn
+Test 097: inconsistent array values: foreignKeys,,,,https://w3c.github.io/csvw/tests/test097-metadata.json,full,warn
+Test 098: inconsistent array values: tables,,,,https://w3c.github.io/csvw/tests/test098-metadata.json,full,fail
+Test 099: inconsistent array values: transformations,,,,https://w3c.github.io/csvw/tests/test099-metadata.json,full,warn
+Test 100: inconsistent array values: columns,,,,https://w3c.github.io/csvw/tests/test100-metadata.json,full,fail
+Test 101: inconsistent array values: foreignKeys,,,,https://w3c.github.io/csvw/tests/test101-metadata.json,full,warn
+Test 102: inconsistent link values: @id,,,,https://w3c.github.io/csvw/tests/test102-metadata.json,full,warn
+Test 103: inconsistent link values: url,,,,https://w3c.github.io/csvw/tests/test103-metadata.json,full,fail
+Test 104: invalid columnReference,,,,https://w3c.github.io/csvw/tests/test104-metadata.json,full,fail
+Test 105: invalid primaryKey,,,,https://w3c.github.io/csvw/tests/test105-metadata.json,full,warn
+Test 106: invalid dialect,,,,https://w3c.github.io/csvw/tests/test106-metadata.json,full,warn
+Test 107: invalid tableSchema,,,,https://w3c.github.io/csvw/tests/test107-metadata.json,full,fail
+Test 108: invalid reference,,,,https://w3c.github.io/csvw/tests/test108-metadata.json,full,fail
+Test 109: titles with invalid language,,,,https://w3c.github.io/csvw/tests/test109-metadata.json,full,fail
+Test 110: titles with non-string values,,,,https://w3c.github.io/csvw/tests/test110-metadata.json,full,warn
+Test 111: titles with invalid value,,,,https://w3c.github.io/csvw/tests/test111-metadata.json,full,fail
+Test 112: titles with non-string array values,,,,https://w3c.github.io/csvw/tests/test112-metadata.json,full,warn
+Test 113: invalid suppressOutput,,,,https://w3c.github.io/csvw/tests/test113-metadata.json,full,warn
+Test 114: invalid name,,,,https://w3c.github.io/csvw/tests/test114-metadata.json,full,warn
+Test 115: invalid virtual,,,,https://w3c.github.io/csvw/tests/test115-metadata.json,full,warn
+Test 116: file-metadata with query component not found,,https://w3c.github.io/csvw/tests/test116.csv?query,,,full,ok
+Test 117: file-metadata not referencing file,,https://w3c.github.io/csvw/tests/test117.csv,,,full,warn
+Test 118: directory-metadata with query component,,https://w3c.github.io/csvw/tests/test118/action.csv?query,,,full,ok
+Test 119: directory-metadata not referencing file,,https://w3c.github.io/csvw/tests/test119/action.csv,,,full,warn
+Test 120: link-metadata not referencing file,,https://w3c.github.io/csvw/tests/test120.csv,,,full,warn
+Test 121: user-metadata not referencing file,,https://w3c.github.io/csvw/tests/test121.csv,,,full,ok
+Test 122: link-metadata not describing file uses file-metadata,,https://w3c.github.io/csvw/tests/test122.csv,,,full,warn
+Test 123: file-metadata not describing file uses directory-metadata,,https://w3c.github.io/csvw/tests/test123/action.csv,,,full,warn
+Test 124: metadata with columns not matching csv titles,,https://w3c.github.io/csvw/tests/tree-ops.csv,,,full,fail
+Test 125: required column with empty cell,,,,https://w3c.github.io/csvw/tests/test125-metadata.json,full,fail
+Test 126: required column with cell matching null,,,,https://w3c.github.io/csvw/tests/test126-metadata.json,full,fail
+Test 127: incompatible table,,,,https://w3c.github.io/csvw/tests/test127-metadata.json,full,fail
+Test 128: duplicate column names,,,,https://w3c.github.io/csvw/tests/test128-metadata.json,full,fail
+Test 129: columnn name as integer,,,,https://w3c.github.io/csvw/tests/test129-metadata.json,full,warn
+Test 130: invalid column name,,,,https://w3c.github.io/csvw/tests/test130-metadata.json,full,warn
+Test 131: invalid column name,,,,https://w3c.github.io/csvw/tests/test131-metadata.json,full,warn
+Test 132: name annotation from title percent encoded,,,,https://w3c.github.io/csvw/tests/test132-metadata.json,full,ok
+Test 133: virtual before non-virtual,,,,https://w3c.github.io/csvw/tests/test133-metadata.json,full,fail
+Test 134: context in common property,,,,https://w3c.github.io/csvw/tests/test134-metadata.json,full,fail
+Test 135: @list value,,,,https://w3c.github.io/csvw/tests/test135-metadata.json,full,fail
+Test 136: @set value,,,,https://w3c.github.io/csvw/tests/test136-metadata.json,full,fail
+Test 137: @type out of range (as datatype),,,,https://w3c.github.io/csvw/tests/test137-metadata.json,full,fail
+Test 138: @type out of range (as node type),,,,https://w3c.github.io/csvw/tests/test138-metadata.json,full,fail
+Test 139: @type out of range (as node type) - string,,,,https://w3c.github.io/csvw/tests/test139-metadata.json,full,fail
+Test 140: @type out of range (as node type) - integer,,,,https://w3c.github.io/csvw/tests/test140-metadata.json,full,fail
+Test 141: @id out of range (as node type) - bnode,,,,https://w3c.github.io/csvw/tests/test141-metadata.json,full,fail
+Test 142: @value with @language and @type,,,,https://w3c.github.io/csvw/tests/test142-metadata.json,full,fail
+Test 143: @value with extra properties,,,,https://w3c.github.io/csvw/tests/test143-metadata.json,full,fail
+Test 144: @language outside of @value,,,,https://w3c.github.io/csvw/tests/test144-metadata.json,full,fail
+Test 145: @value with invalid @language,,,,https://w3c.github.io/csvw/tests/test145-metadata.json,full,fail
+Test 146: Invalid faux-keyword,,,,https://w3c.github.io/csvw/tests/test146-metadata.json,full,fail
+Test 147: title incompatible with title on case,,,,https://w3c.github.io/csvw/tests/test147-metadata.json,full,fail
+Test 148: title incompatible with title on language,,,,https://w3c.github.io/csvw/tests/test148-metadata.json,full,fail
+Test 149: title compatible with title on less specific language,,,,https://w3c.github.io/csvw/tests/test149-metadata.json,full,ok
+Test 150: non-builtin datatype (datatype value),,,,https://w3c.github.io/csvw/tests/test150-metadata.json,full,warn
+Test 151: non-builtin datatype (base value),,,,https://w3c.github.io/csvw/tests/test151-metadata.json,full,warn
+Test 152: string format (valid combinations),,,,https://w3c.github.io/csvw/tests/test152-metadata.json,full,ok
+Test 153: string format (bad format string),,,,https://w3c.github.io/csvw/tests/test153-metadata.json,full,warn
+Test 154: string format (value not matching format),,,,https://w3c.github.io/csvw/tests/test154-metadata.json,full,fail
+Test 155: number format (valid combinations),,,,https://w3c.github.io/csvw/tests/test155-metadata.json,full,ok
+Test 156: number format (bad format string),,,,https://w3c.github.io/csvw/tests/test156-metadata.json,full,warn
+Test 157: number format (value not matching format),,,,https://w3c.github.io/csvw/tests/test157-metadata.json,full,fail
+Test 158: number format (valid combinations),,,,https://w3c.github.io/csvw/tests/test158-metadata.json,full,ok
+Test 159: number format (bad pattern format string),,,,https://w3c.github.io/csvw/tests/test159-metadata.json,full,warn
+Test 160: number format (not matching values with pattern),,,,https://w3c.github.io/csvw/tests/test160-metadata.json,full,fail
+Test 161: number format (not matching values without pattern),,,,https://w3c.github.io/csvw/tests/test161-metadata.json,full,fail
+Test 162: numeric format (consecutive groupChar),,,,https://w3c.github.io/csvw/tests/test162-metadata.json,full,fail
+Test 163: integer datatype with decimalChar,,,,https://w3c.github.io/csvw/tests/test163-metadata.json,full,fail
+Test 164: decimal datatype with exponent,,,,https://w3c.github.io/csvw/tests/test164-metadata.json,full,fail
+Test 165: decimal type with NaN,,,,https://w3c.github.io/csvw/tests/test165-metadata.json,full,fail
+Test 166: decimal type with INF,,,,https://w3c.github.io/csvw/tests/test166-metadata.json,full,fail
+Test 167: decimal type with -INF,,,,https://w3c.github.io/csvw/tests/test167-metadata.json,full,fail
+Test 168: decimal with implicit groupChar,,,,https://w3c.github.io/csvw/tests/test168-metadata.json,full,ok
+Test 169: invalid decimal,,,,https://w3c.github.io/csvw/tests/test169-metadata.json,full,fail
+Test 170: decimal with percent,,,,https://w3c.github.io/csvw/tests/test170-metadata.json,full,ok
+Test 171: decimal with per-mille,,,,https://w3c.github.io/csvw/tests/test171-metadata.json,full,ok
+Test 172: invalid byte,,,,https://w3c.github.io/csvw/tests/test172-metadata.json,full,fail
+Test 173: invald unsignedLong,,,,https://w3c.github.io/csvw/tests/test173-metadata.json,full,fail
+Test 174: invalid unsignedShort,,,,https://w3c.github.io/csvw/tests/test174-metadata.json,full,fail
+Test 175: invalid unsignedByte,,,,https://w3c.github.io/csvw/tests/test175-metadata.json,full,fail
+Test 176: invalid positiveInteger,,,,https://w3c.github.io/csvw/tests/test176-metadata.json,full,fail
+Test 177: invalid negativeInteger,,,,https://w3c.github.io/csvw/tests/test177-metadata.json,full,fail
+Test 178: invalid nonPositiveInteger,,,,https://w3c.github.io/csvw/tests/test178-metadata.json,full,fail
+Test 179: invalid nonNegativeInteger,,,,https://w3c.github.io/csvw/tests/test179-metadata.json,full,fail
+Test 180: invalid double,,,,https://w3c.github.io/csvw/tests/test180-metadata.json,full,fail
+Test 181: invalid number,,,,https://w3c.github.io/csvw/tests/test181-metadata.json,full,fail
+Test 182: invalid float,,,,https://w3c.github.io/csvw/tests/test182-metadata.json,full,fail
+Test 183: boolean format (valid combinations),,,,https://w3c.github.io/csvw/tests/test183-metadata.json,full,ok
+Test 184: boolean format (bad format string),,,,https://w3c.github.io/csvw/tests/test184-metadata.json,full,warn
+Test 185: boolean format (value not matching format),,,,https://w3c.github.io/csvw/tests/test185-metadata.json,full,fail
+Test 186: boolean format (not matching datatype),,,,https://w3c.github.io/csvw/tests/test186-metadata.json,full,fail
+Test 187: date format (valid native combinations),,,,https://w3c.github.io/csvw/tests/test187-metadata.json,full,ok
+Test 188: date format (valid date combinations with formats),,,,https://w3c.github.io/csvw/tests/test188-metadata.json,full,ok
+Test 189: date format (valid time combinations with formats),,,,https://w3c.github.io/csvw/tests/test189-metadata.json,full,ok
+Test 190: date format (valid dateTime combinations with formats),,,,https://w3c.github.io/csvw/tests/test190-metadata.json,full,ok
+Test 191: date format (bad format string),,,,https://w3c.github.io/csvw/tests/test191-metadata.json,full,fail
+Test 192: date format (value not matching format),,,,https://w3c.github.io/csvw/tests/test192-metadata.json,full,fail
+Test 193: duration format (valid combinations),,,,https://w3c.github.io/csvw/tests/test193-metadata.json,full,ok
+Test 194: duration format (value not matching format),,,,https://w3c.github.io/csvw/tests/test194-metadata.json,full,fail
+Test 195: values with matching length,,,,https://w3c.github.io/csvw/tests/test195-metadata.json,full,ok
+Test 196: values with wrong length,,,,https://w3c.github.io/csvw/tests/test196-metadata.json,full,fail
+Test 197: values with wrong maxLength,,,,https://w3c.github.io/csvw/tests/test197-metadata.json,full,fail
+Test 198: values with wrong minLength,,,,https://w3c.github.io/csvw/tests/test198-metadata.json,full,fail
+Test 199: length < minLength,,,,https://w3c.github.io/csvw/tests/test199-metadata.json,full,fail
+Test 200: length > maxLength,,,,https://w3c.github.io/csvw/tests/test200-metadata.json,full,fail
+Test 201: length on date,,,,https://w3c.github.io/csvw/tests/test201-metadata.json,full,fail
+Test 202: float matching constraints,,,,https://w3c.github.io/csvw/tests/test202-metadata.json,full,ok
+Test 203: float value constraint not matching minimum,,,,https://w3c.github.io/csvw/tests/test203-metadata.json,full,fail
+Test 204: float value constraint not matching maximum,,,,https://w3c.github.io/csvw/tests/test204-metadata.json,full,fail
+Test 205: float value constraint not matching minInclusive,,,,https://w3c.github.io/csvw/tests/test205-metadata.json,full,fail
+Test 206: float value constraint not matching minExclusive,,,,https://w3c.github.io/csvw/tests/test206-metadata.json,full,fail
+Test 207: float value constraint not matching maxInclusive,,,,https://w3c.github.io/csvw/tests/test207-metadata.json,full,fail
+Test 208: float value constraint not matching maxExclusive,,,,https://w3c.github.io/csvw/tests/test208-metadata.json,full,fail
+Test 209: date matching constraints,,,,https://w3c.github.io/csvw/tests/test209-metadata.json,full,ok
+Test 210: date value constraint not matching minimum,,,,https://w3c.github.io/csvw/tests/test210-metadata.json,full,fail
+Test 211: date value constraint not matching maximum,,,,https://w3c.github.io/csvw/tests/test211-metadata.json,full,fail
+Test 212: date value constraint not matching minInclusive,,,,https://w3c.github.io/csvw/tests/test212-metadata.json,full,fail
+Test 213: date value constraint not matching minExclusive,,,,https://w3c.github.io/csvw/tests/test213-metadata.json,full,fail
+Test 214: date value constraint not matching maxInclusive,,,,https://w3c.github.io/csvw/tests/test214-metadata.json,full,fail
+Test 215: date value constraint not matching maxExclusive,,,,https://w3c.github.io/csvw/tests/test215-metadata.json,full,fail
+Test 216: minInclusive and minExclusive,,,,https://w3c.github.io/csvw/tests/test216-metadata.json,full,fail
+Test 217: maxInclusive and maxExclusive,,,,https://w3c.github.io/csvw/tests/test217-metadata.json,full,fail
+Test 218: maxInclusive < minInclusive,,,,https://w3c.github.io/csvw/tests/test218-metadata.json,full,fail
+Test 219: maxExclusive = minInclusive,,,,https://w3c.github.io/csvw/tests/test219-metadata.json,full,fail
+Test 220: maxExclusive < minExclusive,,,,https://w3c.github.io/csvw/tests/test220-metadata.json,full,fail
+Test 221: maxInclusive = minExclusive,,,,https://w3c.github.io/csvw/tests/test221-metadata.json,full,fail
+Test 222: string datatype with minimum,,,,https://w3c.github.io/csvw/tests/test222-metadata.json,full,fail
+Test 223: string datatype with maxium,,,,https://w3c.github.io/csvw/tests/test223-metadata.json,full,fail
+Test 224: string datatype with minInclusive,,,,https://w3c.github.io/csvw/tests/test224-metadata.json,full,fail
+Test 225: string datatype with maxInclusive,,,,https://w3c.github.io/csvw/tests/test225-metadata.json,full,fail
+Test 226: string datatype with minExclusive,,,,https://w3c.github.io/csvw/tests/test226-metadata.json,full,fail
+Test 227: string datatype with maxExclusive,,,,https://w3c.github.io/csvw/tests/test227-metadata.json,full,fail
+Test 228: length with separator,,,,https://w3c.github.io/csvw/tests/test228-metadata.json,full,ok
+Test 229: matching minLength with separator,,,,https://w3c.github.io/csvw/tests/test229-metadata.json,full,ok
+Test 230: failing minLength with separator,,,,https://w3c.github.io/csvw/tests/test230-metadata.json,full,fail
+Test 231: single column primaryKey success,,,,https://w3c.github.io/csvw/tests/test231-metadata.json,full,ok
+Test 232: single column primaryKey violation,,,,https://w3c.github.io/csvw/tests/test232-metadata.json,full,fail
+Test 233: multiple column primaryKey success,,,,https://w3c.github.io/csvw/tests/test233-metadata.json,full,ok
+Test 234: multiple column primaryKey violation,,,,https://w3c.github.io/csvw/tests/test234-metadata.json,full,fail
+Test 235: rowTitles on one column,,,,https://w3c.github.io/csvw/tests/test235-metadata.json,full,ok
+Test 236: rowTitles on multiple columns,,,,https://w3c.github.io/csvw/tests/test236-metadata.json,full,ok
+Test 237: rowTitles on one column (minimal),,,,https://w3c.github.io/csvw/tests/test237-metadata.json,full,ok
+Test 238: datatype value an absolute URL,,,,https://w3c.github.io/csvw/tests/test238-metadata.json,full,warn
+Test 242: datatype @id an absolute URL,,,,https://w3c.github.io/csvw/tests/test242-metadata.json,full,ok
+Test 243: invalid datatype @id,,,,https://w3c.github.io/csvw/tests/test243-metadata.json,full,fail
+Test 244: invalid datatype @id,,,,https://w3c.github.io/csvw/tests/test244-metadata.json,full,fail
+Test 245: date format (valid time combinations with formats and milliseconds),,,,https://w3c.github.io/csvw/tests/test245-metadata.json,full,ok
+Test 246: date format (valid dateTime combinations with formats and milliseconds),,,,https://w3c.github.io/csvw/tests/test246-metadata.json,full,ok
+Test 247: date format (extra milliseconds),,,,https://w3c.github.io/csvw/tests/test247-metadata.json,full,fail
+Test 248: Unicode in non-Normalized form,,,,https://w3c.github.io/csvw/tests/test248-metadata.json,full,ok
+Test 249: http normalization,,https://w3c.github.io/csvw/tests/test249.csv,,,full,ok
+Test 250: valid case,,,,https://w3c.github.io/csvw/tests/test250-metadata.json,full,ok
+Test 251: missing source reference,,,,https://w3c.github.io/csvw/tests/test251-metadata.json,full,fail
+Test 252: missing destination reference column,,,,https://w3c.github.io/csvw/tests/test252-metadata.json,full,fail
+Test 253: missing destination table,,,,https://w3c.github.io/csvw/tests/test253-metadata.json,full,fail
+Test 254: foreign key single column same table,,,,https://w3c.github.io/csvw/tests/test254-metadata.json,full,ok
+Test 255: foreign key single column different table,,,,https://w3c.github.io/csvw/tests/test255-metadata.json,full,ok
+Test 256: foreign key multiple columns,,,,https://w3c.github.io/csvw/tests/test256-metadata.json,full,ok
+Test 257: foreign key no referenced row,,,,https://w3c.github.io/csvw/tests/test257-metadata.json,full,fail
+Test 258: foreign key multiple referenced rows,,,,https://w3c.github.io/csvw/tests/test258-metadata.json,full,fail
+Test 259: tree-ops example with csvm.json (w3.org/.well-known/csvm),,https://w3c.github.io/csvw/tests/test259/tree-ops.csv,,,full,ok
+Test 260: tree-ops example with {+url}.json (w3.org/.well-known/csvm),,https://w3c.github.io/csvw/tests/test260/tree-ops.csv,,,full,ok
+Test 261: maxLength < minLength,,,,https://w3c.github.io/csvw/tests/test261-metadata.json,full,fail
+Test 263: @type on a common property can be a built-in type,,,,https://w3c.github.io/csvw/tests/test263-metadata.json,full,ok
+Test 264: @type on a common property can be a CURIE if the prefix is one of the built-in ones,,,,https://w3c.github.io/csvw/tests/test264-metadata.json,full,ok
+Test 266: `null` contains an array of (valid) string & (invalid) numeric values,,,,https://w3c.github.io/csvw/tests/test266-metadata.json,full,warn
+Test 267: @id on datatype is invalid (eg starts with _:),,,,https://w3c.github.io/csvw/tests/test267-metadata.json,full,fail
+Test 268: `base` missing on datatype (defaults to string),,,,https://w3c.github.io/csvw/tests/test268-metadata.json,full,ok
+Test 269: `format` for a boolean datatype is a string but in the wrong form (eg YN),,,,https://w3c.github.io/csvw/tests/test269-metadata.json,full,fail
+Test 270: transformation includes an invalid property (eg foo),,,,https://w3c.github.io/csvw/tests/test270-metadata.json,full,warn
+Test 271: foreign key includes an invalid property (eg `dc:description`),,,,https://w3c.github.io/csvw/tests/test271-metadata.json,full,fail
+Test 272: foreign key reference includes an invalid property (eg `dc:description`),,,,https://w3c.github.io/csvw/tests/test272-metadata.json,full,fail
+Test 273: `@base` set in `@context` overriding eg CSV location,,,,https://w3c.github.io/csvw/tests/test273-metadata.json,full,ok
+Test 274: `@context` object includes properties other than `@base` and `@language`,,,,https://w3c.github.io/csvw/tests/test274-metadata.json,full,fail
+Test 275: property acceptable on column appears on table group,,,,https://w3c.github.io/csvw/tests/test275-metadata.json,full,warn
+Test 276: property acceptable on column appears on table,,,,https://w3c.github.io/csvw/tests/test276-metadata.json,full,warn
+Test 277: property acceptable on table appears on column,,,,https://w3c.github.io/csvw/tests/test277-metadata.json,full,warn
+Test 278: CSV has more headers than there are columns in the metadata,,,,https://w3c.github.io/csvw/tests/test278-metadata.json,full,fail
+Test 279: duration not matching xsd pattern,,,,https://w3c.github.io/csvw/tests/test279-metadata.json,full,fail
+Test 280: dayTimeDuration not matching xsd pattern,,,,https://w3c.github.io/csvw/tests/test280-metadata.json,full,fail
+Test 281: yearMonthDuration not matching xsd pattern,,,,https://w3c.github.io/csvw/tests/test281-metadata.json,full,fail
+Test 282: valid number patterns,,,,https://w3c.github.io/csvw/tests/test282-metadata.json,full,ok
+Test 283: valid number patterns (signs and percent/permille),,,,https://w3c.github.io/csvw/tests/test283-metadata.json,full,ok
+Test 284: valid number patterns (grouping),,,,https://w3c.github.io/csvw/tests/test284-metadata.json,full,ok
+Test 285: valid number patterns (fractional grouping),,,,https://w3c.github.io/csvw/tests/test285-metadata.json,full,ok
+"Test 286: invalid ##0 1,234",,,,https://w3c.github.io/csvw/tests/test286-metadata.json,full,fail
+Test 287: invalid ##0 123.4,,,,https://w3c.github.io/csvw/tests/test287-metadata.json,full,fail
+"Test 288: invalid #,#00 1",,,,https://w3c.github.io/csvw/tests/test288-metadata.json,full,fail
+"Test 289: invalid #,#00 1234",,,,https://w3c.github.io/csvw/tests/test289-metadata.json,full,fail
+"Test 290: invalid #,#00 12,34",,,,https://w3c.github.io/csvw/tests/test290-metadata.json,full,fail
+"Test 291: invalid #,#00 12,34,567",,,,https://w3c.github.io/csvw/tests/test291-metadata.json,full,fail
+"Test 292: invalid #,##,#00 1",,,,https://w3c.github.io/csvw/tests/test292-metadata.json,full,fail
+"Test 293: invalid #,##,#00 1234",,,,https://w3c.github.io/csvw/tests/test293-metadata.json,full,fail
+"Test 294: invalid #,##,#00 12,34",,,,https://w3c.github.io/csvw/tests/test294-metadata.json,full,fail
+"Test 295: invalid #,##,#00 1,234,567",,,,https://w3c.github.io/csvw/tests/test295-metadata.json,full,fail
+Test 296: invalid #0.# 12.34,,,,https://w3c.github.io/csvw/tests/test296-metadata.json,full,fail
+"Test 297: invalid #0.# 1,234.5",,,,https://w3c.github.io/csvw/tests/test297-metadata.json,full,fail
+Test 298: invalid #0.0 1,,,,https://w3c.github.io/csvw/tests/test298-metadata.json,full,fail
+Test 299: invalid #0.0 12.34,,,,https://w3c.github.io/csvw/tests/test299-metadata.json,full,fail
+Test 300: invalid #0.0# 1,,,,https://w3c.github.io/csvw/tests/test300-metadata.json,full,fail
+Test 301: invalid #0.0# 12.345,,,,https://w3c.github.io/csvw/tests/test301-metadata.json,full,fail
+"Test 302: invalid #0.0#,# 1",,,,https://w3c.github.io/csvw/tests/test302-metadata.json,full,fail
+"Test 303: invalid #0.0#,# 12.345",,,,https://w3c.github.io/csvw/tests/test303-metadata.json,full,fail
+"Test 304: invalid #0.0#,# 12.34,567",,,,https://w3c.github.io/csvw/tests/test304-metadata.json,full,fail
+Test 305: multiple values with same subject and property (unordered),,,,https://w3c.github.io/csvw/tests/test305-metadata.json,full,ok
+Test 306: multiple values with same subject and property (ordered),,,,https://w3c.github.io/csvw/tests/test306-metadata.json,full,ok
+Test 307: multiple values with same subject and property (ordered and unordered),,,,https://w3c.github.io/csvw/tests/test307-metadata.json,full,ok
