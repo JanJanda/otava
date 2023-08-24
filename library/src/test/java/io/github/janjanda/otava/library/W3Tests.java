@@ -49,12 +49,13 @@ class W3Tests {
             if (data.validation.equals("desc")) results = manager.descriptorsOnlyValidation(data.suite);
         }
         catch (ValidatorException e) {
-            assertEquals("fatal", data.result);
+            assertEquals("fatal", data.result, data.testName);
+            return;
         }
 
         switch (data.result) {
             case "ok" -> assertTrue(allNotFatal(results), data.testName);
-            case "fatal" -> assertFalse(allNotFatal(results), data.testName);
+            case "fail" -> assertFalse(allNotFatal(results), data.testName);
             case "warn" -> assertFalse(allOk(results), data.testName);
             default -> fail("Invalid test data entry!");
         }
@@ -68,7 +69,7 @@ class W3Tests {
     }
 
     boolean allOk(Result[] results) {
-        for (Result result :results) {
+        for (Result result : results) {
             if (!result.isOk) return false;
         }
         return true;
