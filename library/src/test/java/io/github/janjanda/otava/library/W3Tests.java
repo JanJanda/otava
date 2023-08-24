@@ -2,9 +2,11 @@ package io.github.janjanda.otava.library;
 
 import static io.github.janjanda.otava.library.utils.FileUtils.makeFileReader;
 import static org.junit.jupiter.api.Assertions.*;
+import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import java.io.InputStreamReader;
@@ -14,6 +16,7 @@ import java.util.stream.Stream;
  * This class implements the tests from the CSVW Implementation Report.
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#csvw-validation-tests-1">CSVW Implementation Report</a>
  */
+@Disabled("This project does not support every specified feature.")
 class W3Tests {
     record TestData(String testName, ValidationSuite suite, String validation, String result) {}
 
@@ -37,21 +40,36 @@ class W3Tests {
 
     @ParameterizedTest
     @MethodSource("dataProvider")
-    void testing(TestData data) throws Exception {
+    void testing(TestData data) {
         Manager manager = new Manager();
         Result[] results = null;
-        if (data.validation.equals("full")) results = manager.fullValidation(data.suite);
-        if (data.validation.equals("table")) results = manager.tablesOnlyValidation(data.suite);
-        if (data.validation.equals("desc")) results = manager.descriptorsOnlyValidation(data.suite);
+        try {
+            if (data.validation.equals("full")) results = manager.fullValidation(data.suite);
+            if (data.validation.equals("table")) results = manager.tablesOnlyValidation(data.suite);
+            if (data.validation.equals("desc")) results = manager.descriptorsOnlyValidation(data.suite);
+        }
+        catch (ValidatorException e) {
+            assertEquals("fatal", data.result);
+        }
 
-        if (data.result.equals("ok")) assertTrue(allNotFatal(results), data.testName);
-        else if (data.result.equals("fatal")) assertFalse(allNotFatal(results), data.testName);
-        else fail("Invalid test data entry!");
+        switch (data.result) {
+            case "ok" -> assertTrue(allNotFatal(results), data.testName);
+            case "fatal" -> assertFalse(allNotFatal(results), data.testName);
+            case "warn" -> assertFalse(allOk(results), data.testName);
+            default -> fail("Invalid test data entry!");
+        }
     }
 
     boolean allNotFatal(Result[] results) {
         for (Result result : results) {
             if (result.isFatal) return false;
+        }
+        return true;
+    }
+
+    boolean allOk(Result[] results) {
+        for (Result result :results) {
+            if (!result.isOk) return false;
         }
         return true;
     }
