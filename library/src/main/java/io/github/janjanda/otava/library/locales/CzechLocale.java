@@ -135,4 +135,9 @@ public final class CzechLocale implements Locale {
     public String emptyTablesArray(String descName) {
         return "Pole tables je prázdné v deskriptoru " + descName;
     }
+
+    @Override
+    public String invalidId(String descName) {
+        return "Je zde špatné @id v deskriptoru " + descName;
+    }
 }

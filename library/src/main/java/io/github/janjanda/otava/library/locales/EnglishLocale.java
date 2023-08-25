@@ -137,4 +137,9 @@ public final class EnglishLocale implements Locale {
     public String emptyTablesArray(String descName) {
         return "The tables array is empty in the descriptor " + descName;
     }
+
+    @Override
+    public String invalidId(String descName) {
+        return "There is an invalid @id in the descriptor " + descName;
+    }
 }

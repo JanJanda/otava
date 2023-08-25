@@ -49,7 +49,7 @@ class W3Tests {
             if (data.validation.equals("desc")) results = manager.descriptorsOnlyValidation(data.suite);
         }
         catch (ValidatorException e) {
-            assertEquals("fatal", data.result, data.testName);
+            assertEquals("fail", data.result, data.testName);
             return;
         }
 

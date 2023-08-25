@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 
 /**
@@ -18,7 +17,7 @@ public final class TablesArrayCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws ValidatorException {
+    protected Result performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped().build();
         for (Descriptor descriptor : descriptors) {
