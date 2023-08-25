@@ -22,7 +22,7 @@ public final class Manager {
     private static Locale currentLocale = new EnglishLocale();
     private static boolean localeLocked = false;
     private static final Class<? extends Check> tablesValidation = ConsistentColumnsCheck.class;
-    private static final Class<? extends Check> descriptorsValidation = TablesArrayCheck.class;
+    private static final Class<? extends Check> descriptorsValidation = TypesCheck.class;
     private static final Class<? extends Check> fullRootValidation = FullRootCheck.class;
 
     /**

@@ -13,7 +13,7 @@ import io.github.janjanda.otava.library.factories.CheckFactory;
  */
 public final class TablesArrayCheck extends Check {
     public TablesArrayCheck(CheckFactory f) throws CheckCreationException {
-        super(f.getTables(), f.getDescriptors(), f.getInstance(ContextCheck.class));
+        super(f.getTables(), f.getDescriptors(), f.getInstance(RequiredPropsCheck.class));
     }
 
     @Override

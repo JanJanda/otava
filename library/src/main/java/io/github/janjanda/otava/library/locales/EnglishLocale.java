@@ -147,4 +147,14 @@ public final class EnglishLocale implements Locale {
     public String badType(String descName, String expected) {
         return "Incorrect type in the descriptor " + descName + " - should be " + expected;
     }
+
+    @Override
+    public String missingTablesArray(String descName) {
+        return "Missing required property tables in the descriptor " + descName;
+    }
+
+    @Override
+    public String missingTableUrl(String descName) {
+        return "Missing table URL in the descriptor " + descName;
+    }
 }

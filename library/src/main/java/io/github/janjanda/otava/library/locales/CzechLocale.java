@@ -145,4 +145,14 @@ public final class CzechLocale implements Locale {
     public String badType(String descName, String expected) {
         return "Špatný typ v deskriptoru " + descName + " - měl by být " + expected;
     }
+
+    @Override
+    public String missingTablesArray(String descName) {
+        return "Chybí požadovaná hodnota tables v deskriptoru " + descName;
+    }
+
+    @Override
+    public String missingTableUrl(String descName) {
+        return "Chybí URL pro tabulku v deskriptoru " + descName;
+    }
 }

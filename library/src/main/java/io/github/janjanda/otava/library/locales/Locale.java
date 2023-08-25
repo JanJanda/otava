@@ -30,4 +30,6 @@ public interface Locale {
     String emptyTablesArray(String descName);
     String invalidId(String descName);
     String badType(String descName, String expected);
+    String missingTablesArray(String descName);
+    String missingTableUrl(String descName);
 }

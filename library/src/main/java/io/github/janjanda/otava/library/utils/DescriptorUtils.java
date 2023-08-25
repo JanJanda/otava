@@ -20,16 +20,14 @@ public final class DescriptorUtils {
 
     public static List<JsonNode> extractTables(Descriptor descriptor) {
         List<JsonNode> tableNodes = new ArrayList<>();
-        JsonNode urlNode = descriptor.path("url");
-        if (urlNode.isTextual()) {
-            tableNodes.add(descriptor.getRootNode());
-            return tableNodes;
-        }
         JsonNode tablesArray = descriptor.path("tables");
         if (tablesArray.isArray()) {
             for (int i = 0; i < tablesArray.size(); i++) {
                 tableNodes.add(tablesArray.path(i));
             }
+        }
+        else {
+            tableNodes.add(descriptor.getRootNode());
         }
         return tableNodes;
     }

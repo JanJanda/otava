@@ -11,7 +11,7 @@ import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 
 /**
  * This class checks types of entities in descriptors.
- * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_bfe3bea4a2e449c490bf4f0df6cd816c">Test 083: invalid tableGroup @type [and the following...]</a>
+ * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_bfe3bea4a2e449c490bf4f0df6cd816c">Test 083: invalid tableGroup @type (and the following...)</a>
  */
 public final class TypesCheck extends Check {
     public TypesCheck(CheckFactory f) throws CheckCreationException {
