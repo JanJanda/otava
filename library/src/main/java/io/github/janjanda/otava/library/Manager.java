@@ -21,6 +21,9 @@ public final class Manager {
     public static final Random random = new Random();
     private static Locale currentLocale = new EnglishLocale();
     private static boolean localeLocked = false;
+    private static final Class<? extends Check> tablesValidation = ConsistentColumnsCheck.class;
+    private static final Class<? extends Check> descriptorsValidation = TablesArrayCheck.class;
+    private static final Class<? extends Check> fullRootValidation = FullRootCheck.class;
 
     /**
      * Gets the value of the static variable with the current locale. The locale is in a static variable, and it affects the entire program.
@@ -88,9 +91,9 @@ public final class Manager {
         List<Table> tables = createTables(validationSuite.getPassiveTables(), df);
         DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
         SingletonCheckFactory scf = new SingletonCheckFactory(tableGroup, null);
-        ConsistentColumnsCheck ccc = scf.getInstance(ConsistentColumnsCheck.class);
-        ccc.validate();
-        Set<Result> results = ccc.getAllResults();
+        Check check = scf.getInstance(tablesValidation);
+        check.validate();
+        Set<Result> results = check.getAllResults();
         return results.toArray(new Result[0]);
     }
 
@@ -105,9 +108,9 @@ public final class Manager {
         List<Descriptor> descriptors = createDescriptors(validationSuite.getPassiveDescriptors(), df);
         DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
         SingletonCheckFactory scf = new SingletonCheckFactory(null, descGroup);
-        ContextCheck cc = scf.getInstance(ContextCheck.class);
-        cc.validate();
-        Set<Result> results = cc.getAllResults();
+        Check check = scf.getInstance(descriptorsValidation);
+        check.validate();
+        Set<Result> results = check.getAllResults();
         return results.toArray(new Result[0]);
     }
 
@@ -130,9 +133,9 @@ public final class Manager {
         DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
         DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
         SingletonCheckFactory scf = new SingletonCheckFactory(tableGroup, descGroup);
-        FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
-        rootCheck.validate();
-        Set<Result> results = rootCheck.getAllResults();
+        Check check = scf.getInstance(fullRootValidation);
+        check.validate();
+        Set<Result> results = check.getAllResults();
         return results.toArray(new Result[0]);
     }
 
@@ -190,13 +193,35 @@ public final class Manager {
     }
 
     /**
-     * Creates a string that graphically shows the dependencies in the full validation tree;
+     * Creates a string that graphically shows the dependencies in the tables only validation tree.
      * @return graphical representation of the tree
-     * @throws CheckCreationException If the full validation tree cannot be created.
+     * @throws CheckCreationException If the validation tree cannot be created.
+     */
+    public String printTablesOnlyValidationTree() throws CheckCreationException {
+        return printValidationTree(tablesValidation);
+    }
+
+    /**
+     * Creates a string that graphically shows the dependencies in the descriptors only validation tree.
+     * @return graphical representation of the tree
+     * @throws CheckCreationException If the validation tree cannot be created.
+     */
+    public String printDescriptorsOnlyValidationTree() throws CheckCreationException {
+        return printValidationTree(descriptorsValidation);
+    }
+
+    /**
+     * Creates a string that graphically shows the dependencies in the full validation tree.
+     * @return graphical representation of the tree
+     * @throws CheckCreationException If the validation tree cannot be created.
      */
     public String printFullValidationTree() throws CheckCreationException {
+        return printValidationTree(fullRootValidation);
+    }
+
+    private String printValidationTree(Class<? extends Check> checkClass) throws CheckCreationException {
         SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
-        FullRootCheck rootCheck = scf.getInstance(FullRootCheck.class);
-        return rootCheck.printTree();
+        Check check = scf.getInstance(checkClass);
+        return check.printTree();
     }
 }
