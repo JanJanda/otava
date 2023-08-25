@@ -1,5 +1,7 @@
 package io.github.janjanda.otava.library.locales;
 
+import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
+
 public final class EnglishLocale implements Locale {
     @Override
     public String langTag() {
@@ -129,5 +131,10 @@ public final class EnglishLocale implements Locale {
     @Override
     public String fKeyViolation(String tableUrl, String refTableUrl) {
         return "Foreign key violated in the table " + tableUrl + " because values are missing in the referenced table " + refTableUrl;
+    }
+
+    @Override
+    public String emptyTablesArray(String descName) {
+        return "The tables array is empty in the descriptor " + descName;
     }
 }

@@ -130,4 +130,9 @@ public final class CzechLocale implements Locale {
     public String fKeyViolation(String tableUrl, String refTableUrl) {
         return "Cizí klíč je porušen v tabulce " + tableUrl + " protože příslušné hodnoty chybí v referencované tabulce " + refTableUrl;
     }
+
+    @Override
+    public String emptyTablesArray(String descName) {
+        return "Pole tables je prázdné v deskriptoru " + descName;
+    }
 }

@@ -54,18 +54,18 @@ class W3Tests {
         }
 
         switch (data.result) {
-            case "ok" -> assertTrue(allNotFatal(results), data.testName);
-            case "fail" -> assertFalse(allNotFatal(results), data.testName);
+            case "ok" -> assertFalse(hasFatal(results), data.testName);
+            case "fail" -> assertTrue(hasFatal(results), data.testName);
             case "warn" -> assertFalse(allOk(results), data.testName);
             default -> fail("Invalid test data entry!");
         }
     }
 
-    boolean allNotFatal(Result[] results) {
+    boolean hasFatal(Result[] results) {
         for (Result result : results) {
-            if (result.isFatal) return false;
+            if (result.isFatal) return true;
         }
-        return true;
+        return false;
     }
 
     boolean allOk(Result[] results) {
