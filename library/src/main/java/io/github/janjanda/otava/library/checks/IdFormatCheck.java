@@ -10,7 +10,7 @@ import io.github.janjanda.otava.library.factories.CheckFactory;
 import java.util.List;
 
 /**
- * This class checks the format of some IDs in descriptors.
+ * This class checks the format of IDs in descriptors.
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_d5cd1a52318dc295dfeb575845dfc1b7">Test 077: invalid tableGroup @id [and the following...]</a>
  */
 public final class IdFormatCheck extends Check {

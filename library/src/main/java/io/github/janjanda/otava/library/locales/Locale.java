@@ -29,4 +29,5 @@ public interface Locale {
     String fKeyViolation(String tableUrl, String refTableUrl);
     String emptyTablesArray(String descName);
     String invalidId(String descName);
+    String badType(String descName, String expected);
 }

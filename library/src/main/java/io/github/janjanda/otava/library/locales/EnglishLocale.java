@@ -142,4 +142,9 @@ public final class EnglishLocale implements Locale {
     public String invalidId(String descName) {
         return "There is an invalid @id in the descriptor " + descName;
     }
+
+    @Override
+    public String badType(String descName, String expected) {
+        return "Incorrect type in the descriptor " + descName + " - should be " + expected;
+    }
 }

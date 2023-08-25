@@ -140,4 +140,9 @@ public final class CzechLocale implements Locale {
     public String invalidId(String descName) {
         return "Je zde špatné @id v deskriptoru " + descName;
     }
+
+    @Override
+    public String badType(String descName, String expected) {
+        return "Špatný typ v deskriptoru " + descName + " - měl by být " + expected;
+    }
 }
