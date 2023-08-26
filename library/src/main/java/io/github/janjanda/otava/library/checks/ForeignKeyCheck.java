@@ -64,7 +64,7 @@ public final class ForeignKeyCheck extends Check {
         List<JsonNode> columnNodes = new ArrayList<>();
         for (String name : referencedCols) {
             JsonNode column = findNonVirtColumnForName(name, tableDescription);
-            if (column.isMissingNode()) resultBuilder.addMessage(locale().missingFKeyColDesc(name, tableDescription.path("url").asText()));
+            if (column.isMissingNode()) resultBuilder.setFatal().addMessage(locale().missingFKeyColDesc(name, tableDescription.path("url").asText()));
             else columnNodes.add(column);
         }
         return columnNodes;
