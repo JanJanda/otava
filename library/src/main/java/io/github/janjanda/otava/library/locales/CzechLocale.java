@@ -155,4 +155,9 @@ public final class CzechLocale implements Locale {
     public String missingTableUrl(String descName) {
         return "Chybí URL pro tabulku v deskriptoru " + descName;
     }
+
+    @Override
+    public String propIsNotArray(String propName, String descName) {
+        return "Položka " + propName + " má být pole v deskriptoru " + descName;
+    }
 }

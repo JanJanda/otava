@@ -157,4 +157,9 @@ public final class EnglishLocale implements Locale {
     public String missingTableUrl(String descName) {
         return "Missing table URL in the descriptor " + descName;
     }
+
+    @Override
+    public String propIsNotArray(String propName, String descName) {
+        return "Property " + propName + " should be an array in the descriptor " + descName;
+    }
 }

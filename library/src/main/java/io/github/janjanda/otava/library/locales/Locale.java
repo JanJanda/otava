@@ -32,4 +32,5 @@ public interface Locale {
     String badType(String descName, String expected);
     String missingTablesArray(String descName);
     String missingTableUrl(String descName);
+    String propIsNotArray(String propName, String descName);
 }
