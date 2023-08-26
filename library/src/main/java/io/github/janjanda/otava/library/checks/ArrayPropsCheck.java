@@ -35,7 +35,8 @@ public final class ArrayPropsCheck extends Check {
     private void checkColsArray(Descriptor descriptor, Result.Builder resultBuilder) {
         List<JsonNode> tableDescs = extractTables(descriptor);
         for (JsonNode td : tableDescs) {
-            if (!td.path("tableSchema").path("columns").isArray()) resultBuilder.setFatal().addMessage(locale().propIsNotArray("columns", descriptor.getName()));
+            JsonNode colsNode = td.path("tableSchema").path("columns");
+            if (!colsNode.isMissingNode() && !colsNode.isArray()) resultBuilder.setFatal().addMessage(locale().propIsNotArray("columns", descriptor.getName()));
         }
     }
 }
