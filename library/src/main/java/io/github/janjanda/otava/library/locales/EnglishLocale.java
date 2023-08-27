@@ -167,4 +167,9 @@ public final class EnglishLocale implements Locale {
     public String propIsNotObject(String propName, String descName) {
         return "Property " + propName + " should be an object in the descriptor " + descName;
     }
+
+    @Override
+    public String propBadType(String propName, String descName) {
+        return "Property " + propName + " has incorrect type in the descriptor " + descName;
+    }
 }

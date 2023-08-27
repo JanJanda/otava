@@ -165,4 +165,9 @@ public final class CzechLocale implements Locale {
     public String propIsNotObject(String propName, String descName) {
         return "Položka " + propName + " má být objekt v deskriptoru " + descName;
     }
+
+    @Override
+    public String propBadType(String propName, String descName) {
+        return "Položka " + propName + " má špatný typ v deskriptoru " + descName;
+    }
 }
