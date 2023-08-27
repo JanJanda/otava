@@ -33,4 +33,5 @@ public interface Locale {
     String missingTablesArray(String descName);
     String missingTableUrl(String descName);
     String propIsNotArray(String propName, String descName);
+    String propIsNotObject(String propName, String descName);
 }

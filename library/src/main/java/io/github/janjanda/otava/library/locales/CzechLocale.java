@@ -160,4 +160,9 @@ public final class CzechLocale implements Locale {
     public String propIsNotArray(String propName, String descName) {
         return "Položka " + propName + " má být pole v deskriptoru " + descName;
     }
+
+    @Override
+    public String propIsNotObject(String propName, String descName) {
+        return "Položka " + propName + " má být objekt v deskriptoru " + descName;
+    }
 }

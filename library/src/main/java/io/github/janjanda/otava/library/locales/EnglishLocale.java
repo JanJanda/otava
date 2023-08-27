@@ -162,4 +162,9 @@ public final class EnglishLocale implements Locale {
     public String propIsNotArray(String propName, String descName) {
         return "Property " + propName + " should be an array in the descriptor " + descName;
     }
+
+    @Override
+    public String propIsNotObject(String propName, String descName) {
+        return "Property " + propName + " should be an object in the descriptor " + descName;
+    }
 }

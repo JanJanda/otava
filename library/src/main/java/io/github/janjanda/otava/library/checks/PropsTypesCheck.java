@@ -7,16 +7,15 @@ import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
-
 import java.util.List;
 
 /**
- * This class checks necessary array properties in descriptors.
+ * This class checks actual types of properties in descriptors.
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_dbe6c840800258cb99907ca1ba09dc2b">Test 074: empty tables</a>
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_053758a890cf73e2866e16e23887e6c5">Test 100: inconsistent array values: columns</a>
  */
-public final class ArrayPropsCheck extends Check {
-    public ArrayPropsCheck(CheckFactory f) throws CheckCreationException {
+public final class PropsTypesCheck extends Check {
+    public PropsTypesCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(RequiredPropsCheck.class));
     }
 
@@ -35,6 +34,7 @@ public final class ArrayPropsCheck extends Check {
     private void checkColsArray(Descriptor descriptor, Result.Builder resultBuilder) {
         List<JsonNode> tableDescs = extractTables(descriptor);
         for (JsonNode td : tableDescs) {
+            if (!td.path("tableSchema").isMissingNode() && !td.path("tableSchema").isObject()) resultBuilder.setFatal().addMessage(locale().propIsNotObject("tableSchema", descriptor.getName()));
             JsonNode colsNode = td.path("tableSchema").path("columns");
             if (!colsNode.isMissingNode() && !colsNode.isArray()) resultBuilder.setFatal().addMessage(locale().propIsNotArray("columns", descriptor.getName()));
         }

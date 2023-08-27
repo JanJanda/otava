@@ -15,7 +15,7 @@ import java.util.List;
  */
 public final class IdFormatCheck extends Check {
     public IdFormatCheck(CheckFactory f) throws CheckCreationException {
-        super(f.getTables(), f.getDescriptors(), f.getInstance(ArrayPropsCheck.class));
+        super(f.getTables(), f.getDescriptors(), f.getInstance(PropsTypesCheck.class));
     }
 
     @Override

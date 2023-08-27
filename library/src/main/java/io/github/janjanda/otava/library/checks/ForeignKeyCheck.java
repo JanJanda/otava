@@ -71,7 +71,12 @@ public final class ForeignKeyCheck extends Check {
     }
 
     private Table findReferencedTable(JsonNode foreignKey, Descriptor descriptor, String tableUrl, Result.Builder resultBuilder) {
-        JsonNode resource = foreignKey.path("reference").path("resource");
+        JsonNode fKeyRef = foreignKey.path("reference");
+        if (!fKeyRef.isObject()) {
+            resultBuilder.setFatal().addMessage(locale().propIsNotObject("reference", descriptor.getName()));
+            return null;
+        }
+        JsonNode resource = fKeyRef.path("resource");
         if (resource.isTextual()) {
             String resourceTextual = resource.asText();
             try {
