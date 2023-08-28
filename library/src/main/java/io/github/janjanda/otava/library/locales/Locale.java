@@ -35,4 +35,6 @@ public interface Locale {
     String propIsNotArray(String propName, String descName);
     String propIsNotObject(String propName, String descName);
     String propBadType(String propName, String descName);
+    String virtBeforeNonVirt(String descName);
+    String extraContext(String descName);
 }

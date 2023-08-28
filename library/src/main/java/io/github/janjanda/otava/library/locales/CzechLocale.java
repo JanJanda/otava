@@ -170,4 +170,14 @@ public final class CzechLocale implements Locale {
     public String propBadType(String propName, String descName) {
         return "Položka " + propName + " má špatný typ v deskriptoru " + descName;
     }
+
+    @Override
+    public String virtBeforeNonVirt(String descName) {
+        return "Virtuální sloupec je úmístěn před nevirtuálním sloupcem v deskriptoru " + descName;
+    }
+
+    @Override
+    public String extraContext(String descName) {
+        return "Je tu @context navíc v dekriptoru " + descName;
+    }
 }

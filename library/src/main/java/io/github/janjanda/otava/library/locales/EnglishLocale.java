@@ -172,4 +172,14 @@ public final class EnglishLocale implements Locale {
     public String propBadType(String propName, String descName) {
         return "Property " + propName + " has incorrect type in the descriptor " + descName;
     }
+
+    @Override
+    public String virtBeforeNonVirt(String descName) {
+        return "Virtual column is placed before non-virtual column in the descriptor " + descName;
+    }
+
+    @Override
+    public String extraContext(String descName) {
+        return "There is an extra @context in the descriptor " + descName;
+    }
 }

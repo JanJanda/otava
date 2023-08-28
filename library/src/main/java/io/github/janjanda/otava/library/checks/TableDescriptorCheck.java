@@ -19,7 +19,7 @@ import java.util.List;
  */
 public final class TableDescriptorCheck extends Check {
     public TableDescriptorCheck(CheckFactory f) throws CheckCreationException {
-        super(f.getTables(), f.getDescriptors(), f.getInstance(ConsistentColumnsCheck.class), f.getInstance(TypesCheck.class));
+        super(f.getTables(), f.getDescriptors(), f.getInstance(ConsistentColumnsCheck.class), f.getInstance(VirtualsLastCheck.class));
     }
 
     @Override
