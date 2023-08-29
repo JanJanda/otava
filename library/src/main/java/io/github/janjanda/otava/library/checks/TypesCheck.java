@@ -15,7 +15,7 @@ import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
  */
 public final class TypesCheck extends Check {
     public TypesCheck(CheckFactory f) throws CheckCreationException {
-        super(f.getTables(), f.getDescriptors(), f.getInstance(IdFormatCheck.class));
+        super(f.getTables(), f.getDescriptors(), f.getInstance(PropsTypesAndValuesCheck.class));
     }
 
     @Override
