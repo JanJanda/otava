@@ -28,7 +28,7 @@ public class DataTypesCheckTests {
         DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
         Result result = dc.validate();
         assertFalse(result.isOk);
-        assertFalse(result.isFatal);
+        assertTrue(result.isFatal);
         assertFalse(result.isSkipped);
         assertEquals(7, result.numberOfMsg);
     }
@@ -53,7 +53,7 @@ public class DataTypesCheckTests {
         DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
         Result result = dc.validate();
         assertFalse(result.isOk);
-        assertFalse(result.isFatal);
+        assertTrue(result.isFatal);
         assertFalse(result.isSkipped);
         assertEquals(6, result.numberOfMsg);
     }
