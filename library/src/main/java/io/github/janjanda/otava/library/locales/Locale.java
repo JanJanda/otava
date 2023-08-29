@@ -37,4 +37,5 @@ public interface Locale {
     String propBadType(String propName, String descName);
     String virtBeforeNonVirt(String descName);
     String extraContext(String descName);
+    String forbiddenValue(String valueName, String descName);
 }

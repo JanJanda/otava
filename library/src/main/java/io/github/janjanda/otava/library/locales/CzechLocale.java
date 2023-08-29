@@ -180,4 +180,9 @@ public final class CzechLocale implements Locale {
     public String extraContext(String descName) {
         return "Je tu @context navíc v dekriptoru " + descName;
     }
+
+    @Override
+    public String forbiddenValue(String valueName, String descName) {
+        return "Zakázaná hodnota " + valueName + " v deskriptoru " + descName;
+    }
 }

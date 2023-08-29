@@ -10,14 +10,16 @@ import io.github.janjanda.otava.library.factories.CheckFactory;
 import java.util.List;
 
 /**
- * This class checks actual types of properties in descriptors.
+ * This class checks actual types and values of properties in descriptors.
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_dbe6c840800258cb99907ca1ba09dc2b">Test 074: empty tables</a>
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_053758a890cf73e2866e16e23887e6c5">Test 100: inconsistent array values: columns</a>
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_b931442cec955794ecd8de971e026c81">Test 107: invalid tableSchema</a>
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_17b0d40d1a200632b4fe49c41131f2ba">Test 111: titles with invalid value</a>
+ * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_81724b3ccf5dd39130c569ee2a6e2b4e">Test 135: @list value</a>
+ * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_01bc25e31e6db6e621d317e73a7da77d">Test 136: @set value</a>
  */
-public final class PropsTypesCheck extends Check {
-    public PropsTypesCheck(CheckFactory f) throws CheckCreationException {
+public final class PropsTypesAndValuesCheck extends Check {
+    public PropsTypesAndValuesCheck(CheckFactory f) throws CheckCreationException {
         super(f.getTables(), f.getDescriptors(), f.getInstance(RequiredPropsCheck.class));
     }
 
@@ -29,6 +31,7 @@ public final class PropsTypesCheck extends Check {
             JsonNode tablesArray = descriptor.path("tables");
             if (tablesArray.isArray() && tablesArray.size() == 0) resultBuilder.setFatal().addMessage(locale().emptyTablesArray(descriptor.getName()));
             checkColsArray(descriptor, resultBuilder);
+            checkListsAndSets(descriptor, resultBuilder);
         }
         return resultBuilder.build();
     }
@@ -48,5 +51,12 @@ public final class PropsTypesCheck extends Check {
                 }
             }
         }
+    }
+
+    private void checkListsAndSets(Descriptor descriptor, Result.Builder resultBuilder) {
+        JsonNode listNode = descriptor.getRootNode().findValue("@list");
+        if (listNode != null) resultBuilder.setFatal().addMessage(locale().forbiddenValue("@list", descriptor.getName()));
+        JsonNode setNode = descriptor.getRootNode().findValue("@set");
+        if (setNode != null) resultBuilder.setFatal().addMessage(locale().forbiddenValue("@set", descriptor.getName()));
     }
 }

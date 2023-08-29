@@ -182,4 +182,9 @@ public final class EnglishLocale implements Locale {
     public String extraContext(String descName) {
         return "There is an extra @context in the descriptor " + descName;
     }
+
+    @Override
+    public String forbiddenValue(String valueName, String descName) {
+        return "Forbidden value " + valueName + " in the descriptor " + descName;
+    }
 }
