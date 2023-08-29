@@ -33,7 +33,7 @@ public final class PropsTypesAndValuesCheck extends Check {
             if (tablesArray.isArray() && tablesArray.size() == 0) resultBuilder.setFatal().addMessage(locale().emptyTablesArray(descriptor.getName()));
             checkColsArray(descriptor, resultBuilder);
             checkListsAndSets(descriptor, resultBuilder);
-            checkBlankTypesAndIds(descriptor, resultBuilder);
+            checkTypesAndIds(descriptor, resultBuilder);
         }
         return resultBuilder.build();
     }
@@ -62,16 +62,27 @@ public final class PropsTypesAndValuesCheck extends Check {
         if (setNode != null) resultBuilder.setFatal().addMessage(locale().forbiddenValue("@set", descriptor.getName()));
     }
 
-    private void checkBlankTypesAndIds(Descriptor descriptor, Result.Builder resultBuilder) {
-        List<JsonNode> typeNodes = descriptor.getRootNode().findValues("@type");
-        if (hasBlankNode(typeNodes)) resultBuilder.setFatal().addMessage(locale().noBlanks("@type", descriptor.getName()));
-        List<JsonNode> idNodes = descriptor.getRootNode().findValues("@id");
-        if (hasBlankNode(idNodes)) resultBuilder.setFatal().addMessage(locale().noBlanks("@id", descriptor.getName()));
+    private void checkTypesAndIds(Descriptor descriptor, Result.Builder resultBuilder) {
+        checkNonBlankString(descriptor, resultBuilder, "@type");
+        checkNonBlankString(descriptor, resultBuilder, "@id");
+    }
+
+    private void checkNonBlankString(Descriptor descriptor, Result.Builder resultBuilder, String propName) {
+        List<JsonNode> typeNodes = descriptor.getRootNode().findValues(propName);
+        if (hasBlankNode(typeNodes)) resultBuilder.setFatal().addMessage(locale().noBlanks(propName, descriptor.getName()));
+        if (hasNonString(typeNodes)) resultBuilder.setFatal().addMessage(locale().propBadType(propName, descriptor.getName()));
     }
 
     private boolean hasBlankNode(List<JsonNode> nodes) {
         for (JsonNode node : nodes) {
             if (node.isTextual() && node.asText().startsWith("_:")) return true;
+        }
+        return false;
+    }
+
+    private boolean hasNonString(List<JsonNode> nodes) {
+        for (JsonNode node : nodes) {
+            if (!node.isTextual()) return true;
         }
         return false;
     }
