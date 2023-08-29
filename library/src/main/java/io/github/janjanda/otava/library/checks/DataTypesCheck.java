@@ -64,7 +64,7 @@ public final class DataTypesCheck extends Check {
             if (notFirstLine) {
                 for (int i = 0; i < dataTypes.length; i++) {
                     if (!okValue(row.get(i), dataTypes[i])) {
-                        resultBuilder.addMessage(locale().badDatatype(table.getName(), Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
+                        resultBuilder.setFatal().addMessage(locale().badDatatype(table.getName(), Long.toString(row.getRecordNumber()), Integer.toString(i + 1)));
                     }
                 }
             }
