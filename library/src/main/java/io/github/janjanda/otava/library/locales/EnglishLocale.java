@@ -187,4 +187,9 @@ public final class EnglishLocale implements Locale {
     public String forbiddenValue(String valueName, String descName) {
         return "Forbidden value " + valueName + " in the descriptor " + descName;
     }
+
+    @Override
+    public String noBlanks(String propName, String descName) {
+        return "The property " + propName + " cannot be a blank node in the descriptor " + descName;
+    }
 }

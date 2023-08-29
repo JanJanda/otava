@@ -185,4 +185,9 @@ public final class CzechLocale implements Locale {
     public String forbiddenValue(String valueName, String descName) {
         return "Zakázaná hodnota " + valueName + " v deskriptoru " + descName;
     }
+
+    @Override
+    public String noBlanks(String propName, String descName) {
+        return "Položka " + propName + " nemůže být blank node v deskriptoru " + descName;
+    }
 }

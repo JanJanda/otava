@@ -17,6 +17,7 @@ import java.util.List;
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_17b0d40d1a200632b4fe49c41131f2ba">Test 111: titles with invalid value</a>
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_81724b3ccf5dd39130c569ee2a6e2b4e">Test 135: @list value</a>
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_01bc25e31e6db6e621d317e73a7da77d">Test 136: @set value</a>
+ * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#test_49dd48645c18ca607fa8fa09801f48d7">Test 137: @type out of range (as datatype)</a>
  */
 public final class PropsTypesAndValuesCheck extends Check {
     public PropsTypesAndValuesCheck(CheckFactory f) throws CheckCreationException {
@@ -32,6 +33,7 @@ public final class PropsTypesAndValuesCheck extends Check {
             if (tablesArray.isArray() && tablesArray.size() == 0) resultBuilder.setFatal().addMessage(locale().emptyTablesArray(descriptor.getName()));
             checkColsArray(descriptor, resultBuilder);
             checkListsAndSets(descriptor, resultBuilder);
+            checkBlankTypesAndIds(descriptor, resultBuilder);
         }
         return resultBuilder.build();
     }
@@ -58,5 +60,19 @@ public final class PropsTypesAndValuesCheck extends Check {
         if (listNode != null) resultBuilder.setFatal().addMessage(locale().forbiddenValue("@list", descriptor.getName()));
         JsonNode setNode = descriptor.getRootNode().findValue("@set");
         if (setNode != null) resultBuilder.setFatal().addMessage(locale().forbiddenValue("@set", descriptor.getName()));
+    }
+
+    private void checkBlankTypesAndIds(Descriptor descriptor, Result.Builder resultBuilder) {
+        List<JsonNode> typeNodes = descriptor.getRootNode().findValues("@type");
+        if (hasBlankNode(typeNodes)) resultBuilder.setFatal().addMessage(locale().noBlanks("@type", descriptor.getName()));
+        List<JsonNode> idNodes = descriptor.getRootNode().findValues("@id");
+        if (hasBlankNode(idNodes)) resultBuilder.setFatal().addMessage(locale().noBlanks("@id", descriptor.getName()));
+    }
+
+    private boolean hasBlankNode(List<JsonNode> nodes) {
+        for (JsonNode node : nodes) {
+            if (node.isTextual() && node.asText().startsWith("_:")) return true;
+        }
+        return false;
     }
 }

@@ -38,4 +38,5 @@ public interface Locale {
     String virtBeforeNonVirt(String descName);
     String extraContext(String descName);
     String forbiddenValue(String valueName, String descName);
+    String noBlanks(String propName, String descName);
 }
