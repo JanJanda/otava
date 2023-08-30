@@ -113,12 +113,12 @@ public final class CzechLocale implements Locale {
 
     @Override
     public String badRefTableUrl(String url, String tableUrl) {
-        return "Nelze rezolvovat URL " + url + " v cizím klíči v tabulce s URL " + tableUrl;
+        return "Nelze rezolvovat URL " + url + " v cizím klíči v popisu tabulky s URL " + tableUrl;
     }
 
     @Override
     public String missingFKeyTable(String tableUrl) {
-        return "Chybí referencovaná tabulka v cizím klíči v tabulce s URL " + tableUrl;
+        return "Chybí referencovaná tabulka v cizím klíči v popisu tabulky s URL " + tableUrl;
     }
 
     @Override
@@ -173,7 +173,7 @@ public final class CzechLocale implements Locale {
 
     @Override
     public String extraContext(String descName) {
-        return "Je tu @context navíc v dekriptoru " + descName;
+        return "Je tu nadbytečný @context v dekriptoru " + descName;
     }
 
     @Override
@@ -184,5 +184,15 @@ public final class CzechLocale implements Locale {
     @Override
     public String noBlanks(String propName, String descName) {
         return "Položka " + propName + " nemůže být blank node v deskriptoru " + descName;
+    }
+
+    @Override
+    public String fKeyIsNotObject(String tableUrl) {
+        return "Cizí klíč není objekt v popisu tabulky s URL " + tableUrl;
+    }
+
+    @Override
+    public String extraPropsInFKey(String tableUrl) {
+        return "Cizí klíč obsahuje nadbytečné položky v popisu tabulky s URL " + tableUrl;
     }
 }

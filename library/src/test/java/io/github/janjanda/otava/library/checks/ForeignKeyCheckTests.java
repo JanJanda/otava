@@ -32,7 +32,7 @@ class ForeignKeyCheckTests {
         Result result = fkc.validate();
         assertFalse(result.isOk);
         assertFalse(result.isSkipped);
-        assertFalse(result.isFatal);
+        assertTrue(result.isFatal);
     }
 
     @Test
@@ -60,6 +60,6 @@ class ForeignKeyCheckTests {
         Result result = fkc.validate();
         assertFalse(result.isOk);
         assertFalse(result.isSkipped);
-        assertFalse(result.isFatal);
+        assertTrue(result.isFatal);
     }
 }

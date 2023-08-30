@@ -33,16 +33,19 @@ public final class ForeignKeyCheck extends Check {
             Pair<Descriptor, JsonNode> tableMeta = findTableDescriptorAndDescriptionWithExc(table, descriptors, this.getClass().getName());
             Descriptor tableDescriptor = tableMeta.first;
             JsonNode tableDescription = tableMeta.second;
+            String tableUrl = tableDescription.path("url").asText();
             JsonNode[] foreignKeys = extractForeignKeys(tableDescription);
             for (JsonNode foreignKey : foreignKeys) {
-                List<JsonNode> fKeyCols = findColumnDescriptions(foreignKey.path("columnReference"), tableDescription, resultBuilder);
-                List<Integer> fKeyColIndices = findColumnsWithDescriptions(fKeyCols, table, this.getClass().getName());
-                Table referencedTable = findReferencedTable(foreignKey, tableDescriptor, tableDescription.path("url").asText(), resultBuilder);
-                if (referencedTable != null) {
-                    JsonNode refTableDescription = findTableDescriptionWithExc(referencedTable, descriptors, this.getClass().getName());
-                    List<JsonNode> refTableCols = findColumnDescriptions(foreignKey.path("reference").path("columnReference"), refTableDescription, resultBuilder);
-                    List<Integer> refTableColIndices = findColumnsWithDescriptions(refTableCols, referencedTable, this.getClass().getName());
-                    checkForeignKey(table, fKeyColIndices, referencedTable, refTableColIndices, resultBuilder, tableDescription.path("url").asText());
+                if (checkFKeyStructure(foreignKey, resultBuilder, tableUrl)) {
+                    List<JsonNode> fKeyCols = findColumnDescriptions(foreignKey.path("columnReference"), tableDescription, resultBuilder);
+                    List<Integer> fKeyColIndices = findColumnsWithDescriptions(fKeyCols, table, this.getClass().getName());
+                    Table referencedTable = findReferencedTable(foreignKey, tableDescriptor, tableUrl, resultBuilder);
+                    if (referencedTable != null) {
+                        JsonNode refTableDescription = findTableDescriptionWithExc(referencedTable, descriptors, this.getClass().getName());
+                        List<JsonNode> refTableCols = findColumnDescriptions(foreignKey.path("reference").path("columnReference"), refTableDescription, resultBuilder);
+                        List<Integer> refTableColIndices = findColumnsWithDescriptions(refTableCols, referencedTable, this.getClass().getName());
+                        checkForeignKey(table, fKeyColIndices, referencedTable, refTableColIndices, resultBuilder, tableUrl);
+                    }
                 }
             }
         }
@@ -85,17 +88,17 @@ public final class ForeignKeyCheck extends Check {
                     if (refTableUrl.equals(table.getPreferredName())) return table;
                 }
             } catch (MalformedURLException e) {
-                resultBuilder.addMessage(locale().badRefTableUrl(resourceTextual, tableUrl));
+                resultBuilder.setFatal().addMessage(locale().badRefTableUrl(resourceTextual, tableUrl));
                 return null;
             }
         }
-        resultBuilder.addMessage(locale().missingFKeyTable(tableUrl));
+        resultBuilder.setFatal().addMessage(locale().missingFKeyTable(tableUrl));
         return null;
     }
 
     private void checkForeignKey(Table table, List<Integer> columns, Table refTable, List<Integer> refCols, Result.Builder resultBuilder, String tableUrl) {
         if (columns.size() != refCols.size()) {
-            resultBuilder.addMessage(locale().badNumOfFKeyCols(tableUrl));
+            resultBuilder.setFatal().addMessage(locale().badNumOfFKeyCols(tableUrl));
             return;
         }
         int[] referenceCols = new int[refCols.size()];
@@ -109,10 +112,22 @@ public final class ForeignKeyCheck extends Check {
                     values[i] = row.get(columns.get(i));
                 }
                 if (!areValuesInColumns(refTable, values, referenceCols, 1)) {
-                    resultBuilder.addMessage(locale().fKeyViolation(tableUrl, refTable.getPreferredName()));
+                    resultBuilder.setFatal().addMessage(locale().fKeyViolation(tableUrl, refTable.getPreferredName()));
                     return;
                 }
             }
         }
+    }
+
+    private boolean checkFKeyStructure(JsonNode fKey, Result.Builder resultBuilder, String tableUrl) {
+        if (!fKey.isObject()) {
+            resultBuilder.setFatal().addMessage(locale().fKeyIsNotObject(tableUrl));
+            return false;
+        }
+        if (fKey.size() > 2 || fKey.path("reference").size() > 2) {
+            resultBuilder.setFatal().addMessage(locale().extraPropsInFKey(tableUrl));
+            return false;
+        }
+        return true;
     }
 }

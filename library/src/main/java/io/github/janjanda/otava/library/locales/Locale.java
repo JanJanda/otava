@@ -38,4 +38,6 @@ public interface Locale {
     String extraContext(String descName);
     String forbiddenValue(String valueName, String descName);
     String noBlanks(String propName, String descName);
+    String fKeyIsNotObject(String tableUrl);
+    String extraPropsInFKey(String tableUrl);
 }

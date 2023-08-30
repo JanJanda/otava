@@ -115,12 +115,12 @@ public final class EnglishLocale implements Locale {
 
     @Override
     public String badRefTableUrl(String url, String tableUrl) {
-        return "Cannot resolve URL " + url + " in the foreign key in the table with URL " + tableUrl;
+        return "Cannot resolve URL " + url + " in the foreign key in the description of the table with the URL " + tableUrl;
     }
 
     @Override
     public String missingFKeyTable(String tableUrl) {
-        return "Missing resource table in the foreign key in the table with URL " + tableUrl;
+        return "Missing resource table in the foreign key in the description of the table with the URL " + tableUrl;
     }
 
     @Override
@@ -175,7 +175,7 @@ public final class EnglishLocale implements Locale {
 
     @Override
     public String extraContext(String descName) {
-        return "There is an extra @context in the descriptor " + descName;
+        return "There is a superfluous @context in the descriptor " + descName;
     }
 
     @Override
@@ -186,5 +186,15 @@ public final class EnglishLocale implements Locale {
     @Override
     public String noBlanks(String propName, String descName) {
         return "The property " + propName + " cannot be a blank node in the descriptor " + descName;
+    }
+
+    @Override
+    public String fKeyIsNotObject(String tableUrl) {
+        return "Foreign key is not an object in the description of the table with the URL " + tableUrl;
+    }
+
+    @Override
+    public String extraPropsInFKey(String tableUrl) {
+        return "Foreign key contains superfluous properties in the description of the table with the URL " + tableUrl;
     }
 }
