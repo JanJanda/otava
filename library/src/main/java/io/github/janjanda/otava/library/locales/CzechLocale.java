@@ -195,4 +195,9 @@ public final class CzechLocale implements Locale {
     public String extraPropsInFKey(String tableUrl) {
         return "Cizí klíč obsahuje nadbytečné položky v popisu tabulky s URL " + tableUrl;
     }
+
+    @Override
+    public String cannotResolveBase(String descName) {
+        return "Nelze rezolvovat bázovou URL v deskriptoru " + descName;
+    }
 }

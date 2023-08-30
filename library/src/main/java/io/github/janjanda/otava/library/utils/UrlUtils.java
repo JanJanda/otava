@@ -13,8 +13,17 @@ public final class UrlUtils {
     }
 
     public static String getBaseUrl(Descriptor desc) {
+        try {
+            return getBaseUrlWithExc(desc);
+        }
+        catch (MalformedURLException e) {
+            return "";
+        }
+    }
+
+    public static String getBaseUrlWithExc(Descriptor desc) throws MalformedURLException {
         JsonNode baseNode = desc.path("@context").path(1).path("@base");
-        if (baseNode.isTextual()) return baseNode.asText();
+        if (baseNode.isTextual()) return resolveUrl(desc.getPreferredName(), baseNode.asText());
         return desc.getPreferredName();
     }
 }

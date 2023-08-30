@@ -197,4 +197,9 @@ public final class EnglishLocale implements Locale {
     public String extraPropsInFKey(String tableUrl) {
         return "Foreign key contains superfluous properties in the description of the table with the URL " + tableUrl;
     }
+
+    @Override
+    public String cannotResolveBase(String descName) {
+        return "Cannot resolve base URL in the descriptor " + descName;
+    }
 }

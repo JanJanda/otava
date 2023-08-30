@@ -34,7 +34,7 @@ public final class ColumnTitlesCheck extends Check {
                     JsonNode colDesc = descColumns.get(i);
                     if (isStringInName(tableColName, colDesc.path("name")) || isStringInTitle(tableColName, colDesc.path("titles"))) indexFound = i;
                 }
-                if (indexFound == -1) resultBuilder.addMessage(locale().missingColDesc(tableColName, table.getName()));
+                if (indexFound == -1) resultBuilder.setFatal().addMessage(locale().missingColDesc(tableColName, table.getName()));
                 else descColumns.remove(indexFound);
             }
             for (JsonNode missedCol : descColumns) {

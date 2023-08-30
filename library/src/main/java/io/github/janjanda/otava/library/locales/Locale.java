@@ -40,4 +40,5 @@ public interface Locale {
     String noBlanks(String propName, String descName);
     String fKeyIsNotObject(String tableUrl);
     String extraPropsInFKey(String tableUrl);
+    String cannotResolveBase(String descName);
 }

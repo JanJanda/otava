@@ -15,7 +15,7 @@ import java.util.List;
  */
 public final class RequiredPropsCheck extends Check {
     public RequiredPropsCheck(CheckFactory f) throws CheckCreationException {
-        super(f.getTables(), f.getDescriptors(), f.getInstance(ContextCheck.class));
+        super(f.getTables(), f.getDescriptors(), f.getInstance(BaseUrlsCheck.class));
     }
 
     @Override
