@@ -28,7 +28,7 @@ class ColumnTitlesCheckTests {
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
         Result result = ctc.validate();
         assertFalse(result.isOk);
-        assertFalse(result.isFatal);
+        assertTrue(result.isFatal);
         assertFalse(result.isSkipped);
     }
 
@@ -58,6 +58,6 @@ class ColumnTitlesCheckTests {
         Descriptor[] descs = {createDescriptor("metadata011.json", "https://example.org/metadata011.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
-        assertFalse(ctc.validate().isFatal);
+        assertTrue(ctc.validate().isFatal);
     }
 }
