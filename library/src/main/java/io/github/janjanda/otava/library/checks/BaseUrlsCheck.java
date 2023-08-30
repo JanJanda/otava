@@ -25,7 +25,7 @@ public final class BaseUrlsCheck extends Check {
                 getBaseUrlWithExc(ds);
             }
             catch (MalformedURLException e) {
-                resultBuilder.setFatal().addMessage(locale().cannotResolveBase(ds.getName() + " --- " + e.getMessage()));
+                resultBuilder.setFatal().addMessage(locale().cannotResolveBase(ds.getName()) + " --- " + e.getMessage());
             }
         }
         return resultBuilder.build();
