@@ -7,7 +7,6 @@ import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.*;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
-
 import io.github.janjanda.otava.library.factories.CheckFactory;
 import org.apache.commons.csv.CSVRecord;
 import java.net.URI;
@@ -22,8 +21,8 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * This class checks whether values in tables match their defined data types. Most common data types are supported.
- * It supports the following built-in data types: {@code string}, {@code anyURI}, {@code boolean}, {@code date}, {@code datetime}, {@code number}, {@code integer}, {@code time}, {@code byte}, {@code unsignedLong}.
- * It also supports derived data types. The bases {@code number}, {@code integer}, {@code byte} and {@code unsignedLong} support minimum and maximum constraints (both inclusive and exclusive).
+ * It supports the following built-in data types: {@code string}, {@code anyURI}, {@code boolean}, {@code date}, {@code datetime}, {@code number}, {@code integer}, {@code time}, {@code byte}, {@code unsignedLong}, {@code unsignedShort}, {@code unsignedByte}, {@code positiveInteger}, {@code negativeInteger}, {@code nonPositiveInteger}, {@code nonNegativeInteger}, {@code double}, {@code float}.
+ * It also supports derived data types. The bases {@code number}, {@code integer}, {@code byte}, {@code unsignedLong}, {@code unsignedShort}, {@code unsignedByte}, {@code positiveInteger}, {@code negativeInteger}, {@code nonPositiveInteger}, {@code nonNegativeInteger}, {@code double}, {@code float} support minimum and maximum constraints (both inclusive and exclusive).
  * The base {@code string} supports length, minimum length, maximum length and format constraints. The format expects a regular expression.
  * The bases {@code date}, {@code time} and {@code datetime} support format constraint. The format expects a datetime formatter pattern.
  * Unsupported features and invalid constraints are ignored because they may still be reasonable outside the scope of this validator.
@@ -85,6 +84,15 @@ public final class DataTypesCheck extends Check {
             if (textual.equals("time")) return isTime(value) || isOffsetTime(value);
             if (textual.equals("byte")) return isByte(value);
             if (textual.equals("unsignedLong")) return isUnsLong(value);
+            if (textual.equals("unsignedShort")) return isUnsShort(value);
+            if (textual.equals("unsignedByte")) return isUnsByte(value);
+            if (textual.equals("positiveInteger")) return isPosInteger(value);
+            if (textual.equals("negativeInteger")) return isNegInteger(value);
+            if (textual.equals("nonPositiveInteger")) return isNonPosInteger(value);
+            if (textual.equals("nonNegativeInteger")) return isNonNegInteger(value);
+            if (textual.equals("double")) return isNumber(value);
+            if (textual.equals("float")) return isFloat(value);
+
         }
         if (dataType.isObject()) {
             JsonNode baseNode = dataType.path("base");
@@ -98,6 +106,14 @@ public final class DataTypesCheck extends Check {
             if (base.equals("time")) return checkTime(value, dataType) || checkOffsetTime(value, dataType);
             if (base.equals("byte")) return isByte(value) && checkNumber(value, dataType);
             if (base.equals("unsignedLong")) return isUnsLong(value) && checkNumber(value, dataType);
+            if (base.equals("unsignedShort")) return isUnsShort(value) && checkNumber(value, dataType);
+            if (base.equals("unsignedByte")) return isUnsByte(value) && checkNumber(value, dataType);
+            if (base.equals("positiveInteger")) return isPosInteger(value) && checkNumber(value, dataType);
+            if (base.equals("negativeInteger")) return isNegInteger(value) && checkNumber(value, dataType);
+            if (base.equals("nonPositiveInteger")) return isNonPosInteger(value) && checkNumber(value, dataType);
+            if (base.equals("nonNegativeInteger")) return isNonNegInteger(value) && checkNumber(value, dataType);
+            if (base.equals("double")) return checkNumber(value, dataType);
+            if (base.equals("float")) return isFloat(value) && checkNumber(value, dataType);
         }
         return true;
     }
@@ -200,6 +216,76 @@ public final class DataTypesCheck extends Check {
         try {
             long v = Long.parseLong(value);
             return v >= 0;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isUnsShort(String value) {
+        try {
+            int v = Integer.parseInt(value);
+            return v >= 0 && v <= 65535;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isUnsByte(String value) {
+        try {
+            int v = Integer.parseInt(value);
+            return v >= 0 && v <= 255;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isPosInteger(String value) {
+        try {
+            long v = Long.parseLong(value);
+            return v >= 1;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isNegInteger(String value) {
+        try {
+            long v = Long.parseLong(value);
+            return v <= -1;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isNonPosInteger(String value) {
+        try {
+            long v = Long.parseLong(value);
+            return v <= 0;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isNonNegInteger(String value) {
+        try {
+            long v = Long.parseLong(value);
+            return v >= 0;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isFloat(String value) {
+        try {
+            Float.parseFloat(value);
+            return true;
         }
         catch (NumberFormatException e) {
             return false;
