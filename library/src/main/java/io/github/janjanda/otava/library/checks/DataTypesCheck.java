@@ -22,8 +22,8 @@ import java.util.regex.PatternSyntaxException;
 
 /**
  * This class checks whether values in tables match their defined data types. Most common data types are supported.
- * It supports the following built-in data types: {@code string}, {@code anyURI}, {@code boolean}, {@code date}, {@code datetime}, {@code number}, {@code integer}, {@code time}.
- * It also supports derived data types. The bases {@code number} and {@code integer} support minimum and maximum constraints (both inclusive and exclusive).
+ * It supports the following built-in data types: {@code string}, {@code anyURI}, {@code boolean}, {@code date}, {@code datetime}, {@code number}, {@code integer}, {@code time}, {@code byte}, {@code unsignedLong}.
+ * It also supports derived data types. The bases {@code number}, {@code integer}, {@code byte} and {@code unsignedLong} support minimum and maximum constraints (both inclusive and exclusive).
  * The base {@code string} supports length, minimum length, maximum length and format constraints. The format expects a regular expression.
  * The bases {@code date}, {@code time} and {@code datetime} support format constraint. The format expects a datetime formatter pattern.
  * Unsupported features and invalid constraints are ignored because they may still be reasonable outside the scope of this validator.
@@ -76,13 +76,15 @@ public final class DataTypesCheck extends Check {
         if (value.isEmpty()) return true;
         if (dataType.isTextual()) {
             String textual = dataType.asText();
-            if (textual.equals("anyURI") && !isURI(value)) return false;
-            if (textual.equals("boolean") && !isBoolean(value)) return false;
-            if (textual.equals("date") && !isDate(value)) return false;
-            if (textual.equals("datetime") && !isDateTime(value) && !isOffsetDateTime(value)) return false;
-            if (textual.equals("number") && !isNumber(value)) return false;
-            if (textual.equals("integer") && !isInteger(value)) return false;
-            if (textual.equals("time") && !isTime(value) && !isOffsetTime(value)) return false;
+            if (textual.equals("anyURI")) return isURI(value);
+            if (textual.equals("boolean")) return isBoolean(value);
+            if (textual.equals("date")) return isDate(value);
+            if (textual.equals("datetime")) return isDateTime(value) || isOffsetDateTime(value);
+            if (textual.equals("number")) return isNumber(value);
+            if (textual.equals("integer")) return isInteger(value);
+            if (textual.equals("time")) return isTime(value) || isOffsetTime(value);
+            if (textual.equals("byte")) return isByte(value);
+            if (textual.equals("unsignedLong")) return isUnsLong(value);
         }
         if (dataType.isObject()) {
             JsonNode baseNode = dataType.path("base");
@@ -94,6 +96,8 @@ public final class DataTypesCheck extends Check {
             if (base.equals("date")) return checkDate(value, dataType);
             if (base.equals("datetime")) return checkDateTime(value, dataType) || checkOffsetDateTime(value, dataType);
             if (base.equals("time")) return checkTime(value, dataType) || checkOffsetTime(value, dataType);
+            if (base.equals("byte")) return isByte(value) && checkNumber(value, dataType);
+            if (base.equals("unsignedLong")) return isUnsLong(value) && checkNumber(value, dataType);
         }
         return true;
     }
@@ -178,6 +182,26 @@ public final class DataTypesCheck extends Check {
             return true;
         }
         catch (DateTimeParseException e) {
+            return false;
+        }
+    }
+
+    private boolean isByte(String value) {
+        try {
+            Byte.parseByte(value);
+            return true;
+        }
+        catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private boolean isUnsLong(String value) {
+        try {
+            long v = Long.parseLong(value);
+            return v >= 0;
+        }
+        catch (NumberFormatException e) {
             return false;
         }
     }
