@@ -16,6 +16,9 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+/**
+ * This is the main class of the library. It provides unified interface for the use of the library.
+ */
 public final class Manager {
     public static final String rdfPrefix = "https://janjanda.github.io/otava/";
     public static final Random random = new Random();

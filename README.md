@@ -34,6 +34,6 @@ java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -t library/src/t
   - [x] Finish data model
   - [x] Extend file discovery possibilities
   - [x] Create unified library interface
-  - [ ] Inspect test coverage
-  - [ ] Review code
-  - [ ] Add documentation
+  - [x] Inspect test coverage
+  - [x] Review code
+  - [x] Add documentation

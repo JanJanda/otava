@@ -8,6 +8,9 @@ import static io.github.janjanda.otava.library.Manager.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represent a result of a validation check.
+ */
 public final class Result implements Outcome {
     public final boolean isFatal;
     public final boolean isOk;
@@ -69,6 +72,9 @@ public final class Result implements Outcome {
         return output.toString();
     }
 
+    /**
+     * This builder provides a convenient syntax for the input of result data.
+     */
     public static final class Builder {
         private boolean fatal = false;
         private boolean skipped = false;
