@@ -5,9 +5,11 @@ import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
+
 import java.util.List;
+
 import static io.github.janjanda.otava.library.Manager.locale;
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.extractTables;
 
 /**
  * This class checks @types of entities in descriptors.

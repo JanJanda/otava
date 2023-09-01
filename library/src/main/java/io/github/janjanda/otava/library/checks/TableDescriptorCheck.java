@@ -1,17 +1,20 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.*;
-import static io.github.janjanda.otava.library.Manager.*;
-import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.documents.Descriptor;
+import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
-import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.extractTables;
+import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrl;
+import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
 
 /**
  * This class checks whether every table has a description in descriptors and every description has a corresponding table.

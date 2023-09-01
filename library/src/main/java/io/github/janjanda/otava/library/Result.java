@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import static io.github.janjanda.otava.library.Manager.*;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.janjanda.otava.library.Manager.*;
 
 /**
  * This class represent a result of a validation check.

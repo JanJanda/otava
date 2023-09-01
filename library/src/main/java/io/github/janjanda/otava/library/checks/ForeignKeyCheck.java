@@ -1,20 +1,25 @@
 package io.github.janjanda.otava.library.checks;
 
-import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 import com.fasterxml.jackson.databind.JsonNode;
-import static io.github.janjanda.otava.library.Manager.*;
-import io.github.janjanda.otava.library.*;
-import io.github.janjanda.otava.library.documents.*;
-import io.github.janjanda.otava.library.exceptions.*;
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
-
+import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.documents.Descriptor;
+import io.github.janjanda.otava.library.documents.Table;
+import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.exceptions.CheckRunException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 import io.github.janjanda.otava.library.utils.Pair;
-import static io.github.janjanda.otava.library.utils.TableUtils.*;
 import org.apache.commons.csv.CSVRecord;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
+import static io.github.janjanda.otava.library.utils.TableUtils.areValuesInColumns;
+import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrl;
+import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
 
 /**
  * This class checks specified foreign keys between tables.

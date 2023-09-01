@@ -1,7 +1,5 @@
 package io.github.janjanda.otava.library.locales;
 
-import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-
 public final class EnglishLocale implements Locale {
     @Override
     public String langTag() {

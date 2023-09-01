@@ -2,6 +2,7 @@ package io.github.janjanda.otava.library.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import io.github.janjanda.otava.library.documents.Descriptor;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 

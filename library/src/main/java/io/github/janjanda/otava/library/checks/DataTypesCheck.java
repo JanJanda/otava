@@ -2,13 +2,14 @@ package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.MissingNode;
-import io.github.janjanda.otava.library.*;
-import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.*;
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
+import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.exceptions.CheckRunException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 import org.apache.commons.csv.CSVRecord;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.*;
@@ -18,6 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 
 /**
  * This class checks whether values in tables match their defined data types. Most common data types are supported.

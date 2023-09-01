@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import io.github.janjanda.otava.library.Outcome;
+
 import static io.github.janjanda.otava.library.Manager.*;
 
 public class ValidatorException extends Exception implements Outcome {

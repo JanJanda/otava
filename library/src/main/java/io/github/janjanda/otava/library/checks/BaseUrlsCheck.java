@@ -1,12 +1,14 @@
 package io.github.janjanda.otava.library.checks;
 
-import static io.github.janjanda.otava.library.utils.UrlUtils.*;
-import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
+
 import java.net.MalformedURLException;
+
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrlWithExc;
 
 /**
  * This class checks base URLs of descriptors.

@@ -1,20 +1,32 @@
 package io.github.janjanda.otava.library;
 
-import static io.github.janjanda.otava.library.ValidationSuite.*;
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
-import static io.github.janjanda.otava.library.utils.UrlUtils.*;
-import io.github.janjanda.otava.library.checks.*;
-import io.github.janjanda.otava.library.documents.*;
-import io.github.janjanda.otava.library.exceptions.*;
+import com.fasterxml.jackson.databind.JsonNode;
+import io.github.janjanda.otava.library.checks.Check;
+import io.github.janjanda.otava.library.checks.ConsistentColumnsCheck;
+import io.github.janjanda.otava.library.checks.FullRootCheck;
+import io.github.janjanda.otava.library.checks.TypesCheck;
+import io.github.janjanda.otava.library.documents.Descriptor;
+import io.github.janjanda.otava.library.documents.DocsGroup;
+import io.github.janjanda.otava.library.documents.Table;
+import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.exceptions.ValidatorException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.DocumentFactory;
 import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
-import io.github.janjanda.otava.library.locales.*;
-import com.fasterxml.jackson.databind.JsonNode;
+import io.github.janjanda.otava.library.locales.EnglishLocale;
+import io.github.janjanda.otava.library.locales.Locale;
+
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import static io.github.janjanda.otava.library.ValidationSuite.DescResource;
+import static io.github.janjanda.otava.library.ValidationSuite.TableResource;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.extractTables;
+import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrl;
+import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
 
 /**
  * This is the main class of the library. It provides unified interface for the use of the library.

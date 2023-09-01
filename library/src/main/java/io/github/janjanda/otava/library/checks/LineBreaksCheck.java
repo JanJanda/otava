@@ -1,13 +1,14 @@
 package io.github.janjanda.otava.library.checks;
 
-import io.github.janjanda.otava.library.*;
-import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static io.github.janjanda.otava.library.Manager.locale;
 
 /**
  * This class checks the line breaks of the tables according to the CSV specification.

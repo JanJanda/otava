@@ -2,10 +2,12 @@ package io.github.janjanda.otava.library.documents;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import static io.github.janjanda.otava.library.Manager.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
+
+import static io.github.janjanda.otava.library.Manager.locale;
 
 public final class BasicDescriptor implements Descriptor {
     private final String fileName;

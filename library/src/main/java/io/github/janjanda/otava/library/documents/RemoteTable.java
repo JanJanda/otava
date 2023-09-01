@@ -1,13 +1,16 @@
 package io.github.janjanda.otava.library.documents;
 
-import static io.github.janjanda.otava.library.Manager.*;
-import io.github.janjanda.otava.library.exceptions.*;
+import io.github.janjanda.otava.library.exceptions.FileIteratorException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Iterator;
+
+import static io.github.janjanda.otava.library.Manager.locale;
 
 public final class RemoteTable implements Table {
     private final String fileName;

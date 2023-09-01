@@ -1,17 +1,20 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.*;
-import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.*;
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
-import static io.github.janjanda.otava.library.utils.TableUtils.*;
-
+import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.exceptions.CheckRunException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 import org.apache.commons.csv.CSVRecord;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
+import static io.github.janjanda.otava.library.utils.TableUtils.areValuesInColumns;
 
 /**
  * This class checks the defined primary keys of the tables. Values of a primary key must be unique.

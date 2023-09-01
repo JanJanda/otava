@@ -1,7 +1,7 @@
 package io.github.janjanda.otava.library;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class only collects input data for validation. It does not do anything with the data. It has a convenient builder.

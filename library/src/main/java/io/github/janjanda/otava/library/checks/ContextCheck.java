@@ -1,12 +1,13 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import static io.github.janjanda.otava.library.Manager.*;
-import io.github.janjanda.otava.library.*;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 
 import java.util.List;
+
+import static io.github.janjanda.otava.library.Manager.locale;
 
 /**
  * This class checks the @context fields of the metadata descriptors according to the corresponding W3C Recommendation.

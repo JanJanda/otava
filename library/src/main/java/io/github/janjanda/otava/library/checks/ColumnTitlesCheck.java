@@ -1,15 +1,18 @@
 package io.github.janjanda.otava.library.checks;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.*;
-import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Table;
-import io.github.janjanda.otava.library.exceptions.*;
-import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
-
+import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.exceptions.CheckRunException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 import org.apache.commons.csv.CSVRecord;
+
 import java.util.List;
+
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.utils.DescriptorUtils.*;
 
 /**
  * This class checks columns in tables and their respective descriptors.

@@ -1,14 +1,18 @@
 package io.github.janjanda.otava.library.factories;
 
-import static io.github.janjanda.otava.library.Manager.*;
-import io.github.janjanda.otava.library.documents.*;
 import io.github.janjanda.otava.library.checks.Check;
+import io.github.janjanda.otava.library.documents.Descriptor;
+import io.github.janjanda.otava.library.documents.DocsGroup;
+import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.lang.reflect.Constructor;
+
+import static io.github.janjanda.otava.library.Manager.locale;
 
 public final class SingletonCheckFactory implements CheckFactory {
     private final Map<Class<?>, Check> instances = new HashMap<>();

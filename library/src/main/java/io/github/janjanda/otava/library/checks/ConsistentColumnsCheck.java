@@ -1,12 +1,13 @@
 package io.github.janjanda.otava.library.checks;
 
-import io.github.janjanda.otava.library.*;
-import static io.github.janjanda.otava.library.Manager.*;
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
 import org.apache.commons.csv.CSVRecord;
+
+import static io.github.janjanda.otava.library.Manager.locale;
 
 /**
  * This class checks size of rows in tables.

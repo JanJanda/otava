@@ -1,6 +1,8 @@
 package io.github.janjanda.otava.library.factories;
 
-import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.documents.BasicDescriptor;
+import io.github.janjanda.otava.library.documents.InMemoryTable;
+import io.github.janjanda.otava.library.documents.RemoteTable;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.utils.FileUtils;
 import org.apache.commons.csv.CSVFormat;
