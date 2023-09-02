@@ -1,7 +1,5 @@
 package io.github.janjanda.otava.library;
 
-import static io.github.janjanda.otava.library.utils.FileUtils.makeFileReader;
-import static org.junit.jupiter.api.Assertions.*;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -9,14 +7,18 @@ import org.apache.commons.csv.CSVRecord;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+
 import java.io.InputStreamReader;
 import java.util.stream.Stream;
 
+import static io.github.janjanda.otava.library.utils.FileUtils.makeFileReader;
+import static org.junit.jupiter.api.Assertions.*;
+
 /**
- * This class implements the tests from the CSVW Implementation Report.
+ * This class implements the validation tests from the CSVW Implementation Report.
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#csvw-validation-tests-1">CSVW Implementation Report</a>
  */
-@Disabled("This project does not support every specified feature.")
+@Disabled("This project does not support every specified feature because it is not required.")
 class W3Tests {
     record TestData(String testName, ValidationSuite suite, String validation, String result) {}
 

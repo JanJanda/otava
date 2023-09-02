@@ -1,12 +1,14 @@
 package io.github.janjanda.otava.library;
 
-import static org.junit.jupiter.api.Assertions.*;
 import io.github.janjanda.otava.library.checks.*;
-import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.ValueSource;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
+import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 class SingletonCheckFactoryTests {
     @Test

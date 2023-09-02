@@ -1,10 +1,12 @@
 package io.github.janjanda.otava.library.documents;
 
-import static org.junit.jupiter.api.Assertions.*;
+import io.github.janjanda.otava.library.exceptions.FileIteratorException;
+import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.DocumentFactory;
-import io.github.janjanda.otava.library.exceptions.*;
 import org.apache.commons.csv.CSVRecord;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 class RemoteTableTests {
     private RemoteTable createRemoteTable(String path) {

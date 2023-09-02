@@ -1,7 +1,10 @@
 package io.github.janjanda.otava.library;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import io.github.janjanda.otava.library.checks.*;
+import io.github.janjanda.otava.library.checks.Check;
+import io.github.janjanda.otava.library.checks.ConsistentColumnsCheck;
+import io.github.janjanda.otava.library.checks.FullRootCheck;
+import io.github.janjanda.otava.library.checks.VirtualsLastCheck;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.documents.DocsGroup;
 import io.github.janjanda.otava.library.documents.Table;

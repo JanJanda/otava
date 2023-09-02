@@ -1,8 +1,9 @@
 package io.github.janjanda.otava.library.documents;
 
-import static io.github.janjanda.otava.library.TestUtils.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+
+import static io.github.janjanda.otava.library.TestUtils.createDescriptor;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class BasicDescriptorTests {
     @Test

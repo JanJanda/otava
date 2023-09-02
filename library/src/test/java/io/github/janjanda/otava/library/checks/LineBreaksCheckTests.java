@@ -1,10 +1,14 @@
 package io.github.janjanda.otava.library.checks;
 
-import static io.github.janjanda.otava.library.TestUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
+import io.github.janjanda.otava.library.documents.DocsGroup;
+import io.github.janjanda.otava.library.documents.InMemoryTable;
+import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
-import io.github.janjanda.otava.library.documents.*;
 import org.junit.jupiter.api.Test;
+
+import static io.github.janjanda.otava.library.TestUtils.createTable;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws Exception {

@@ -1,13 +1,16 @@
 package io.github.janjanda.otava.library.checks;
 
-import static io.github.janjanda.otava.library.TestUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
-import io.github.janjanda.otava.library.*;
-import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.Result;
+import io.github.janjanda.otava.library.documents.DocsGroup;
+import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static io.github.janjanda.otava.library.TestUtils.createTable;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ConsistentColumnsCheckTests {
     @Test

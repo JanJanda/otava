@@ -1,10 +1,12 @@
 package io.github.janjanda.otava.library.utils;
 
-import static io.github.janjanda.otava.library.TestUtils.*;
-import static org.junit.jupiter.api.Assertions.*;
-import static io.github.janjanda.otava.library.utils.TableUtils.*;
-import org.junit.jupiter.api.Test;
 import io.github.janjanda.otava.library.documents.InMemoryTable;
+import org.junit.jupiter.api.Test;
+
+import static io.github.janjanda.otava.library.TestUtils.createTable;
+import static io.github.janjanda.otava.library.utils.TableUtils.areValuesInColumns;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class TableUtilsTests {
     private InMemoryTable makeTable() throws Exception {

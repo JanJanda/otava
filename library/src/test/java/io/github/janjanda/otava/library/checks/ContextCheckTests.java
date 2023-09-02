@@ -1,11 +1,14 @@
 package io.github.janjanda.otava.library.checks;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import io.github.janjanda.otava.library.*;
-import io.github.janjanda.otava.library.documents.*;
+import io.github.janjanda.otava.library.TestUtils;
+import io.github.janjanda.otava.library.documents.BasicDescriptor;
+import io.github.janjanda.otava.library.documents.Descriptor;
+import io.github.janjanda.otava.library.documents.DocsGroup;
 import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class ContextCheckTests {
     private ContextCheck createCheck(String descName) throws Exception {
