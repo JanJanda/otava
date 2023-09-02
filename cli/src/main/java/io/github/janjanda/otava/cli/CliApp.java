@@ -43,14 +43,8 @@ public class CliApp {
                 System.out.println("Missing descriptor names!");
                 return;
             }
-            String[] dAliases = initArrayStart(descriptors.length, line.getOptionValues(descriptorAliases));
             String lang = line.getOptionValue(language);
             if (csTag.equals(lang)) Manager.setLocale(new CzechLocale());
-            Manager m = new Manager();
-            Set<Result> results = m.manualLocalValidation(tables, tAliases, descriptors, dAliases);
-            for (Result result : results) {
-                System.out.println(result.asText());
-            }
         }
         catch (ParseException | ValidatorException e) {
             System.out.println(e.getMessage());
