@@ -25,8 +25,7 @@ import java.util.Set;
 import static io.github.janjanda.otava.library.ValidationSuite.DescResource;
 import static io.github.janjanda.otava.library.ValidationSuite.TableResource;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.extractTables;
-import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrl;
-import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
+import static io.github.janjanda.otava.library.utils.UrlUtils.*;
 
 /**
  * This is the main class of the library. It provides unified interface for the use of the library.
@@ -113,7 +112,7 @@ public final class Manager {
         List<Table> tables = createTables(validationSuite.getActiveTables(), df);
         List<Descriptor> descriptors = createDescriptors(validationSuite.getActiveDescriptors(), df);
         DescResource[] descResources = createDescResources(tables);
-        TableResource[] tableResources = createTableResources(descriptors);
+        TableResource[] tableResources = createTableResources(descriptors, validationSuite.saveMemory);
         tables.addAll(createTables(tableResources, df));
         descriptors.addAll(createDescriptors(descResources, df));
         tables.addAll(createTables(validationSuite.getPassiveTables(), df));
@@ -131,11 +130,11 @@ public final class Manager {
         List<Table> tables = new ArrayList<>();
         for (TableResource spec : specs) {
             if (spec.isLocal()) {
-                if (spec.outOfMemory()) tables.add(df.makeLocalRemoteTable(spec.name(), spec.alias()));
+                if (spec.outOfMemory()) tables.add(df.makeLocalOutOfMemoryTable(spec.name(), spec.alias()));
                 else tables.add(df.makeLocalInMemoryTable(spec.name(), spec.alias()));
             }
             else {
-                if (spec.outOfMemory()) tables.add(df.makeOnlineRemoteTable(spec.name(), spec.alias()));
+                if (spec.outOfMemory()) tables.add(df.makeOnlineOutOfMemoryTable(spec.name(), spec.alias()));
                 else tables.add(df.makeOnlineInMemoryTable(spec.name(), spec.alias()));
             }
         }
@@ -159,17 +158,23 @@ public final class Manager {
         return resources.toArray(new DescResource[0]);
     }
 
-    private TableResource[] createTableResources(List<Descriptor> activeDescs) throws ValidatorFileException {
+    private TableResource[] createTableResources(List<Descriptor> activeDescs, boolean outOfMemory) throws ValidatorFileException {
         List<TableResource> resources = new ArrayList<>();
         for (Descriptor activeDesc : activeDescs) {
-            String baseUrl = getBaseUrl(activeDesc);
+            String baseUrl;
+            try {
+                baseUrl = getBaseUrlWithExc(activeDesc);
+            }
+            catch (MalformedURLException e) {
+                throw new ValidatorFileException(locale().cannotResolveBase(activeDesc.getName()) + " --- " + e.getMessage());
+            }
             List<JsonNode> extractedTables = extractTables(activeDesc);
             for (JsonNode extractedTable : extractedTables) {
                 JsonNode urlNode = extractedTable.path("url");
                 if (urlNode.isTextual()) {
                     try {
                         String url = resolveUrl(baseUrl, urlNode.asText());
-                        resources.add(new TableResource(url, null, false, true));
+                        resources.add(new TableResource(url, null, false, outOfMemory));
                     }
                     catch (MalformedURLException e) {
                         throw new ValidatorFileException(locale().malformedUrl(urlNode.asText(), baseUrl, activeDesc.getName()));

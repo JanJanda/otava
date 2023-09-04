@@ -7,12 +7,14 @@ import java.util.List;
  * This class only collects input data for validation. It does not do anything with the data. It has a convenient builder.
  */
 public final class ValidationSuite {
+    public final boolean saveMemory;
     private final TableResource[] passiveTables;
     private final TableResource[] activeTables;
     private final DescResource[] passiveDescriptors;
     private final DescResource[] activeDescriptors;
 
     private ValidationSuite(Builder b) {
+        saveMemory = b.saveMemory;
         passiveTables = b.passiveTables.toArray(new TableResource[0]);
         activeTables = b.activeTables.toArray(new TableResource[0]);
         passiveDescriptors = b.passiveDescriptors.toArray(new DescResource[0]);
@@ -55,10 +57,20 @@ public final class ValidationSuite {
      * This builder provides a convenient syntax for the input of validation data. It only collects the data.
      */
     public static final class Builder {
+        private boolean saveMemory = false;
         private final List<TableResource> passiveTables = new ArrayList<>();
         private final List<TableResource> activeTables = new ArrayList<>();
         private final List<DescResource> passiveDescriptors = new ArrayList<>();
         private final List<DescResource> activeDescriptors = new ArrayList<>();
+
+        /**
+         * Sets the "save memory" flag to {@code true}. Tables located in active descriptors will not be loaded to memory.
+         * @return reference to this builder
+         */
+        public Builder setSaveMemory() {
+            saveMemory = true;
+            return this;
+        }
 
         /**
          * Adds a passive table to the builder. Passive tables do not attempt to locate their descriptors.

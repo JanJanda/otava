@@ -2,7 +2,7 @@ package io.github.janjanda.otava.library.factories;
 
 import io.github.janjanda.otava.library.documents.BasicDescriptor;
 import io.github.janjanda.otava.library.documents.InMemoryTable;
-import io.github.janjanda.otava.library.documents.RemoteTable;
+import io.github.janjanda.otava.library.documents.OutOfMemoryTable;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.utils.FileUtils;
 import org.apache.commons.csv.CSVFormat;
@@ -26,11 +26,11 @@ public final class DocumentFactory {
         return new InMemoryTable(url, alias, csvFormat, FileUtils::makeUrlReader);
     }
 
-    public RemoteTable makeLocalRemoteTable(String path, String alias) {
-        return new RemoteTable(path, alias, csvFormat, FileUtils::makeFileReader);
+    public OutOfMemoryTable makeLocalOutOfMemoryTable(String path, String alias) {
+        return new OutOfMemoryTable(path, alias, csvFormat, FileUtils::makeFileReader);
     }
 
-    public RemoteTable makeOnlineRemoteTable(String url, String alias) {
-        return new RemoteTable(url, alias, csvFormat, FileUtils::makeUrlReader);
+    public OutOfMemoryTable makeOnlineOutOfMemoryTable(String url, String alias) {
+        return new OutOfMemoryTable(url, alias, csvFormat, FileUtils::makeUrlReader);
     }
 }
