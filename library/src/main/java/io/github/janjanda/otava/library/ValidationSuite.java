@@ -64,7 +64,7 @@ public final class ValidationSuite {
         private final List<DescResource> activeDescriptors = new ArrayList<>();
 
         /**
-         * Sets the "save memory" flag to {@code true}. Tables located in active descriptors will not be loaded to memory.
+         * Sets the "save memory" flag to {@code true}. Tables automatically located from active descriptors will not be loaded to memory.
          * @return reference to this builder
          */
         public Builder setSaveMemory() {
