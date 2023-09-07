@@ -48,7 +48,7 @@ public class CliApp {
         HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.setWidth(110);
         final String cmdLineSyntax = "otava [-help] [-tablestree -descstree -fulltree] [-lang en|cs] [-savemem] (-tables | -descs | -full) " +
-                "(-text | -json | -turtle) [-sep <char>] [-plit <path[:alias]...>] [-plot <path[:alias]...>] [-poit <url[:alias]...>] " +
+                "[-text | -json | -turtle] [-sep <char>] [-plit <path[:alias]...>] [-plot <path[:alias]...>] [-poit <url[:alias]...>] " +
                 "[-poot <url[:alias]...>] [-alit <path[:alias]...>] [-alot <path[:alias]...>] [-aoit <url[:alias]...>] [-aoot <url[:alias]...>] " +
                 "[-pld <path[:alias]...>] [-pod <url[:alias]...>] [-ald <path[:alias]...>] [-aod <url[:alias]...>]";
 
