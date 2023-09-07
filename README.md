@@ -12,9 +12,9 @@ The library part of this project is developed. There are automatic unit tests wi
 
 The command line interface is also developed. It can be built and executed with the following commands.
 
-The web application is currently being developed.
-
 ```
 mvn package
 java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -help
 ```
+
+The web application is currently being developed.
