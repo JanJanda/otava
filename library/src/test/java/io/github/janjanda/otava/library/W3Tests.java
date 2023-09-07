@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * This class implements the validation tests from the CSVW Implementation Report.
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#csvw-validation-tests-1">CSVW Implementation Report</a>
  */
-@Disabled("This project does not support every specified feature because it is not required.")
+@Disabled("This project does not support every specified feature because it is not required. Results: 80 failed, 201 passed")
 class W3Tests {
     record TestData(String testName, ValidationSuite suite, String validation, String result) {}
 
