@@ -1,8 +1,7 @@
-package io.github.janjanda.otava.library;
+package io.github.janjanda.otava.library.factories;
 
 import io.github.janjanda.otava.library.checks.*;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
-import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
