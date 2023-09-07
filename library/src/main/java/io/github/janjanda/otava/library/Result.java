@@ -25,9 +25,9 @@ public final class Result implements Outcome {
         isFatal = b.fatal;
         messages = b.listMessages.toArray(new String[0]);
         numberOfMsg = messages.length;
-        isOk = messages.length == 0 && !isFatal;
         isSkipped = b.skipped;
         originCheck = b.origin;
+        isOk = messages.length == 0 && !isFatal && !isSkipped;
     }
 
     @Override
