@@ -12,14 +12,17 @@ public class CliApp {
     public static void main(String[] args) {
         // define options
         Option help = Option.builder("help").desc("print this description of the options").build();
+        Option tablesTree = Option.builder("tablestree").desc("print the tree of validation checks for tables").build();
+        Option descsTree = Option.builder("descstree").desc("print the tree of validation checks for descriptors").build();
+        Option fullTree = Option.builder("fulltree").desc("print the full tree of validation checks").build();
         Option lang = Option.builder("lang").desc("set the language of the results, en is default").hasArg().argName("language tag [en|cs]").build();
         Option saveMem = Option.builder("savemem").desc("do not load tables from active descriptors to memory").build();
         Option tables = Option.builder("tables").desc("validate only tables alone").build();
         Option descs = Option.builder("descs").desc("validate only descriptors alone").build();
         Option full = Option.builder("full").desc("perform full validation with tables and descriptors").build();
-        Option text = Option.builder("text").desc("write result as plain text").build();
-        Option json = Option.builder("json").desc("write result as JSON").build();
-        Option turtle = Option.builder("turtle").desc("write result as RDF 1.1 Turtle").build();
+        Option text = Option.builder("text").desc("print result as plain text").build();
+        Option json = Option.builder("json").desc("print result as JSON").build();
+        Option turtle = Option.builder("turtle").desc("print result as RDF 1.1 Turtle").build();
         Option sep = Option.builder("sep").desc("set separator between name and alias of a table or a descriptor, : is default, regex parameter to String.split(String regex)").hasArg().argName("regex").build();
         Option plit = Option.builder("plit").desc("add passive local in-memory table to validation suite").hasArgs().argName("path[:alias]...").build();
         Option plot = Option.builder("plot").desc("add passive local out-of-memory table to validation suite").hasArgs().argName("path[:alias]...").build();
@@ -36,17 +39,17 @@ public class CliApp {
 
         // add options
         Options options = new Options();
-        options.addOption(help).addOption(lang).addOption(saveMem).addOption(tables).addOption(descs).addOption(full)
-                .addOption(text).addOption(json).addOption(turtle).addOption(sep).addOption(plit).addOption(plot)
-                .addOption(poit).addOption(poot).addOption(alit).addOption(alot).addOption(aoit).addOption(aoot)
-                .addOption(pld).addOption(pod).addOption(ald).addOption(aod);
+        options.addOption(help).addOption(tablesTree).addOption(descsTree).addOption(fullTree).addOption(lang).addOption(saveMem)
+                .addOption(tables).addOption(descs).addOption(full).addOption(text).addOption(json).addOption(turtle)
+                .addOption(sep).addOption(plit).addOption(plot).addOption(poit).addOption(poot).addOption(alit)
+                .addOption(alot).addOption(aoit).addOption(aoot).addOption(pld).addOption(pod).addOption(ald).addOption(aod);
 
         // create help formatter
         HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.setWidth(110);
-        final String cmdLineSyntax = "otava [-help] [-lang en|cs] [-savemem] (-tables | -descs | -full) (-text | -json | -turtle) " +
-                "[-sep <char>] [-plit <path[:alias]...>] [-plot <path[:alias]...>] [-poit <url[:alias]...>] [-poot <url[:alias]...>] " +
-                "[-alit <path[:alias]...>] [-alot <path[:alias]...>] [-aoit <url[:alias]...>] [-aoot <url[:alias]...>] " +
+        final String cmdLineSyntax = "otava [-help] [-tablestree -descstree -fulltree] [-lang en|cs] [-savemem] (-tables | -descs | -full) " +
+                "(-text | -json | -turtle) [-sep <char>] [-plit <path[:alias]...>] [-plot <path[:alias]...>] [-poit <url[:alias]...>] " +
+                "[-poot <url[:alias]...>] [-alit <path[:alias]...>] [-alot <path[:alias]...>] [-aoit <url[:alias]...>] [-aoot <url[:alias]...>] " +
                 "[-pld <path[:alias]...>] [-pod <url[:alias]...>] [-ald <path[:alias]...>] [-aod <url[:alias]...>]";
 
         // parse command line
@@ -63,6 +66,20 @@ public class CliApp {
         // show help
         if (line.hasOption(help)) {
             helpFormatter.printHelp(cmdLineSyntax, options);
+            return;
+        }
+
+        // show checks tree
+        if (line.hasOption(tablesTree)) {
+            System.out.println(Manager.printTablesOnlyValidationTree());
+            return;
+        }
+        if (line.hasOption(descsTree)) {
+            System.out.println(Manager.printDescriptorsOnlyValidationTree());
+            return;
+        }
+        if (line.hasOption(fullTree)) {
+            System.out.println(Manager.printFullValidationTree());
             return;
         }
 

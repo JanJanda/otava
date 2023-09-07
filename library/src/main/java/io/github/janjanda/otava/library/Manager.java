@@ -188,33 +188,35 @@ public final class Manager {
     /**
      * Creates a string that graphically shows the dependencies in the tables only validation tree.
      * @return graphical representation of the tree
-     * @throws CheckCreationException If the validation tree cannot be created.
      */
-    public String printTablesOnlyValidationTree() throws CheckCreationException {
+    public static String printTablesOnlyValidationTree() {
         return printValidationTree(tablesValidation);
     }
 
     /**
      * Creates a string that graphically shows the dependencies in the descriptors only validation tree.
      * @return graphical representation of the tree
-     * @throws CheckCreationException If the validation tree cannot be created.
      */
-    public String printDescriptorsOnlyValidationTree() throws CheckCreationException {
+    public static String printDescriptorsOnlyValidationTree() {
         return printValidationTree(descriptorsValidation);
     }
 
     /**
      * Creates a string that graphically shows the dependencies in the full validation tree.
      * @return graphical representation of the tree
-     * @throws CheckCreationException If the validation tree cannot be created.
      */
-    public String printFullValidationTree() throws CheckCreationException {
+    public static String printFullValidationTree() {
         return printValidationTree(fullRootValidation);
     }
 
-    private String printValidationTree(Class<? extends Check> checkClass) throws CheckCreationException {
-        SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
-        Check check = scf.getInstance(checkClass);
-        return check.printTree();
+    private static String printValidationTree(Class<? extends Check> checkClass) {
+        try {
+            SingletonCheckFactory scf = new SingletonCheckFactory(null, null);
+            Check check = scf.getInstance(checkClass);
+            return check.printTree();
+        }
+        catch (CheckCreationException e) {
+            return "Cannot create the validation tree!";
+        }
     }
 }
