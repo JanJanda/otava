@@ -23,19 +23,19 @@ public class CliApp {
         Option text = Option.builder("text").desc("print result as plain text").build();
         Option json = Option.builder("json").desc("print result as JSON").build();
         Option turtle = Option.builder("turtle").desc("print result as RDF 1.1 Turtle").build();
-        Option sep = Option.builder("sep").desc("set separator between name and alias of a table or a descriptor, : is default, regex parameter to String.split(String regex)").hasArg().argName("regex").build();
-        Option plit = Option.builder("plit").desc("add passive local in-memory table to validation suite").hasArgs().argName("path[:alias]...").build();
-        Option plot = Option.builder("plot").desc("add passive local out-of-memory table to validation suite").hasArgs().argName("path[:alias]...").build();
-        Option poit = Option.builder("poit").desc("add passive online in-memory table to validation suite").hasArgs().argName("url[:alias]...").build();
-        Option poot = Option.builder("poot").desc("add passive online out-of-memory table to validation suite").hasArgs().argName("url[:alias]...").build();
-        Option alit = Option.builder("alit").desc("add active local in-memory table to validation suite").hasArgs().argName("path[:alias]...").build();
-        Option alot = Option.builder("alot").desc("add active local out-of-memory table to validation suite").hasArgs().argName("path[:alias]...").build();
-        Option aoit = Option.builder("aoit").desc("add active online in-memory table to validation suite").hasArgs().argName("url[:alias]...").build();
-        Option aoot = Option.builder("aoot").desc("add active online out-of-memory table to validation suite").hasArgs().argName("url[:alias]...").build();
-        Option pld = Option.builder("pld").desc("add passive local descriptor to validation suite").hasArgs().argName("path[:alias]...").build();
-        Option pod = Option.builder("pod").desc("add passive online descriptor to validation suite").hasArgs().argName("url[:alias]...").build();
-        Option ald = Option.builder("ald").desc("add active local descriptor to validation suite").hasArgs().argName("path[:alias]...").build();
-        Option aod = Option.builder("aod").desc("add active online descriptor to validation suite").hasArgs().argName("url[:alias]...").build();
+        Option sep = Option.builder("sep").desc("set separator between name and alias of a table or a descriptor, ; is default, regex parameter to String.split(String regex)").hasArg().argName("regex").build();
+        Option plit = Option.builder("plit").desc("add passive local in-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
+        Option plot = Option.builder("plot").desc("add passive local out-of-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
+        Option poit = Option.builder("poit").desc("add passive online in-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
+        Option poot = Option.builder("poot").desc("add passive online out-of-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
+        Option alit = Option.builder("alit").desc("add active local in-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
+        Option alot = Option.builder("alot").desc("add active local out-of-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
+        Option aoit = Option.builder("aoit").desc("add active online in-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
+        Option aoot = Option.builder("aoot").desc("add active online out-of-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
+        Option pld = Option.builder("pld").desc("add passive local descriptor to validation suite").hasArgs().argName("path[;alias]...").build();
+        Option pod = Option.builder("pod").desc("add passive online descriptor to validation suite").hasArgs().argName("url[;alias]...").build();
+        Option ald = Option.builder("ald").desc("add active local descriptor to validation suite").hasArgs().argName("path[;alias]...").build();
+        Option aod = Option.builder("aod").desc("add active online descriptor to validation suite").hasArgs().argName("url[;alias]...").build();
 
         // add options
         Options options = new Options();
@@ -48,9 +48,9 @@ public class CliApp {
         HelpFormatter helpFormatter = new HelpFormatter();
         helpFormatter.setWidth(110);
         final String cmdLineSyntax = "otava [-help] [-tablestree -descstree -fulltree] [-lang en|cs] [-savemem] (-tables | -descs | -full) " +
-                "[-text | -json | -turtle] [-sep <char>] [-plit <path[:alias]...>] [-plot <path[:alias]...>] [-poit <url[:alias]...>] " +
-                "[-poot <url[:alias]...>] [-alit <path[:alias]...>] [-alot <path[:alias]...>] [-aoit <url[:alias]...>] [-aoot <url[:alias]...>] " +
-                "[-pld <path[:alias]...>] [-pod <url[:alias]...>] [-ald <path[:alias]...>] [-aod <url[:alias]...>]";
+                "[-text | -json | -turtle] [-sep <char>] [-plit <path[;alias]...>] [-plot <path[;alias]...>] [-poit <url[;alias]...>] " +
+                "[-poot <url[;alias]...>] [-alit <path[;alias]...>] [-alot <path[;alias]...>] [-aoit <url[;alias]...>] [-aoot <url[;alias]...>] " +
+                "[-pld <path[;alias]...>] [-pod <url[;alias]...>] [-ald <path[;alias]...>] [-aod <url[;alias]...>]";
 
         // parse command line
         CommandLineParser parser = new DefaultParser();
@@ -103,7 +103,7 @@ public class CliApp {
         }
 
         // set separator
-        String separator = line.getOptionValue(sep, ":");
+        String separator = line.getOptionValue(sep, ";");
 
         // crate validation suite
         ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
