@@ -177,7 +177,7 @@ public final class Manager {
                         resources.add(new TableResource(url, null, false, outOfMemory));
                     }
                     catch (MalformedURLException e) {
-                        throw new ValidatorFileException(locale().malformedUrl(urlNode.asText(), baseUrl, activeDesc.getName()));
+                        throw new ValidatorFileException(locale().malformedUrl(urlNode.asText(), baseUrl, activeDesc.getName()) + " --- " + e.getMessage());
                     }
                 }
             }

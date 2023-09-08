@@ -23,7 +23,8 @@ public class ValidatorException extends Exception implements Outcome {
         ObjectNode root = objectMapper.createObjectNode().put("message", getMessage());
         try {
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             return "Cannot write an exception as JSON.";
         }
     }

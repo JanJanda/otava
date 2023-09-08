@@ -55,7 +55,8 @@ public final class Result implements Outcome {
         }
         try {
             return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
-        } catch (JsonProcessingException e) {
+        }
+        catch (JsonProcessingException e) {
             return "Cannot write a result as JSON.";
         }
     }

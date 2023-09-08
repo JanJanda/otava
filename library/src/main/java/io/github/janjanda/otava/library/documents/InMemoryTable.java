@@ -31,7 +31,7 @@ public final class InMemoryTable implements Table {
             csvRecords = csvParser.getRecords();
         }
         catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException(fileName));
+            throw new ValidatorFileException(locale().ioException(fileName) + " --- " + e.getMessage());
         }
     }
 
@@ -62,7 +62,7 @@ public final class InMemoryTable implements Table {
             return readerMaker.makeReader(fileName);
         }
         catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException(fileName));
+            throw new ValidatorFileException(locale().ioException(fileName) + " --- " + e.getMessage());
         }
     }
 

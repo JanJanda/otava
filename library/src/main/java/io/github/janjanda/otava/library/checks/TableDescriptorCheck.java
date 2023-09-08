@@ -50,8 +50,9 @@ public final class TableDescriptorCheck extends Check {
                 if (urlNode.isTextual()) {
                     try {
                         urls.add(resolveUrl(baseUrl, urlNode.asText()));
-                    } catch (MalformedURLException e) {
-                        resultBuilder.setFatal().addMessage(locale().malformedUrl(urlNode.asText(), baseUrl, desc.getName()));
+                    }
+                    catch (MalformedURLException e) {
+                        resultBuilder.setFatal().addMessage(locale().malformedUrl(urlNode.asText(), baseUrl, desc.getName()) + " --- " + e.getMessage());
                     }
                 }
             }

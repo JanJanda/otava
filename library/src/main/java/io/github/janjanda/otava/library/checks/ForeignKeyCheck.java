@@ -92,8 +92,9 @@ public final class ForeignKeyCheck extends Check {
                 for (Table table : tables) {
                     if (refTableUrl.equals(table.getPreferredName())) return table;
                 }
-            } catch (MalformedURLException e) {
-                resultBuilder.setFatal().addMessage(locale().badRefTableUrl(resourceTextual, tableUrl));
+            }
+            catch (MalformedURLException e) {
+                resultBuilder.setFatal().addMessage(locale().badRefTableUrl(resourceTextual, tableUrl) + " --- " + e.getMessage());
                 return null;
             }
         }

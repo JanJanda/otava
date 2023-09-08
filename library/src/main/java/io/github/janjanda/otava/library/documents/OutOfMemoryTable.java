@@ -49,7 +49,7 @@ public final class OutOfMemoryTable implements Table {
             return null;
         }
         catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException(fileName));
+            throw new ValidatorFileException(locale().ioException(fileName) + " --- " + e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public final class OutOfMemoryTable implements Table {
             return readerMaker.makeReader(fileName);
         }
         catch (IOException e) {
-            throw new ValidatorFileException(locale().ioException(fileName));
+            throw new ValidatorFileException(locale().ioException(fileName) + " --- " + e.getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ public final class OutOfMemoryTable implements Table {
             return csvParser.iterator();
         }
         catch (IOException e) {
-            throw new FileIteratorException(locale().ioException(fileName));
+            throw new FileIteratorException(locale().ioException(fileName) + " --- " + e.getMessage());
         }
     }
 }
