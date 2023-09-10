@@ -41,4 +41,6 @@ public interface Locale {
     String fKeyIsNotObject(String tableUrl);
     String extraPropsInFKey(String tableUrl);
     String cannotResolveBase(String descName);
+    String duration();
+    String decimal();
 }

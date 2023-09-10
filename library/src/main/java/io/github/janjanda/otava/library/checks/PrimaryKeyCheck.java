@@ -25,15 +25,15 @@ public final class PrimaryKeyCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException, ValidatorFileException {
+    protected Result.Builder performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
             List<JsonNode> columnNodes = findColumnNodes(table, resultBuilder);
             List<Integer> pkColIndices = findColumnsWithDescriptions(columnNodes, table, this.getClass().getName());
             checkPrimKeyValues(table, pkColIndices, resultBuilder);
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private List<JsonNode> findColumnNodes(Table table, Result.Builder resultBuilder) throws CheckRunException {

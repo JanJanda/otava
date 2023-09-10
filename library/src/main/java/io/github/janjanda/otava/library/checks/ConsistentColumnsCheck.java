@@ -20,9 +20,9 @@ public final class ConsistentColumnsCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws ValidatorFileException {
+    protected Result.Builder performValidation() throws ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
             CSVRecord firstLine = table.getFirstLine();
             if (firstLine == null) resultBuilder.setFatal().addMessage(locale().emptyTable(table.getName()));
@@ -33,6 +33,6 @@ public final class ConsistentColumnsCheck extends Check {
                 }
             }
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 }

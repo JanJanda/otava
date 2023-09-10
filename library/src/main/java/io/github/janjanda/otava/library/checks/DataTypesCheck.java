@@ -38,16 +38,16 @@ public final class DataTypesCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException, ValidatorFileException {
+    protected Result.Builder performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
             JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> columns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
             JsonNode[] dataTypes = extractAndSortDataTypes(columns, table);
             checkDataTypes(dataTypes, table, resultBuilder);
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private JsonNode[] extractAndSortDataTypes(List<JsonNode> columns, Table table) throws ValidatorFileException {

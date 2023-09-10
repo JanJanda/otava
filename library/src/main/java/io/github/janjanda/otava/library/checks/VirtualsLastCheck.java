@@ -21,9 +21,9 @@ public final class VirtualsLastCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Descriptor descriptor : descriptors) {
             List<JsonNode> tableDescs = extractTables(descriptor);
             for (JsonNode td : tableDescs) {
@@ -31,7 +31,7 @@ public final class VirtualsLastCheck extends Check {
                 if (colsNode.isArray()) checkColsArray(colsNode, resultBuilder, descriptor.getName());
             }
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private void checkColsArray(JsonNode colsArray, Result.Builder resultBuilder, String descName) {

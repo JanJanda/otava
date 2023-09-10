@@ -14,7 +14,7 @@ public final class FullRootCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
-        return new Result.Builder(this.getClass().getName()).build();
+    protected Result.Builder performValidation() {
+        return new Result.Builder(this.getClass().getName());
     }
 }

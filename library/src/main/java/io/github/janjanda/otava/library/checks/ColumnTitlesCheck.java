@@ -24,9 +24,9 @@ public final class ColumnTitlesCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException, ValidatorFileException {
+    protected Result.Builder performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
             JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> descColumns = extractNonVirtualColumns(tableDescription.path("tableSchema"));
@@ -44,6 +44,6 @@ public final class ColumnTitlesCheck extends Check {
                 resultBuilder.setFatal().addMessage(locale().missingCol(missedCol.path("name").asText(), tableDescription.path("url").asText()));
             }
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 }

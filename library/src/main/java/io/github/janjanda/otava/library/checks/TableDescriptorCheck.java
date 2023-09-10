@@ -26,9 +26,9 @@ public final class TableDescriptorCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         List<String> extractedUrls = extractAndResolveTableUrls(resultBuilder);
         for (Table table : tables) {
             String tableName = table.getPreferredName();
@@ -37,7 +37,7 @@ public final class TableDescriptorCheck extends Check {
         for (String url : extractedUrls) {
             resultBuilder.setFatal().addMessage(locale().missingTable(url));
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private List<String> extractAndResolveTableUrls(Result.Builder resultBuilder) {

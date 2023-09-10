@@ -8,6 +8,8 @@ import io.github.janjanda.otava.library.exceptions.FileIteratorException;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -51,15 +53,19 @@ public abstract class Check {
         if (result != null) return result;
         for (Check pc : preChecks) pc.validate();
         try {
-            result = performValidation();
+            Instant start = Instant.now();
+            Result.Builder resultBuilder = performValidation();
+            Instant end = Instant.now();
+            resultBuilder.setDuration(Duration.between(start, end));
+            result = resultBuilder.build();
+            return result;
         }
         catch (FileIteratorException e) {
             throw new ValidatorFileException(e.getMessage());
         }
-        return result;
     }
 
-    protected abstract Result performValidation() throws ValidatorException;
+    protected abstract Result.Builder performValidation() throws ValidatorException;
 
     public final String printTree() {
         StringBuilder result = new StringBuilder();

@@ -31,9 +31,9 @@ public final class ForeignKeyCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException, ValidatorFileException {
+    protected Result.Builder performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
             Pair<Descriptor, JsonNode> tableMeta = findTableDescriptorAndDescriptionWithExc(table, descriptors, this.getClass().getName());
             Descriptor tableDescriptor = tableMeta.first;
@@ -54,7 +54,7 @@ public final class ForeignKeyCheck extends Check {
                 }
             }
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private JsonNode[] extractForeignKeys(JsonNode tableDescription) {

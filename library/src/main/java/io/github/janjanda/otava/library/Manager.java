@@ -25,7 +25,8 @@ import java.util.Set;
 import static io.github.janjanda.otava.library.ValidationSuite.DescResource;
 import static io.github.janjanda.otava.library.ValidationSuite.TableResource;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.extractTables;
-import static io.github.janjanda.otava.library.utils.UrlUtils.*;
+import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrlWithExc;
+import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
 
 /**
  * This is the main class of the library. It provides unified interface for the use of the library.

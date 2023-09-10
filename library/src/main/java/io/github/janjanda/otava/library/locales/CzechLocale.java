@@ -200,4 +200,14 @@ public final class CzechLocale implements Locale {
     public String cannotResolveBase(String descName) {
         return "Nelze rezolvovat bázovou URL v deskriptoru " + descName;
     }
+
+    @Override
+    public String duration() {
+        return "Trvání";
+    }
+
+    @Override
+    public String decimal() {
+        return ",";
+    }
 }

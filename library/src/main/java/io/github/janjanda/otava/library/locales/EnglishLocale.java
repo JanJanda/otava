@@ -200,4 +200,14 @@ public final class EnglishLocale implements Locale {
     public String cannotResolveBase(String descName) {
         return "Cannot resolve base URL in the descriptor " + descName;
     }
+
+    @Override
+    public String duration() {
+        return "Duration";
+    }
+
+    @Override
+    public String decimal() {
+        return ".";
+    }
 }

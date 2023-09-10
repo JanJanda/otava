@@ -22,12 +22,12 @@ public final class LineBreaksCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws ValidatorFileException {
+    protected Result.Builder performValidation() throws ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         for (Table table : tables) {
             if (lineBreaksWrong(table)) resultBuilder.addMessage(locale().badLineSeparators(table.getName()));
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private boolean lineBreaksWrong(Table table) throws ValidatorFileException {

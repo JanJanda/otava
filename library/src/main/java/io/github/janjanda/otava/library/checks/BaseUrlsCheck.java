@@ -19,9 +19,9 @@ public final class BaseUrlsCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Descriptor ds : descriptors) {
             try {
                 getBaseUrlWithExc(ds);
@@ -30,6 +30,6 @@ public final class BaseUrlsCheck extends Check {
                 resultBuilder.setFatal().addMessage(locale().cannotResolveBase(ds.getName()) + " --- " + e.getMessage());
             }
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 }

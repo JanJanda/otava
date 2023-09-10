@@ -21,15 +21,15 @@ public final class RequiredPropsCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Descriptor ds : descriptors) {
             boolean missingTables = ds.path("@type").isTextual() && ds.path("@type").asText().equals("TableGroup") && ds.path("tables").isMissingNode();
             if (missingTables) resultBuilder.setFatal().addMessage(locale().missingTablesArray(ds.getName()));
             checkTablesUrls(ds, resultBuilder);
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private void checkTablesUrls(Descriptor descriptor, Result.Builder resultBuilder) {

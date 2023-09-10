@@ -25,9 +25,9 @@ public final class RequiredColumnsCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() throws CheckRunException, ValidatorFileException {
+    protected Result.Builder performValidation() throws CheckRunException, ValidatorFileException {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
             JsonNode tableDescription = findTableDescriptionWithExc(table, descriptors, this.getClass().getName());
             List<JsonNode> reqCols = findRequiredColumns(tableDescription);
@@ -35,7 +35,7 @@ public final class RequiredColumnsCheck extends Check {
             boolean columnsOk = reqColsNotEmpty(table, reqColIndices);
             if (!columnsOk) resultBuilder.setFatal().addMessage(locale().emptyRequiredColumn(table.getName()));
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private List<JsonNode> findRequiredColumns(JsonNode tableDescription) {

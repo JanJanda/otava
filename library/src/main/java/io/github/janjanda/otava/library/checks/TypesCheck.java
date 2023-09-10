@@ -21,16 +21,16 @@ public final class TypesCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Descriptor descriptor : descriptors) {
             if (descriptor.path("tables").isArray()) checkTypeNode(descriptor.path("@type"), "TableGroup", resultBuilder, descriptor.getName());
             checkTablesTypes(descriptor, resultBuilder);
             checkTypeNode(descriptor.path("dialect").path("@type"), "Dialect", resultBuilder, descriptor.getName());
             checkTransformsTypes(descriptor, resultBuilder);
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private void checkTablesTypes(Descriptor descriptor, Result.Builder resultBuilder) {

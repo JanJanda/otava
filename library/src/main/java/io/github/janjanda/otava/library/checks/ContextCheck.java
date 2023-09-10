@@ -19,13 +19,13 @@ public final class ContextCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         for (Descriptor descriptor : descriptors) {
             if (!correctContext(descriptor)) resultBuilder.addMessage(locale().badContext(descriptor.getName())).setFatal();
             if (someOtherContext(descriptor)) resultBuilder.addMessage(locale().extraContext(descriptor.getName())).setFatal();
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private boolean correctContext(Descriptor descriptor) {

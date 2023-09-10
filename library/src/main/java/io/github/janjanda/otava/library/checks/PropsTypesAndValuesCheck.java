@@ -27,9 +27,9 @@ public final class PropsTypesAndValuesCheck extends Check {
     }
 
     @Override
-    protected Result performValidation() {
+    protected Result.Builder performValidation() {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
-        if (fatalSubResult()) return resultBuilder.setSkipped().build();
+        if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Descriptor descriptor : descriptors) {
             JsonNode tablesArray = descriptor.path("tables");
             if (tablesArray.isArray() && tablesArray.size() == 0) resultBuilder.setFatal().addMessage(locale().emptyTablesArray(descriptor.getName()));
@@ -37,7 +37,7 @@ public final class PropsTypesAndValuesCheck extends Check {
             checkListsAndSets(descriptor, resultBuilder);
             checkTypesAndIds(descriptor, resultBuilder);
         }
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     private void checkColsArray(Descriptor descriptor, Result.Builder resultBuilder) {
