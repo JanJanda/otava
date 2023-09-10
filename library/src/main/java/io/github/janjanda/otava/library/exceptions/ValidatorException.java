@@ -13,12 +13,12 @@ public class ValidatorException extends Exception implements Outcome {
     }
 
     @Override
-    public String asText() {
+    public final String asText() {
         return getMessage();
     }
 
     @Override
-    public String asJson() {
+    public final String asJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode root = objectMapper.createObjectNode().put("message", getMessage());
         try {
@@ -30,7 +30,7 @@ public class ValidatorException extends Exception implements Outcome {
     }
 
     @Override
-    public String asTurtle() {
+    public final String asTurtle() {
         return "_:e" + random.nextInt(10000) + " <" + rdfPrefix + "message> \"" + getMessage() + "\"@" + locale().langTag() + " ." + System.lineSeparator();
     }
 }
