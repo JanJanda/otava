@@ -26,7 +26,6 @@ public final class Result implements Outcome {
     private final String langWarn = locale().warning();
     private final String langFatal = locale().fatal();
     private final String langSkipped = locale().skipped();
-    private final String langDecimal = locale().decimal();
 
     private Result(Builder b) {
         originCheck = b.origin;
@@ -89,9 +88,7 @@ public final class Result implements Outcome {
 
     private String formatDuration() {
         if (duration == null) return "?";
-        long seconds = duration.getSeconds();
-        int millis = duration.getNano() / 1_000_000;
-        return seconds + langDecimal + millis + " s";
+        return convertDuration() + " s";
     }
 
     private double convertDuration() {

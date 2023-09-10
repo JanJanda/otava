@@ -210,9 +210,4 @@ public final class EnglishLocale implements Locale {
     public String duration() {
         return "Duration";
     }
-
-    @Override
-    public String decimal() {
-        return ".";
-    }
 }

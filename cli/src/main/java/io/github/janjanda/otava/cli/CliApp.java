@@ -8,6 +8,9 @@ import io.github.janjanda.otava.library.locales.CzechLocale;
 import io.github.janjanda.otava.library.locales.EnglishLocale;
 import org.apache.commons.cli.*;
 
+import java.time.Duration;
+import java.time.Instant;
+
 public class CliApp {
     public static void main(String[] args) {
         // define options
@@ -125,6 +128,7 @@ public class CliApp {
         // perform validation
         Manager manager = new Manager();
         Outcome[] outcomes = new Outcome[0];
+        Instant validationStart = Instant.now();
         try {
             if (line.hasOption(tables)) outcomes = manager.tablesOnlyValidation(vs);
             if (line.hasOption(descs)) outcomes = manager.descriptorsOnlyValidation(vs);
@@ -133,8 +137,10 @@ public class CliApp {
         catch (ValidatorException e) {
             outcomes = new Outcome[]{e};
         }
+        Instant validationEnd = Instant.now();
 
         // write outcomes
+        printDuration(Duration.between(validationStart, validationEnd));
         boolean outputWritten = false;
         if (line.hasOption(text)) {
             for (Outcome outcome : outcomes) System.out.println(outcome.asText());
@@ -192,5 +198,10 @@ public class CliApp {
                 else vsBuilder.addPassiveDescriptor(splitSpec[0], splitSpec[1], local);
             }
         }
+    }
+
+    private static void printDuration(Duration duration) {
+        double time = duration.toMillis() / 1000d;
+        System.out.println("Total validation time: " + time + " s");
     }
 }
