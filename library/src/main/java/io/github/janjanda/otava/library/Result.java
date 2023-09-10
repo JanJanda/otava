@@ -15,27 +15,29 @@ import static io.github.janjanda.otava.library.Manager.*;
  * This class represent a result of a validation check.
  */
 public final class Result implements Outcome {
-    public final Duration duration;
-    public final boolean isFatal;
-    public final boolean isOk;
-    public final boolean isSkipped;
     public final String originCheck;
+    public final Duration duration;
+    public final State state;
     private final String[] messages;
     public final int numberOfMsg;
+
     private final String langDuration = locale().duration();
     private final String langTag = locale().langTag();
+    private final String langWarn = locale().warning();
     private final String langFatal = locale().fatal();
     private final String langSkipped = locale().skipped();
     private final String langDecimal = locale().decimal();
 
     private Result(Builder b) {
+        originCheck = b.origin;
         duration = b.duration;
-        isFatal = b.fatal;
+        state = b.state;
         messages = b.listMessages.toArray(new String[0]);
         numberOfMsg = messages.length;
-        isSkipped = b.skipped;
-        originCheck = b.origin;
-        isOk = messages.length == 0 && !isFatal && !isSkipped;
+    }
+
+    public String getMessage(int index) {
+        return messages[index];
     }
 
     @Override
@@ -43,9 +45,12 @@ public final class Result implements Outcome {
         StringBuilder result = new StringBuilder();
         result.append(originCheck).append(System.lineSeparator());
         result.append(langDuration).append(": ").append(formatDuration()).append(System.lineSeparator());
-        if (isOk) result.append("ok").append(System.lineSeparator());
-        if (isFatal) result.append(langFatal).append(System.lineSeparator());
-        if (isSkipped) result.append(langSkipped).append(System.lineSeparator());
+        switch (state) {
+            case OK -> result.append("ok").append(System.lineSeparator());
+            case WARN -> result.append(langWarn).append(System.lineSeparator());
+            case FATAL -> result.append(langFatal).append(System.lineSeparator());
+            case SKIPPED -> result.append(langSkipped).append(System.lineSeparator());
+        }
         for (String message : messages) result.append(message).append(System.lineSeparator());
         return result.toString();
     }
@@ -55,9 +60,7 @@ public final class Result implements Outcome {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode root = objectMapper.createObjectNode()
                 .put("check", originCheck)
-                .put("fatal", isFatal)
-                .put("ok", isOk)
-                .put("skipped", isSkipped);
+                .put("state", state.toString());
         if (duration != null) root.put("duration", convertDuration());
         ArrayNode msgs = root.putArray("messages");
         for (String msg : messages) {
@@ -77,9 +80,7 @@ public final class Result implements Outcome {
         StringBuilder output = new StringBuilder();
         output.append(label).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .").append(System.lineSeparator());
         if (duration != null) output.append(label).append(" <").append(rdfPrefix).append("duration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
-        output.append(label).append(" <").append(rdfPrefix).append("fatal> ").append(isFatal).append(" .").append(System.lineSeparator());
-        output.append(label).append(" <").append(rdfPrefix).append("ok> ").append(isOk).append(" .").append(System.lineSeparator());
-        output.append(label).append(" <").append(rdfPrefix).append("skipped> ").append(isSkipped).append(" .").append(System.lineSeparator());
+        output.append(label).append(" <").append(rdfPrefix).append("state> \"").append(state.toString()).append("\" .").append(System.lineSeparator());
         for (String msg : messages) {
             output.append(label).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(langTag).append(" .").append(System.lineSeparator());
         }
@@ -101,27 +102,27 @@ public final class Result implements Outcome {
      * This builder provides a convenient syntax for the input of result data.
      */
     public static final class Builder {
-        private Duration duration;
-        private boolean fatal = false;
-        private boolean skipped = false;
-        private final List<String> listMessages = new ArrayList<>();
         private final String origin;
+        private Duration duration;
+        private State state = State.OK;
+        private final List<String> listMessages = new ArrayList<>();
 
         public Builder(String originCheck) {
             origin = originCheck;
         }
 
         public Builder setFatal() {
-            fatal = true;
+            state = State.FATAL;
             return this;
         }
 
         public Builder setSkipped() {
-            skipped = true;
+            state = State.SKIPPED;
             return this;
         }
 
         public Builder addMessage(String message) {
+            if (state == State.OK) state = State.WARN;
             listMessages.add(message);
             return this;
         }
@@ -134,5 +135,12 @@ public final class Result implements Outcome {
         public Result build() {
             return new Result(this);
         }
+    }
+
+    public enum State {
+        OK,
+        WARN,
+        FATAL,
+        SKIPPED
     }
 }

@@ -17,6 +17,7 @@ public interface Locale {
     String missingPrimKeyTitles(String colName, String tableUrl);
     String invalidPrimKey(String tableName);
     String emptyRequiredColumn(String tableName);
+    String warning();
     String fatal();
     String skipped();
     String badDatatype(String tableName, String row, String column);

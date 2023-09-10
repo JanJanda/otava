@@ -1,5 +1,6 @@
 package io.github.janjanda.otava.library.checks;
 
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.TestUtils;
 import io.github.janjanda.otava.library.documents.BasicDescriptor;
 import io.github.janjanda.otava.library.documents.Descriptor;
@@ -8,7 +9,7 @@ import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ContextCheckTests {
     private ContextCheck createCheck(String descName) throws Exception {
@@ -21,13 +22,13 @@ class ContextCheckTests {
     @ParameterizedTest
     @ValueSource(strings = {"metadata001.json", "metadata002.json", "metadata003.json", "metadata004.json"})
     void checkCorrectContexts(String fileName) throws Exception {
-        assertTrue(createCheck(fileName).validate().isOk);
+        assertEquals(Result.State.OK, createCheck(fileName).validate().state);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"metadata005.json", "metadata006.json", "metadata007.json",
                             "metadata008.json", "metadata009.json", "metadata010.json"})
     void checkIncorrectContexts(String fileName) throws Exception {
-        assertTrue(createCheck(fileName).validate().isFatal);
+        assertEquals(Result.State.FATAL, createCheck(fileName).validate().state);
     }
 }

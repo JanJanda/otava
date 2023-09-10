@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.github.janjanda.otava.library.TestUtils.createDescriptor;
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class RequiredColumnsCheckTests {
     @Test
@@ -20,9 +19,7 @@ class RequiredColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
         Result result = rcc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -32,9 +29,7 @@ class RequiredColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
         Result result = rcc.validate();
-        assertFalse(result.isOk);
-        assertTrue(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.FATAL, result.state);
     }
 
     @Test
@@ -44,9 +39,7 @@ class RequiredColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
         Result result = rcc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -56,9 +49,7 @@ class RequiredColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
         Result result = rcc.validate();
-        assertFalse(result.isOk);
-        assertTrue(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.FATAL, result.state);
     }
 
     @Test
@@ -67,7 +58,7 @@ class RequiredColumnsCheckTests {
         Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
-        assertTrue(rcc.validate().isSkipped);
+        assertEquals(Result.State.SKIPPED, rcc.validate().state);
     }
 
     @Test
@@ -77,8 +68,6 @@ class RequiredColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         RequiredColumnsCheck rcc = scf.getInstance(RequiredColumnsCheck.class);
         Result result = rcc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 }

@@ -82,6 +82,11 @@ public final class EnglishLocale implements Locale {
     }
 
     @Override
+    public String warning() {
+        return "warning";
+    }
+
+    @Override
     public String fatal() {
         return "fatal";
     }

@@ -1,5 +1,6 @@
 package io.github.janjanda.otava.library.checks;
 
+import io.github.janjanda.otava.library.Result;
 import io.github.janjanda.otava.library.documents.DocsGroup;
 import io.github.janjanda.otava.library.documents.InMemoryTable;
 import io.github.janjanda.otava.library.documents.Table;
@@ -7,8 +8,7 @@ import io.github.janjanda.otava.library.factories.SingletonCheckFactory;
 import org.junit.jupiter.api.Test;
 
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LineBreaksCheckTests {
     private LineBreaksCheck createCheck(String tableName) throws Exception {
@@ -20,16 +20,16 @@ class LineBreaksCheckTests {
 
     @Test
     void CrLfPass() throws Exception {
-        assertTrue(createCheck("table001.csv").validate().isOk);
+        assertEquals(Result.State.OK, createCheck("table001.csv").validate().state);
     }
 
     @Test
     void LfFail() throws Exception {
-        assertFalse(createCheck("table002.csv").validate().isOk);
+        assertEquals(Result.State.WARN, createCheck("table002.csv").validate().state);
     }
 
     @Test
     void CrFail() throws Exception {
-        assertFalse(createCheck("table003.csv").validate().isOk);
+        assertEquals(Result.State.WARN, createCheck("table003.csv").validate().state);
     }
 }

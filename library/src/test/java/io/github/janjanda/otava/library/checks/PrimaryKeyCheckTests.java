@@ -11,7 +11,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static io.github.janjanda.otava.library.TestUtils.createDescriptor;
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PrimaryKeyCheckTests {
     @ParameterizedTest
@@ -22,9 +22,7 @@ class PrimaryKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         PrimaryKeyCheck pkc = scf.getInstance(PrimaryKeyCheck.class);
         Result result = pkc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -34,7 +32,7 @@ class PrimaryKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         PrimaryKeyCheck pkc = scf.getInstance(PrimaryKeyCheck.class);
         Result result = pkc.validate();
-        assertTrue(result.isFatal);
+        assertEquals(Result.State.FATAL, result.state);
     }
 
     @Test
@@ -44,9 +42,7 @@ class PrimaryKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         PrimaryKeyCheck pkc = scf.getInstance(PrimaryKeyCheck.class);
         Result result = pkc.validate();
-        assertFalse(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.WARN, result.state);
         assertEquals(2, result.numberOfMsg);
     }
 
@@ -57,6 +53,6 @@ class PrimaryKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         PrimaryKeyCheck pkc = scf.getInstance(PrimaryKeyCheck.class);
         Result result = pkc.validate();
-        assertTrue(result.isSkipped);
+        assertEquals(Result.State.SKIPPED, result.state);
     }
 }

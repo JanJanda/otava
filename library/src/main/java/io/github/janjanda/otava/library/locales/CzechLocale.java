@@ -82,6 +82,11 @@ public final class CzechLocale implements Locale {
     }
 
     @Override
+    public String warning() {
+        return "varování";
+    }
+
+    @Override
     public String fatal() {
         return "fatální";
     }

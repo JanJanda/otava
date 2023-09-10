@@ -65,14 +65,14 @@ class W3Tests {
 
     boolean hasFatal(Result[] results) {
         for (Result result : results) {
-            if (result.isFatal) return true;
+            if (result.state == Result.State.FATAL) return true;
         }
         return false;
     }
 
     boolean allOk(Result[] results) {
         for (Result result : results) {
-            if (!result.isOk) return false;
+            if (result.state != Result.State.OK) return false;
         }
         return true;
     }

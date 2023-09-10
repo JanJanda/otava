@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.github.janjanda.otava.library.TestUtils.createDescriptor;
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ColumnTitlesCheckTests {
     @Test
@@ -20,9 +19,7 @@ class ColumnTitlesCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
         Result result = ctc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -32,9 +29,7 @@ class ColumnTitlesCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
         Result result = ctc.validate();
-        assertFalse(result.isOk);
-        assertTrue(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.FATAL, result.state);
     }
 
     @Test
@@ -43,7 +38,7 @@ class ColumnTitlesCheckTests {
         Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
-        assertTrue(ctc.validate().isFatal);
+        assertEquals(Result.State.FATAL, ctc.validate().state);
     }
 
     @Test
@@ -52,7 +47,7 @@ class ColumnTitlesCheckTests {
         Descriptor[] descs = {createDescriptor("metadata001.json", "https://example.org/metadata001.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
-        assertTrue(ctc.validate().isSkipped);
+        assertEquals(Result.State.SKIPPED, ctc.validate().state);
     }
 
     @Test
@@ -63,6 +58,6 @@ class ColumnTitlesCheckTests {
         Descriptor[] descs = {createDescriptor("metadata011.json", "https://example.org/metadata011.json")};
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ColumnTitlesCheck ctc = scf.getInstance(ColumnTitlesCheck.class);
-        assertTrue(ctc.validate().isFatal);
+        assertEquals(Result.State.FATAL, ctc.validate().state);
     }
 }

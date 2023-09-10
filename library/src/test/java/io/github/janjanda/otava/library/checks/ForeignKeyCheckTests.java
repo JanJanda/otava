@@ -9,8 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.github.janjanda.otava.library.TestUtils.createDescriptor;
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ForeignKeyCheckTests {
     @Test
@@ -21,9 +20,7 @@ class ForeignKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ForeignKeyCheck fkc = scf.getInstance(ForeignKeyCheck.class);
         Result result = fkc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isSkipped);
-        assertFalse(result.isFatal);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -34,9 +31,7 @@ class ForeignKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ForeignKeyCheck fkc = scf.getInstance(ForeignKeyCheck.class);
         Result result = fkc.validate();
-        assertFalse(result.isOk);
-        assertFalse(result.isSkipped);
-        assertTrue(result.isFatal);
+        assertEquals(Result.State.FATAL, result.state);
     }
 
     @Test
@@ -48,9 +43,7 @@ class ForeignKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ForeignKeyCheck fkc = scf.getInstance(ForeignKeyCheck.class);
         Result result = fkc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isSkipped);
-        assertFalse(result.isFatal);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -62,8 +55,6 @@ class ForeignKeyCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         ForeignKeyCheck fkc = scf.getInstance(ForeignKeyCheck.class);
         Result result = fkc.validate();
-        assertFalse(result.isOk);
-        assertFalse(result.isSkipped);
-        assertTrue(result.isFatal);
+        assertEquals(Result.State.FATAL, result.state);
     }
 }

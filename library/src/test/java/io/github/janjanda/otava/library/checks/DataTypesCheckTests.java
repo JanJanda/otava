@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.github.janjanda.otava.library.TestUtils.createDescriptor;
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DataTypesCheckTests {
     @Test
@@ -19,9 +19,7 @@ public class DataTypesCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
         Result result = dc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -31,9 +29,7 @@ public class DataTypesCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
         Result result = dc.validate();
-        assertFalse(result.isOk);
-        assertTrue(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.FATAL, result.state);
         assertEquals(7, result.numberOfMsg);
     }
 
@@ -44,9 +40,7 @@ public class DataTypesCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
         Result result = dc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @Test
@@ -56,9 +50,7 @@ public class DataTypesCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), new DocsGroup<>(descs));
         DataTypesCheck dc = scf.getInstance(DataTypesCheck.class);
         Result result = dc.validate();
-        assertFalse(result.isOk);
-        assertTrue(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.FATAL, result.state);
         assertEquals(6, result.numberOfMsg);
     }
 }

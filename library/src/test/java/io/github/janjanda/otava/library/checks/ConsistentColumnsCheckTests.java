@@ -9,8 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static io.github.janjanda.otava.library.TestUtils.createTable;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ConsistentColumnsCheckTests {
     @Test
@@ -19,9 +18,7 @@ class ConsistentColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), null);
         ConsistentColumnsCheck ccc = scf.getInstance(ConsistentColumnsCheck.class);
         Result result = ccc.validate();
-        assertTrue(result.isOk);
-        assertFalse(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.OK, result.state);
     }
 
     @ParameterizedTest
@@ -31,8 +28,6 @@ class ConsistentColumnsCheckTests {
         SingletonCheckFactory scf = new SingletonCheckFactory(new DocsGroup<>(tables), null);
         ConsistentColumnsCheck ccc = scf.getInstance(ConsistentColumnsCheck.class);
         Result result = ccc.validate();
-        assertFalse(result.isOk);
-        assertTrue(result.isFatal);
-        assertFalse(result.isSkipped);
+        assertEquals(Result.State.FATAL, result.state);
     }
 }

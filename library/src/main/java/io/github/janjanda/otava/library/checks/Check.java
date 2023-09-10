@@ -44,7 +44,7 @@ public abstract class Check {
 
     public final boolean fatalSubResult() {
         boolean fatal = false;
-        if (result != null) fatal = result.isFatal;
+        if (result != null) fatal = result.state == Result.State.FATAL;
         for (Check pc : preChecks) fatal = fatal || pc.fatalSubResult();
         return fatal;
     }
