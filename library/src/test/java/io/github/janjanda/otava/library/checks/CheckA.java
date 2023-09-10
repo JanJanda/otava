@@ -10,7 +10,7 @@ public class CheckA extends Check {
     }
 
     @Override
-    protected Result performValidation() {
-        return null;
+    protected Result.Builder performValidation() {
+        return new Result.Builder(this.getClass().getName());
     }
 }
