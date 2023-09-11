@@ -20,8 +20,8 @@ public class CliApp {
         Option fullTree = Option.builder("fulltree").desc("print the full tree of validation checks").build();
         Option lang = Option.builder("lang").desc("set the language of the results, en is default").hasArg().argName("language tag [en|cs]").build();
         Option saveMem = Option.builder("savemem").desc("do not load tables from active descriptors to memory").build();
-        Option tables = Option.builder("tables").desc("validate only tables alone").build();
-        Option descs = Option.builder("descs").desc("validate only descriptors alone").build();
+        Option tables = Option.builder("tables").desc("validate only passive tables alone").build();
+        Option descs = Option.builder("descs").desc("validate only passive descriptors alone").build();
         Option full = Option.builder("full").desc("perform full validation with tables and descriptors").build();
         Option text = Option.builder("text").desc("print result as plain text").build();
         Option json = Option.builder("json").desc("print result as JSON").build();
@@ -73,18 +73,9 @@ public class CliApp {
         }
 
         // show checks tree
-        if (line.hasOption(tablesTree)) {
-            System.out.println(Manager.printTablesOnlyValidationTree());
-            return;
-        }
-        if (line.hasOption(descsTree)) {
-            System.out.println(Manager.printDescriptorsOnlyValidationTree());
-            return;
-        }
-        if (line.hasOption(fullTree)) {
-            System.out.println(Manager.printFullValidationTree());
-            return;
-        }
+        if (line.hasOption(tablesTree)) System.out.println(Manager.printTablesOnlyValidationTree());
+        if (line.hasOption(descsTree)) System.out.println(Manager.printDescriptorsOnlyValidationTree());
+        if (line.hasOption(fullTree)) System.out.println(Manager.printFullValidationTree());
 
         // set language
         if (line.hasOption(lang)) {
