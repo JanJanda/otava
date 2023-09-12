@@ -73,9 +73,18 @@ public class CliApp {
         }
 
         // show checks tree
-        if (line.hasOption(tablesTree)) System.out.println(Manager.printTablesOnlyValidationTree());
-        if (line.hasOption(descsTree)) System.out.println(Manager.printDescriptorsOnlyValidationTree());
-        if (line.hasOption(fullTree)) System.out.println(Manager.printFullValidationTree());
+        if (line.hasOption(tablesTree)) {
+            System.out.println(Manager.printTablesOnlyValidationTree());
+            return;
+        }
+        if (line.hasOption(descsTree)) {
+            System.out.println(Manager.printDescriptorsOnlyValidationTree());
+            return;
+        }
+        if (line.hasOption(fullTree)) {
+            System.out.println(Manager.printFullValidationTree());
+            return;
+        }
 
         // set language
         if (line.hasOption(lang)) {
