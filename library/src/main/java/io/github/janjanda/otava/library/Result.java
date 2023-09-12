@@ -9,7 +9,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.github.janjanda.otava.library.Manager.*;
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.Manager.rdfPrefix;
 
 /**
  * This class represent a result of a validation check.
@@ -26,6 +27,7 @@ public final class Result implements Outcome {
     private final String langWarn = locale().warning();
     private final String langFatal = locale().fatal();
     private final String langSkipped = locale().skipped();
+    private final String langType = locale().result();
 
     private Result(Builder b) {
         originCheck = b.origin;
@@ -42,6 +44,7 @@ public final class Result implements Outcome {
     @Override
     public String asText() {
         StringBuilder result = new StringBuilder();
+        result.append(langType).append(System.lineSeparator());
         result.append(originCheck).append(System.lineSeparator());
         result.append(langDuration).append(": ").append(formatDuration()).append(System.lineSeparator());
         switch (state) {
@@ -58,6 +61,7 @@ public final class Result implements Outcome {
     public String asJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode root = objectMapper.createObjectNode()
+                .put("type", "Result")
                 .put("check", originCheck)
                 .put("state", state.toString());
         if (duration != null) root.put("duration", convertDuration());
@@ -75,8 +79,9 @@ public final class Result implements Outcome {
 
     @Override
     public String asTurtle() {
-        String label = "_:r" + random.nextInt(10000);
+        String label = "_:r" + this.hashCode();
         StringBuilder output = new StringBuilder();
+        output.append(label).append(" a <").append(rdfPrefix).append("Result> .").append(System.lineSeparator());
         output.append(label).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .").append(System.lineSeparator());
         if (duration != null) output.append(label).append(" <").append(rdfPrefix).append("duration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
         output.append(label).append(" <").append(rdfPrefix).append("state> \"").append(state.toString()).append("\" .").append(System.lineSeparator());

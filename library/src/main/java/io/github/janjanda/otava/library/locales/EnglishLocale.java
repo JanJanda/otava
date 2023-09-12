@@ -210,4 +210,14 @@ public final class EnglishLocale implements Locale {
     public String duration() {
         return "Duration";
     }
+
+    @Override
+    public String result() {
+        return "Result";
+    }
+
+    @Override
+    public String exception() {
+        return "Exception";
+    }
 }

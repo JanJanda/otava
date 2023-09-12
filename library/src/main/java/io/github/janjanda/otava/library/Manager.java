@@ -30,7 +30,6 @@ import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
  */
 public final class Manager {
     public static final String rdfPrefix = "https://janjanda.github.io/otava/";
-    public static final Random random = new Random();
     private static Locale currentLocale = new EnglishLocale();
     private static boolean localeLocked = false;
     private static final Class<? extends Check> tablesValidation = ConsistentColumnsCheck.class;

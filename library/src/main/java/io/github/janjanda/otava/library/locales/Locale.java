@@ -43,4 +43,6 @@ public interface Locale {
     String extraPropsInFKey(String tableUrl);
     String cannotResolveBase(String descName);
     String duration();
+    String result();
+    String exception();
 }
