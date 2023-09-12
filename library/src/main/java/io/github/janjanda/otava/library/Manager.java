@@ -17,10 +17,7 @@ import io.github.janjanda.otava.library.locales.EnglishLocale;
 import io.github.janjanda.otava.library.locales.Locale;
 
 import java.net.MalformedURLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
 import static io.github.janjanda.otava.library.ValidationSuite.DescResource;
 import static io.github.janjanda.otava.library.ValidationSuite.TableResource;
@@ -82,7 +79,7 @@ public final class Manager {
         Check check = scf.getInstance(tablesValidation);
         check.validate();
         Set<Result> results = check.getAllResults();
-        return results.toArray(new Result[0]);
+        return makeSortedResults(results);
     }
 
     /**
@@ -99,7 +96,7 @@ public final class Manager {
         Check check = scf.getInstance(descriptorsValidation);
         check.validate();
         Set<Result> results = check.getAllResults();
-        return results.toArray(new Result[0]);
+        return makeSortedResults(results);
     }
 
     /**
@@ -124,7 +121,7 @@ public final class Manager {
         Check check = scf.getInstance(fullRootValidation);
         check.validate();
         Set<Result> results = check.getAllResults();
-        return results.toArray(new Result[0]);
+        return makeSortedResults(results);
     }
 
     private List<Table> createTables(TableResource[] specs, DocumentFactory df) throws ValidatorFileException {
@@ -184,6 +181,12 @@ public final class Manager {
             }
         }
         return resources.toArray(new TableResource[0]);
+    }
+
+    private Result[] makeSortedResults(Set<Result> resultSet) {
+        Result[] results = resultSet.toArray(new Result[0]);
+        Arrays.sort(results, Comparator.comparing(a -> a.originCheck));
+        return results;
     }
 
     /**
