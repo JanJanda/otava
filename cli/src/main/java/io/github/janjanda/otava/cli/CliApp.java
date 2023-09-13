@@ -13,6 +13,8 @@ import java.time.Instant;
 
 public class CliApp {
     public static void main(String[] args) {
+        System.setProperty("file.encoding", "UTF-8");
+
         // define options
         Option help = Option.builder("help").desc("print this description of the options").build();
         Option tablesTree = Option.builder("tablestree").desc("print the tree of validation checks for tables").build();
