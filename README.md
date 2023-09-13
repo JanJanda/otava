@@ -8,6 +8,8 @@ The [CSV on the Web](https://www.w3.org/TR/2016/NOTE-tabular-data-primer-2016022
 
 ## Status of Development
 
+Java version 17.0.1 is used in this project.
+
 The library part of this project is developed. There are automatic unit tests with great coverage. It is possible to execute individual parts of the library in the tests. The tests can be modified to try different behavior. There are also resources for the tests. It is easy to find the files because the project follows the [Standard Maven Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html). The command `mvn test` executes the tests.
 
 The command line interface is also developed.
@@ -28,7 +30,7 @@ It is important to understand the documents in the library. There are following 
 
 ## Command Line Application
 
-The command line application provides user access to the features of the library. It can be compiled and executed with the following commands.
+The command line application provides user access to the features of the library. It can be compiled and executed respectively with the following commands.
 
 ```
 mvn package
@@ -39,21 +41,19 @@ The option `-help` shows possible options and their syntax with arguments. The n
 
 ### Examples
 
-We show only command line arguments in the following examples for brevity.
-
 Perform full validation with the provided active online descriptor, and write results as plain text.
 ```
--full -text -aod https://w3c.github.io/csvw/tests/test011/tree-ops.csv-metadata.json
+java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -full -text -aod https://w3c.github.io/csvw/tests/test011/tree-ops.csv-metadata.json
 ```
 
 The following examples are executed in the directory `library/src/test/resources`.
 
 Perform full validation with the provided passive local in-memory table and the provided passive local descriptor, and write results as plain text. The table and the descriptor have both name and alias because the links in the descriptor would not be valid otherwise.
 ```
--full -text -plit tables/table005.csv;https://example.org/tree-ops.csv -pld metadata/metadata001.json;https://example.org/metadata001.json
+java -jar ../../../../cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -full -text -plit tables/table005.csv;https://example.org/tree-ops.csv -pld metadata/metadata001.json;https://example.org/metadata001.json
 ```
 
 Perform tables only validation with the provided tables, and write results as plain text. It is possible to validate multiple documents together.
 ```
--tables -text -plit tables/table002.csv -plit tables/table013.csv -plit tables/table014.csv -plit tables/table015.csv
+java -jar ../../../../cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -tables -text -plit tables/table002.csv -plit tables/table013.csv -plit tables/table014.csv -plit tables/table015.csv
 ```
