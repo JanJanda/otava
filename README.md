@@ -22,7 +22,7 @@ The library contains the core functionality of this project. It performs the val
 
 ### Validation Principles
 
-There are three styles of the validation: tables only, descriptors only, and full validation. Each style has a corresponding method with comments and descriptions in the manager. The validation itself is implemented in many individual classes. This ensures great extensibility. Each class represent a so-called validation check, and it checks a particular feature of tables and descriptors. Some checks do not make sense if other checks fail. For this reason, a check can depend on other checks. These dependencies create a tree, and the checks in the tree are executed from leaves to the root. If more checks depend on one check, the one check appears on more places in the tree, but it is executed only once for effectiveness. The manager can print the validations trees for each style of the validation. The methods for the validation itself require one parameter with a validation suite. A validation suite contains documents and other input for the validation, and it has a convenient builder. The validation returns an array of validation results. Each validation check creates one result. The result can be shown in several formats. If a validation cannot be performed, an exception is thrown. The exception can also be shown in several formats just like a result.
+There are three styles of the validation: tables only, descriptors only, and full validation. Each style has a corresponding method with comments and descriptions in the manager. The validation itself is implemented in many individual classes. This ensures great extensibility. Each class represent a so-called validation check, and it checks a particular feature of tables and descriptors. Some checks do not make sense if other checks fail. For this reason, a check can depend on other checks. These dependencies create a tree, and the checks in the tree are executed from leaves to the root. If more checks depend on one check, the one check appears on more places in the tree, but it is executed only once for effectiveness. The manager can print the validations trees for each style of the validation. The methods for the validation itself require one parameter with a validation suite. A validation suite contains documents and other input for the validation, and it has a convenient builder. The validation returns a validation report with results. Each validation check creates one result. The report can be shown in several formats. If a validation cannot be performed, an exception is thrown. The exception can also be shown in several formats just like the report.
 
 ### Documents
 
@@ -41,19 +41,19 @@ The option `-help` shows possible options and their syntax with arguments. The n
 
 ### Examples
 
-Perform full validation with the provided active online descriptor, and write results as plain text.
+Perform full validation with the provided active online descriptor, and write the report as plain text.
 ```
 java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -full -text -aod https://w3c.github.io/csvw/tests/test011/tree-ops.csv-metadata.json
 ```
 
 The following examples are executed in the directory `library/src/test/resources`.
 
-Perform full validation with the provided passive local in-memory table and the provided passive local descriptor, and write results as plain text. The table and the descriptor have both name and alias because the links in the descriptor would not be valid otherwise.
+Perform full validation with the provided passive local in-memory table and the provided passive local descriptor, and write the report as plain text. The table and the descriptor have both name and alias because the links in the descriptor would not be valid otherwise.
 ```
 java -jar ../../../../cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -full -text -plit tables/table005.csv;https://example.org/tree-ops.csv -pld metadata/metadata001.json;https://example.org/metadata001.json
 ```
 
-Perform tables only validation with the provided tables, and write results as plain text. It is possible to validate multiple documents together.
+Perform tables only validation with the provided tables, and write the report as plain text. It is possible to validate multiple documents together.
 ```
 java -jar ../../../../cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -tables -text -plit tables/table002.csv -plit tables/table013.csv -plit tables/table014.csv -plit tables/table015.csv
 ```
