@@ -39,7 +39,10 @@ public final class Result {
     private final String langFatal = locale().fatal();
     private final String langSkipped = locale().skipped();
     private final String langType = locale().result();
-    private final String turtleLabel = "_:r" + this.hashCode();
+    /**
+     * The subject of the Turtle representation. The subject represents this result in Turtle.
+     */
+    public final String turtleLabel = "_:r" + this.hashCode();
 
     private Result(Builder b) {
         originCheck = b.origin;
@@ -91,14 +94,6 @@ public final class Result {
         ArrayNode msgs = root.putArray("messages");
         for (String msg : messages) msgs.add(msg);
         return root;
-    }
-
-    /**
-     * Gets the subject of the Turtle representation. The subject represent this result.
-     * @return subject of the Turtle representation
-     */
-    public String getTurtleLabel() {
-        return turtleLabel;
     }
 
     /**

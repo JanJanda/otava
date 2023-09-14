@@ -109,7 +109,7 @@ public final class Report implements Outcome {
             sb.append(label).append(" <").append(rdfPrefix).append("descriptorName> \"").append(descName).append("\" .").append(System.lineSeparator());
         }
         for (Result result : results) {
-            sb.append(label).append(" <").append(rdfPrefix).append("result> ").append(result.getTurtleLabel()).append(" .").append(System.lineSeparator());
+            sb.append(label).append(" <").append(rdfPrefix).append("result> ").append(result.turtleLabel).append(" .").append(System.lineSeparator());
         }
         sb.append(System.lineSeparator());
         for (Result result : results) {
