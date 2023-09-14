@@ -45,7 +45,7 @@ public final class Result {
         StringBuilder result = new StringBuilder();
         result.append(langType).append(System.lineSeparator());
         result.append(originCheck).append(System.lineSeparator());
-        result.append(langDuration).append(": ").append(formatDuration()).append(System.lineSeparator());
+        result.append(langDuration).append(": ").append(convertDuration()).append(" s").append(System.lineSeparator());
         switch (state) {
             case OK -> result.append("ok").append(System.lineSeparator());
             case WARN -> result.append(langWarn).append(System.lineSeparator());
@@ -61,8 +61,8 @@ public final class Result {
         ObjectNode root = objectMapper.createObjectNode()
                 .put("type", "Result")
                 .put("check", originCheck)
+                .put("duration", convertDuration())
                 .put("state", state.toString());
-        root.put("duration", convertDuration());
         ArrayNode msgs = root.putArray("messages");
         for (String msg : messages) {
             msgs.add(msg);
@@ -77,17 +77,13 @@ public final class Result {
     public String toTurtle() {
         StringBuilder output = new StringBuilder();
         output.append(turtleLabel).append(" a <").append(rdfPrefix).append("Result> .").append(System.lineSeparator());
-        output.append(turtleLabel).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" <").append(rdfPrefix).append("checkName> \"").append(originCheck).append("\" .").append(System.lineSeparator());
         output.append(turtleLabel).append(" <").append(rdfPrefix).append("duration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
         output.append(turtleLabel).append(" <").append(rdfPrefix).append("state> \"").append(state.toString()).append("\" .").append(System.lineSeparator());
         for (String msg : messages) {
             output.append(turtleLabel).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(langTag).append(" .").append(System.lineSeparator());
         }
         return output.toString();
-    }
-
-    private String formatDuration() {
-        return convertDuration() + " s";
     }
 
     private double convertDuration() {

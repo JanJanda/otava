@@ -240,4 +240,9 @@ public final class EnglishLocale implements Locale {
     public String results() {
         return "Results";
     }
+
+    @Override
+    public String validationReport() {
+        return "Validation Report";
+    }
 }

@@ -240,4 +240,9 @@ public final class CzechLocale implements Locale {
     public String results() {
         return "Výsledky";
     }
+
+    @Override
+    public String validationReport() {
+        return "Validační zpráva";
+    }
 }

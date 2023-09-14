@@ -6,14 +6,23 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.time.Duration;
-import static io.github.janjanda.otava.library.Manager.*;
 
+import static io.github.janjanda.otava.library.Manager.locale;
+import static io.github.janjanda.otava.library.Manager.rdfPrefix;
+
+/**
+ * This class represents results and other data about performed validation.
+ */
 public final class Report implements Outcome {
+    /**
+     * total measured duration of the validation
+     */
     public final Duration totalDuration;
     private final String[] tableNames;
     private final String[] descNames;
     private final Result[] results;
 
+    private final String langReport = locale().validationReport();
     private final String langTotalDuration = locale().totalDuration();
     private final String langTables = locale().tables();
     private final String langDescs = locale().descriptors();
@@ -26,14 +35,26 @@ public final class Report implements Outcome {
         this.results = results.clone();
     }
 
+    /**
+     * Gets used names of the validated tables.
+     * @return used names of the validated tables
+     */
     public String[] getTableNames() {
         return tableNames.clone();
     }
 
+    /**
+     * Gets used names of the validated descriptors.
+     * @return used names of the validated descriptors
+     */
     public String[] getDescNames() {
         return descNames.clone();
     }
 
+    /**
+     * Gets results of the validation checks.
+     * @return results of the validation checks
+     */
     public Result[] getResults() {
         return results.clone();
     }
@@ -41,7 +62,8 @@ public final class Report implements Outcome {
     @Override
     public String asText() {
         StringBuilder sb = new StringBuilder();
-        sb.append(langTotalDuration).append(": ").append(formatDuration()).append(System.lineSeparator());
+        sb.append(langReport).append(System.lineSeparator());
+        sb.append(langTotalDuration).append(": ").append(convertDuration()).append(" s").append(System.lineSeparator());
         sb.append(System.lineSeparator());
         sb.append(langTables).append(":").append(System.lineSeparator());
         for (String tableName : tableNames) sb.append(tableName).append(System.lineSeparator());
@@ -60,6 +82,7 @@ public final class Report implements Outcome {
     public String asJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode root = objectMapper.createObjectNode();
+        root.put("type", "Report");
         root.put("totalDuration", convertDuration());
         ArrayNode tablesArray = root.putArray("tables");
         for (String tableName : tableNames) tablesArray.add(tableName);
@@ -80,6 +103,7 @@ public final class Report implements Outcome {
         StringBuilder sb = new StringBuilder();
         String label = "_:rep" + this.hashCode();
         sb.append(label).append(" a <").append(rdfPrefix).append("Report> .").append(System.lineSeparator());
+        sb.append(label).append(" <").append(rdfPrefix).append("totalDuration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
         for (String tableName : tableNames) {
             sb.append(label).append(" <").append(rdfPrefix).append("tableName> \"").append(tableName).append("\" .").append(System.lineSeparator());
         }
@@ -94,10 +118,6 @@ public final class Report implements Outcome {
             sb.append(result.toTurtle()).append(System.lineSeparator());
         }
         return sb.toString();
-    }
-
-    private String formatDuration() {
-        return convertDuration() + " s";
     }
 
     private double convertDuration() {

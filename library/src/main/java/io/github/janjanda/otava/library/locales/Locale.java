@@ -49,4 +49,5 @@ public interface Locale {
     String tables();
     String descriptors();
     String results();
+    String validationReport();
 }

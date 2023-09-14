@@ -70,7 +70,7 @@ public final class Manager {
     /**
      * Validates only tables without descriptors. Only passive tables from the validation suite are validated.
      * @param validationSuite specification of validated files, only passive tables are read
-     * @return results of individual validation checks
+     * @return validation report
      * @throws ValidatorException If the validation cannot be performed.
      */
     public Report tablesOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
@@ -89,7 +89,7 @@ public final class Manager {
     /**
      * Validate only descriptors without tables. Only passive descriptors from the validation suite are validated.
      * @param validationSuite specification of validate files, only passive descriptors are read
-     * @return results of individual validation checks
+     * @return validation report
      * @throws ValidatorException If the validation cannot be performed.
      */
     public Report descriptorsOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
@@ -108,7 +108,7 @@ public final class Manager {
     /**
      * Performs full validation with the provided validation suite.
      * @param validationSuite specifications of validated files
-     * @return results of individual validation checks
+     * @return validation report
      * @throws ValidatorException If the validation cannot be performed.
      */
     public Report fullValidation(ValidationSuite validationSuite) throws ValidatorException {

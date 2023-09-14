@@ -8,9 +8,6 @@ import io.github.janjanda.otava.library.locales.CzechLocale;
 import io.github.janjanda.otava.library.locales.EnglishLocale;
 import org.apache.commons.cli.*;
 
-import java.time.Duration;
-import java.time.Instant;
-
 public class CliApp {
     public static void main(String[] args) {
         System.setProperty("file.encoding", "UTF-8");
