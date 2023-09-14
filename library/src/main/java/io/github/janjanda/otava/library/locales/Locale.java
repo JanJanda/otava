@@ -45,4 +45,8 @@ public interface Locale {
     String duration();
     String result();
     String exception();
+    String totalDuration();
+    String tables();
+    String descriptors();
+    String results();
 }

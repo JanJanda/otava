@@ -7,6 +7,7 @@ import io.github.janjanda.otava.library.checks.FullRootCheck;
 import io.github.janjanda.otava.library.checks.VirtualsLastCheck;
 import io.github.janjanda.otava.library.documents.Descriptor;
 import io.github.janjanda.otava.library.documents.DocsGroup;
+import io.github.janjanda.otava.library.documents.Document;
 import io.github.janjanda.otava.library.documents.Table;
 import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
@@ -17,6 +18,8 @@ import io.github.janjanda.otava.library.locales.EnglishLocale;
 import io.github.janjanda.otava.library.locales.Locale;
 
 import java.net.MalformedURLException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 
 import static io.github.janjanda.otava.library.ValidationSuite.DescResource;
@@ -70,7 +73,8 @@ public final class Manager {
      * @return results of individual validation checks
      * @throws ValidatorException If the validation cannot be performed.
      */
-    public Result[] tablesOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+    public Report tablesOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+        Instant start = Instant.now();
         DocumentFactory df = new DocumentFactory();
         List<Table> tables = createTables(validationSuite.getPassiveTables(), df);
         DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
@@ -78,7 +82,8 @@ public final class Manager {
         Check check = scf.getInstance(tablesValidation);
         check.validate();
         Set<Result> results = check.getAllResults();
-        return makeSortedResults(results);
+        Instant end = Instant.now();
+        return new Report(Duration.between(start, end), extractDocumentNames(tableGroup), new String[0], makeSortedResults(results));
     }
 
     /**
@@ -87,7 +92,8 @@ public final class Manager {
      * @return results of individual validation checks
      * @throws ValidatorException If the validation cannot be performed.
      */
-    public Result[] descriptorsOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+    public Report descriptorsOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+        Instant start = Instant.now();
         DocumentFactory df = new DocumentFactory();
         List<Descriptor> descriptors = createDescriptors(validationSuite.getPassiveDescriptors(), df);
         DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
@@ -95,7 +101,8 @@ public final class Manager {
         Check check = scf.getInstance(descriptorsValidation);
         check.validate();
         Set<Result> results = check.getAllResults();
-        return makeSortedResults(results);
+        Instant end = Instant.now();
+        return new Report(Duration.between(start, end), new String[0], extractDocumentNames(descGroup), makeSortedResults(results));
     }
 
     /**
@@ -104,7 +111,8 @@ public final class Manager {
      * @return results of individual validation checks
      * @throws ValidatorException If the validation cannot be performed.
      */
-    public Result[] fullValidation(ValidationSuite validationSuite) throws ValidatorException {
+    public Report fullValidation(ValidationSuite validationSuite) throws ValidatorException {
+        Instant start = Instant.now();
         DocumentFactory df = new DocumentFactory();
         List<Table> tables = createTables(validationSuite.getActiveTables(), df);
         List<Descriptor> descriptors = createDescriptors(validationSuite.getActiveDescriptors(), df);
@@ -120,7 +128,8 @@ public final class Manager {
         Check check = scf.getInstance(fullRootValidation);
         check.validate();
         Set<Result> results = check.getAllResults();
-        return makeSortedResults(results);
+        Instant end = Instant.now();
+        return new Report(Duration.between(start, end), extractDocumentNames(tableGroup), extractDocumentNames(descGroup), makeSortedResults(results));
     }
 
     private List<Table> createTables(TableResource[] specs, DocumentFactory df) throws ValidatorFileException {
@@ -186,6 +195,15 @@ public final class Manager {
         Result[] results = resultSet.toArray(new Result[0]);
         Arrays.sort(results, Comparator.comparing(a -> a.originCheck));
         return results;
+    }
+
+    private String[] extractDocumentNames(DocsGroup<?> docsGroup) {
+        Document[] docs = docsGroup.getDocuments();
+        String[] names = new String[docs.length];
+        for (int i = 0; i < docs.length; i++) {
+            names[i] = docs[i].getPreferredName();
+        }
+        return names;
     }
 
     /**

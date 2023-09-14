@@ -1,6 +1,5 @@
 package io.github.janjanda.otava.library;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -15,7 +14,7 @@ import static io.github.janjanda.otava.library.Manager.rdfPrefix;
 /**
  * This class represent a result of a validation check.
  */
-public final class Result implements Outcome {
+public final class Result {
     public final String originCheck;
     public final Duration duration;
     public final State state;
@@ -28,6 +27,7 @@ public final class Result implements Outcome {
     private final String langFatal = locale().fatal();
     private final String langSkipped = locale().skipped();
     private final String langType = locale().result();
+    private final String turtleLabel = "_:r" + this.hashCode();
 
     private Result(Builder b) {
         originCheck = b.origin;
@@ -41,8 +41,7 @@ public final class Result implements Outcome {
         return messages[index];
     }
 
-    @Override
-    public String asText() {
+    public String toText() {
         StringBuilder result = new StringBuilder();
         result.append(langType).append(System.lineSeparator());
         result.append(originCheck).append(System.lineSeparator());
@@ -57,42 +56,37 @@ public final class Result implements Outcome {
         return result.toString();
     }
 
-    @Override
-    public String asJson() {
+    public ObjectNode toJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode root = objectMapper.createObjectNode()
                 .put("type", "Result")
                 .put("check", originCheck)
                 .put("state", state.toString());
-        if (duration != null) root.put("duration", convertDuration());
+        root.put("duration", convertDuration());
         ArrayNode msgs = root.putArray("messages");
         for (String msg : messages) {
             msgs.add(msg);
         }
-        try {
-            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(root);
-        }
-        catch (JsonProcessingException e) {
-            return "Cannot write a result as JSON.";
-        }
+        return root;
     }
 
-    @Override
-    public String asTurtle() {
-        String label = "_:r" + this.hashCode();
+    public String getTurtleLabel() {
+        return turtleLabel;
+    }
+
+    public String toTurtle() {
         StringBuilder output = new StringBuilder();
-        output.append(label).append(" a <").append(rdfPrefix).append("Result> .").append(System.lineSeparator());
-        output.append(label).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .").append(System.lineSeparator());
-        if (duration != null) output.append(label).append(" <").append(rdfPrefix).append("duration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
-        output.append(label).append(" <").append(rdfPrefix).append("state> \"").append(state.toString()).append("\" .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" a <").append(rdfPrefix).append("Result> .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" <").append(rdfPrefix).append("check> \"").append(originCheck).append("\" .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" <").append(rdfPrefix).append("duration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" <").append(rdfPrefix).append("state> \"").append(state.toString()).append("\" .").append(System.lineSeparator());
         for (String msg : messages) {
-            output.append(label).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(langTag).append(" .").append(System.lineSeparator());
+            output.append(turtleLabel).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(langTag).append(" .").append(System.lineSeparator());
         }
         return output.toString();
     }
 
     private String formatDuration() {
-        if (duration == null) return "?";
         return convertDuration() + " s";
     }
 

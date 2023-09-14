@@ -16,6 +16,10 @@ public final class DocsGroup<T extends Document> implements Iterable<T> {
         return documents[index];
     }
 
+    public T[] getDocuments() {
+        return documents.clone();
+    }
+
     @Override
     public Iterator<T> iterator() {
         return Arrays.stream(documents).iterator();

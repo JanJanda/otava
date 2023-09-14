@@ -129,31 +129,32 @@ public class CliApp {
 
         // perform validation
         Manager manager = new Manager();
-        Outcome[] outcomes = new Outcome[0];
-        Instant validationStart = Instant.now();
+        Outcome outcome = null;
         try {
-            if (line.hasOption(tables)) outcomes = manager.tablesOnlyValidation(vs);
-            if (line.hasOption(descs)) outcomes = manager.descriptorsOnlyValidation(vs);
-            if (line.hasOption(full)) outcomes = manager.fullValidation(vs);
+            if (line.hasOption(tables)) outcome = manager.tablesOnlyValidation(vs);
+            if (line.hasOption(descs)) outcome = manager.descriptorsOnlyValidation(vs);
+            if (line.hasOption(full)) outcome = manager.fullValidation(vs);
         }
         catch (ValidatorException e) {
-            outcomes = new Outcome[]{e};
+            outcome = e;
         }
-        Instant validationEnd = Instant.now();
 
         // write outcomes
-        printDuration(Duration.between(validationStart, validationEnd));
+        if (outcome == null) {
+            System.out.println("Validation has not created any outcome!");
+            return;
+        }
         boolean outputWritten = false;
         if (line.hasOption(text)) {
-            for (Outcome outcome : outcomes) System.out.println(outcome.asText());
+            System.out.println(outcome.asText());
             outputWritten = true;
         }
         if (line.hasOption(json)) {
-            for (Outcome outcome : outcomes) System.out.println(outcome.asJson());
+            System.out.println(outcome.asJson());
             outputWritten = true;
         }
         if (line.hasOption(turtle)) {
-            for (Outcome outcome : outcomes) System.out.println(outcome.asTurtle());
+            System.out.println(outcome.asTurtle());
             outputWritten = true;
         }
         if (!outputWritten) System.out.println("No output format was selected! Use -help");
@@ -200,10 +201,5 @@ public class CliApp {
                 else vsBuilder.addPassiveDescriptor(splitSpec[0], splitSpec[1], local);
             }
         }
-    }
-
-    private static void printDuration(Duration duration) {
-        double time = duration.toMillis() / 1000d;
-        System.out.println("Total validation time: " + time + " s");
     }
 }

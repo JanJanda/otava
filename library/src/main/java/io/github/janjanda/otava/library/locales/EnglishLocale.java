@@ -220,4 +220,24 @@ public final class EnglishLocale implements Locale {
     public String exception() {
         return "Exception";
     }
+
+    @Override
+    public String totalDuration() {
+        return "Total duration";
+    }
+
+    @Override
+    public String tables() {
+        return "Tables";
+    }
+
+    @Override
+    public String descriptors() {
+        return "Descriptors";
+    }
+
+    @Override
+    public String results() {
+        return "Results";
+    }
 }

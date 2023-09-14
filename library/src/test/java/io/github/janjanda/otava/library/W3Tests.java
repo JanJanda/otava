@@ -44,11 +44,11 @@ class W3Tests {
     @MethodSource("dataProvider")
     void testing(TestData data) {
         Manager manager = new Manager();
-        Result[] results = null;
+        Report report = null;
         try {
-            if (data.validation.equals("full")) results = manager.fullValidation(data.suite);
-            if (data.validation.equals("table")) results = manager.tablesOnlyValidation(data.suite);
-            if (data.validation.equals("desc")) results = manager.descriptorsOnlyValidation(data.suite);
+            if (data.validation.equals("full")) report = manager.fullValidation(data.suite);
+            if (data.validation.equals("table")) report = manager.tablesOnlyValidation(data.suite);
+            if (data.validation.equals("desc")) report = manager.descriptorsOnlyValidation(data.suite);
         }
         catch (ValidatorException e) {
             assertEquals("fail", data.result, data.testName);
@@ -56,9 +56,9 @@ class W3Tests {
         }
 
         switch (data.result) {
-            case "ok" -> assertFalse(hasFatal(results), data.testName);
-            case "fail" -> assertTrue(hasFatal(results), data.testName);
-            case "warn" -> assertFalse(allOk(results), data.testName);
+            case "ok" -> assertFalse(hasFatal(report.getResults()), data.testName);
+            case "fail" -> assertTrue(hasFatal(report.getResults()), data.testName);
+            case "warn" -> assertFalse(allOk(report.getResults()), data.testName);
             default -> fail("Invalid test data entry!");
         }
     }

@@ -220,4 +220,24 @@ public final class CzechLocale implements Locale {
     public String exception() {
         return "Výjimka";
     }
+
+    @Override
+    public String totalDuration() {
+        return "Celkové trvání";
+    }
+
+    @Override
+    public String tables() {
+        return "Tabulky";
+    }
+
+    @Override
+    public String descriptors() {
+        return "Deskriptory";
+    }
+
+    @Override
+    public String results() {
+        return "Výsledky";
+    }
 }
