@@ -15,10 +15,22 @@ import static io.github.janjanda.otava.library.Manager.rdfPrefix;
  * This class represent a result of a validation check.
  */
 public final class Result {
+    /**
+     * check which created this result
+     */
     public final String originCheck;
+    /**
+     * duration of the execution of the check
+     */
     public final Duration duration;
+    /**
+     * state of this result
+     */
     public final State state;
     private final String[] messages;
+    /**
+     * number of messages
+     */
     public final int numberOfMsg;
 
     private final String langDuration = locale().duration();
@@ -37,10 +49,19 @@ public final class Result {
         numberOfMsg = messages.length;
     }
 
+    /**
+     * Gest a message from an array with messages.
+     * @param index index of the message
+     * @return message from an array with messages
+     */
     public String getMessage(int index) {
         return messages[index];
     }
 
+    /**
+     * Crates a textual representation of this result.
+     * @return textual representation of this result
+     */
     public String toText() {
         StringBuilder result = new StringBuilder();
         result.append(langType).append(System.lineSeparator());
@@ -56,6 +77,10 @@ public final class Result {
         return result.toString();
     }
 
+    /**
+     * Creates a JSON representation of this result.
+     * @return JSON representation of this result
+     */
     public ObjectNode toJson() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode root = objectMapper.createObjectNode()
@@ -64,16 +89,22 @@ public final class Result {
                 .put("duration", convertDuration())
                 .put("state", state.toString());
         ArrayNode msgs = root.putArray("messages");
-        for (String msg : messages) {
-            msgs.add(msg);
-        }
+        for (String msg : messages) msgs.add(msg);
         return root;
     }
 
+    /**
+     * Gets the subject of the Turtle representation. The subject represent this result.
+     * @return subject of the Turtle representation
+     */
     public String getTurtleLabel() {
         return turtleLabel;
     }
 
+    /**
+     * Creates a representation of this result in RDF 1.1 Turtle.
+     * @return representation of this result in RDF 1.1 Turtle
+     */
     public String toTurtle() {
         StringBuilder output = new StringBuilder();
         output.append(turtleLabel).append(" a <").append(rdfPrefix).append("Result> .").append(System.lineSeparator());

@@ -11,7 +11,7 @@ import static io.github.janjanda.otava.library.Manager.locale;
 import static io.github.janjanda.otava.library.Manager.rdfPrefix;
 
 /**
- * This class represents results and other data about performed validation.
+ * This class contains results and other data about performed validation.
  */
 public final class Report implements Outcome {
     /**
@@ -72,9 +72,7 @@ public final class Report implements Outcome {
         for (String descName : descNames) sb.append(descName).append(System.lineSeparator());
         sb.append(System.lineSeparator());
         sb.append(langResults).append(":").append(System.lineSeparator());
-        for (Result result : results) {
-            sb.append(result.toText()).append(System.lineSeparator());
-        }
+        for (Result result : results) sb.append(result.toText()).append(System.lineSeparator());
         return sb.toString();
     }
 

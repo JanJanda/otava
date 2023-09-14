@@ -237,7 +237,7 @@ public final class Manager {
             return check.printTree();
         }
         catch (CheckCreationException e) {
-            return "Cannot create the validation tree!";
+            return "Cannot create the validation tree.";
         }
     }
 }
