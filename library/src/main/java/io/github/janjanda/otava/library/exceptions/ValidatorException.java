@@ -7,6 +7,7 @@ import io.github.janjanda.otava.library.Outcome;
 
 import static io.github.janjanda.otava.library.Manager.locale;
 import static io.github.janjanda.otava.library.Manager.rdfPrefix;
+import static io.github.janjanda.otava.library.utils.StringUtils.escapeTurtleString;
 
 public class ValidatorException extends Exception implements Outcome {
     private final String langTag = locale().langTag();
@@ -37,6 +38,6 @@ public class ValidatorException extends Exception implements Outcome {
     public final String asTurtle() {
         String label = "_:e" + this.hashCode();
         return label + " a <" + rdfPrefix + "Exception> ." + System.lineSeparator() +
-               label + " <" + rdfPrefix + "message> \"" + getMessage() + "\"@" + langTag + " ." + System.lineSeparator();
+               label + " <" + rdfPrefix + "message> \"" + escapeTurtleString(getMessage()) + "\"@" + langTag + " ." + System.lineSeparator();
     }
 }

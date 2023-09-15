@@ -10,6 +10,7 @@ import java.util.List;
 
 import static io.github.janjanda.otava.library.Manager.locale;
 import static io.github.janjanda.otava.library.Manager.rdfPrefix;
+import static io.github.janjanda.otava.library.utils.StringUtils.escapeTurtleString;
 
 /**
  * This class represent a result of a validation check.
@@ -103,11 +104,11 @@ public final class Result {
     public String toTurtle() {
         StringBuilder output = new StringBuilder();
         output.append(turtleLabel).append(" a <").append(rdfPrefix).append("Result> .").append(System.lineSeparator());
-        output.append(turtleLabel).append(" <").append(rdfPrefix).append("checkName> \"").append(originCheck).append("\" .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" <").append(rdfPrefix).append("checkName> \"").append(escapeTurtleString(originCheck)).append("\" .").append(System.lineSeparator());
         output.append(turtleLabel).append(" <").append(rdfPrefix).append("duration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
-        output.append(turtleLabel).append(" <").append(rdfPrefix).append("state> \"").append(state.toString()).append("\" .").append(System.lineSeparator());
+        output.append(turtleLabel).append(" <").append(rdfPrefix).append("state> \"").append(escapeTurtleString(state.toString())).append("\" .").append(System.lineSeparator());
         for (String msg : messages) {
-            output.append(turtleLabel).append(" <").append(rdfPrefix).append("message> \"").append(msg).append("\"@").append(langTag).append(" .").append(System.lineSeparator());
+            output.append(turtleLabel).append(" <").append(rdfPrefix).append("message> \"").append(escapeTurtleString(msg)).append("\"@").append(langTag).append(" .").append(System.lineSeparator());
         }
         return output.toString();
     }

@@ -9,6 +9,7 @@ import java.time.Duration;
 
 import static io.github.janjanda.otava.library.Manager.locale;
 import static io.github.janjanda.otava.library.Manager.rdfPrefix;
+import static io.github.janjanda.otava.library.utils.StringUtils.escapeTurtleString;
 
 /**
  * This class contains results and other data about performed validation.
@@ -103,10 +104,10 @@ public final class Report implements Outcome {
         sb.append(label).append(" a <").append(rdfPrefix).append("Report> .").append(System.lineSeparator());
         sb.append(label).append(" <").append(rdfPrefix).append("totalDuration> ").append(convertDuration()).append(" .").append(System.lineSeparator());
         for (String tableName : tableNames) {
-            sb.append(label).append(" <").append(rdfPrefix).append("tableName> \"").append(tableName).append("\" .").append(System.lineSeparator());
+            sb.append(label).append(" <").append(rdfPrefix).append("tableName> \"").append(escapeTurtleString(tableName)).append("\" .").append(System.lineSeparator());
         }
         for (String descName : descNames) {
-            sb.append(label).append(" <").append(rdfPrefix).append("descriptorName> \"").append(descName).append("\" .").append(System.lineSeparator());
+            sb.append(label).append(" <").append(rdfPrefix).append("descriptorName> \"").append(escapeTurtleString(descName)).append("\" .").append(System.lineSeparator());
         }
         for (Result result : results) {
             sb.append(label).append(" <").append(rdfPrefix).append("result> ").append(result.turtleLabel).append(" .").append(System.lineSeparator());
