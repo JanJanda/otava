@@ -34,7 +34,7 @@ The command line application provides user access to the features of the library
 
 ```
 mvn package
-java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -help
+java -jar cli/target/cli-1.0-jar-with-dependencies.jar -help
 ```
 
 The option `-help` shows possible options and their syntax with arguments. The names and descriptions of the command line options clearly refer to the corresponding concepts in the library from the previous section.
@@ -43,17 +43,17 @@ The option `-help` shows possible options and their syntax with arguments. The n
 
 Perform full validation with the provided active online descriptor, and write the report as plain text.
 ```
-java -jar cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -full -text -aod https://w3c.github.io/csvw/tests/test011/tree-ops.csv-metadata.json
+java -jar cli/target/cli-1.0-jar-with-dependencies.jar -full -text -aod https://w3c.github.io/csvw/tests/test011/tree-ops.csv-metadata.json
 ```
 
 The following examples are executed in the directory `library/src/test/resources`.
 
 Perform full validation with the provided passive local in-memory table and the provided passive local descriptor, and write the report as plain text. The table and the descriptor have both name and alias because the links in the descriptor would not be valid otherwise.
 ```
-java -jar ../../../../cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -full -text -plit tables/table005.csv;https://example.org/tree-ops.csv -pld metadata/metadata001.json;https://example.org/metadata001.json
+java -jar ../../../../cli/target/cli-1.0-jar-with-dependencies.jar -full -text -plit tables/table005.csv;https://example.org/tree-ops.csv -pld metadata/metadata001.json;https://example.org/metadata001.json
 ```
 
 Perform tables only validation with the provided tables, and write the report as plain text. It is possible to validate multiple documents together.
 ```
-java -jar ../../../../cli/target/cli-1.0-SNAPSHOT-jar-with-dependencies.jar -tables -text -plit tables/table002.csv -plit tables/table013.csv -plit tables/table014.csv -plit tables/table015.csv
+java -jar ../../../../cli/target/cli-1.0-jar-with-dependencies.jar -tables -text -plit tables/table002.csv -plit tables/table013.csv -plit tables/table014.csv -plit tables/table015.csv
 ```

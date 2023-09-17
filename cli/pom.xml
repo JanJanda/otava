@@ -5,7 +5,7 @@
     <parent>
         <artifactId>otava</artifactId>
         <groupId>io.github.janjanda</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -50,7 +50,7 @@
         <dependency>
             <groupId>io.github.janjanda.otava</groupId>
             <artifactId>library</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
         <dependency>
             <groupId>commons-cli</groupId>

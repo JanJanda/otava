@@ -7,7 +7,7 @@
     <groupId>io.github.janjanda</groupId>
     <artifactId>otava</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <modules>
         <module>library</module>
         <module>cli</module>
