@@ -1,7 +1,8 @@
 const express = require('express');
 const path = require('path');
+
 const app = express();
 
-app.use('/validator', express.static(path.join(__dirname, '..', 'client', 'build')))
+app.use('/validator/validate', express.static(path.join(__dirname, '..', 'client', 'build')));
 
-app.listen(80);
+app.listen(80, () => console.log('Listening on port 80'));
