@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 
 export default function App() {
   return (
-    <div className="mt-5">
+    <div className="mx-5 mt-4">
       <ValidationForm />
     </div>
   );
@@ -47,9 +47,12 @@ function ValidationForm() {
         <Form.Control as="textarea" name="activeDescriptors" />
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        Validate
-      </Button>
+      <Form.Group className="mb-3" controlId="description">
+        <Form.Label>Description</Form.Label>
+        <Form.Control as="textarea" name="description" />
+      </Form.Group>
+
+      <Button variant="primary" type="submit">Submit validation request</Button>
     </Form>
   );
 }
