@@ -24,4 +24,10 @@ async function addValidationRequest(language, style, passiveTables, activeTables
   return result[0].insertId;
 }
 
+async function getValidationData(id) {
+  const result = await connectionPool.execute("SELECT * FROM `validations` WHERE `id` = ?", [id]);
+  return result[0][0];
+}
+
 module.exports.addValidationRequest = addValidationRequest;
+module.exports.getValidationData = getValidationData;
