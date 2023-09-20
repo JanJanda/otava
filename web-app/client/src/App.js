@@ -1,8 +1,17 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import {Route, Routes} from "react-router-dom";
 
 export default function App() {
+  return (
+    <Routes>
+      <Route path="/validate" element={<ValidationPage />} />
+    </Routes>
+  );
+}
+
+function ValidationPage() {
   return (
     <div className="mx-5 mt-4">
       <ValidationForm />
@@ -12,7 +21,7 @@ export default function App() {
 
 function ValidationForm() {
   return (
-    <Form method="post" action="submit-validation">
+    <Form method="post" action="/submit-validation">
 
       <div className="mb-3">
         <Form.Label>Validation result language</Form.Label>
