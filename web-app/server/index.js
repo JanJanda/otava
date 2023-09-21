@@ -14,7 +14,7 @@ app.get("/validation-data/:id", async (req, res) => {
   res.json(result);
 });
 
-app.get("/*", (req,res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
 
