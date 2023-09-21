@@ -13,7 +13,7 @@ async function init() {
 
   await connectionPool.query("CREATE DATABASE IF NOT EXISTS otava;");
   await connectionPool.query("USE otava;")
-  await connectionPool.query("CREATE TABLE IF NOT EXISTS `validations` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `language` VARCHAR(10) NOT NULL , `style` VARCHAR(10) NOT NULL , `passive-tables` TEXT NOT NULL , `active-tables` TEXT NOT NULL , `passive-descriptors` TEXT NOT NULL , `active-descriptors` TEXT NOT NULL , `description` TEXT NOT NULL , `request-time` DATETIME NOT NULL , `finish-time` DATETIME NULL , `state` VARCHAR(10) NOT NULL , `result-text` TEXT NULL , `result-json` TEXT NULL , `result-turtle` TEXT NULL , PRIMARY KEY (`id`));");
+  await connectionPool.query("CREATE TABLE IF NOT EXISTS `validations` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `language` VARCHAR(20) NOT NULL , `style` VARCHAR(20) NOT NULL , `passive-tables` TEXT NOT NULL , `active-tables` TEXT NOT NULL , `passive-descriptors` TEXT NOT NULL , `active-descriptors` TEXT NOT NULL , `description` TEXT NOT NULL , `request-time` DATETIME NOT NULL , `finish-time` DATETIME NULL , `state` VARCHAR(20) NOT NULL , `result-text` TEXT NULL , `result-json` TEXT NULL , `result-turtle` TEXT NULL , PRIMARY KEY (`id`));");
 
   setInterval(deleteOld, 3600000);
 
@@ -28,7 +28,7 @@ async function deleteOld() {
 
 async function addValidationRequest(language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description) {
   const result = await connectionPool.execute("INSERT INTO `validations` (`language`, `style`, `passive-tables`, `active-tables`, `passive-descriptors`, `active-descriptors`, `description`, `request-time`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
-    [language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description, new Date(), "waiting"]);
+    [language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description, new Date(), "queueing"]);
   return result[0].insertId;
 }
 

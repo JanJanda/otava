@@ -1,6 +1,6 @@
 export const englishLocale = {
   noValidation: "The validation request does not exist.",
-  waiting: "The validation request is waiting in the queue.",
+  queueing: "The validation request is waiting in the queue.",
   setValLang: "Validation result language",
   english: "English",
   czech: "Czech",
@@ -12,6 +12,12 @@ export const englishLocale = {
   activeTables: "Active tables",
   passDescs: "Passive descriptors",
   activeDescs: "Active descriptors",
-  description: "Description",
-  submit: "Submit validation request"
+  description: "Description of the request",
+  submit: "Submit validation request",
+  validation: "Validation",
+  reqTime: "Request time",
+  reqDetail: "Request details",
+  langTag: "en",
+  working: "The validation is in progress.",
+  finished: "The validation is finished."
 };

@@ -21,7 +21,7 @@ export default function TopBar(props) {
 
 function LangSelect(props) {
   return (
-    <FormSelect style={{ "max-width": "200px" }} onChange={e => props.setLocale(selectLocale(e.target.value))}>
+    <FormSelect style={{ maxWidth: "200px" }} onChange={e => props.setLocale(selectLocale(e.target.value))}>
       <option value="en">English</option>
       <option value="cs">Česky</option>
     </FormSelect>

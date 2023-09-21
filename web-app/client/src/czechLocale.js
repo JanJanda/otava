@@ -1,6 +1,6 @@
 export const czechLocale = {
   noValidation: "Tato žádost o validaci neexistuje.",
-  waiting: "Žádost o validaci čeká ve frontě.",
+  queueing: "Žádost o validaci čeká ve frontě.",
   setValLang: "Jazyk výsledku validace",
   english: "Angličtina",
   czech: "Čeština",
@@ -12,6 +12,12 @@ export const czechLocale = {
   activeTables: "Aktivní tabulky",
   passDescs: "Pasivní deskriptory",
   activeDescs: "Aktivní deskriptory",
-  description: "Popis",
-  submit: "Odeslat žádost o validaci"
+  description: "Popis žádosti",
+  submit: "Odeslat žádost o validaci",
+  validation: "Validace",
+  reqTime: "Čas žádosti",
+  reqDetail: "Detaily žádosti",
+  langTag: "cs",
+  working: "Validace právě probíhá.",
+  finished: "Validace je dokončena."
 };
