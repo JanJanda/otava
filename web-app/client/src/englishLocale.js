@@ -23,4 +23,11 @@ export const englishLocale = {
   report: "Validation report",
   finishTime: "Finish time",
   notFound: "Sorry, page not found",
+  searchById: "Search validation by ID",
+  search: "Search",
+  validate: "Validate",
+  searchValidation: "Search validation",
+  otava: "Open Table Validator",
+  webApp: "Web Application",
+  introText: "This web application is a part of the larger OTAVA project."
 };

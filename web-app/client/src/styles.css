@@ -14,3 +14,14 @@ body {
 .center-msg {
     text-align: center;
 }
+
+.search-bar {
+    width: fit-content;
+    border: solid;
+    padding: 10px;
+}
+
+.intro-text {
+    color: black;
+    font-size: 25px;
+}

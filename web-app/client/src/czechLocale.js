@@ -23,4 +23,11 @@ export const czechLocale = {
   report: "Validační zpráva",
   finishTime: "Čas dokončení",
   notFound: "Smůla, stránka nenalezena",
+  searchById: "Hledat validaci podle ID",
+  search: "Hledat",
+  validate: "Validovat",
+  searchValidation: "Hledat validaci",
+  otava: "Otevřený validátor tabulek",
+  webApp: "webová aplikace",
+  introText: ""
 };

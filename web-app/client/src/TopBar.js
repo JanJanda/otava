@@ -11,17 +11,23 @@ export default function TopBar(props) {
   const locale = useContext(LocaleContext);
   const location = useLocation();
 
-  let linkColor = "white";
-  if (location.pathname === "/validate") linkColor = "yellow";
+  let validateColor = "white";
+  if (location.pathname === "/validate") validateColor = "yellow";
+
+  let searchColor = "white";
+  if (location.pathname === "/search") searchColor = "yellow";
 
   return (
     <Navbar className="bg-body-tertiary" data-bs-theme="dark">
       <Container>
         <Link to="/" style={{ textDecoration: "none" }}>
-          <Navbar.Brand>OTAVA: Open Table Validator</Navbar.Brand>
+          <Navbar.Brand>OTAVA - WebApp</Navbar.Brand>
         </Link>
-        <Link to="/validate" style={{ textDecoration: "none", color: linkColor, fontWeight: "bold" }}>
-          {locale.validation}
+        <Link to="/validate" style={{ textDecoration: "none", color: validateColor, fontWeight: "bold" }}>
+          {locale.validate}
+        </Link>
+        <Link to="/search" style={{ textDecoration: "none", color: searchColor, fontWeight: "bold" }}>
+          {locale.searchValidation}
         </Link>
           <LangSelect setLocale={props.setLocale} />
       </Container>

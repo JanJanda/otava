@@ -6,6 +6,7 @@ import TopBar from "./TopBar";
 import {englishLocale} from "./englishLocale";
 import HomePage from "./HomePage";
 import NotFoundPage from "./NotFoundPage";
+import SearchPage from "./SearchPage";
 
 export const LocaleContext = createContext(englishLocale);
 
@@ -18,6 +19,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/validate" element={<ValidatePage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/result/:id" element={<ResultPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
