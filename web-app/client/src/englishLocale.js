@@ -21,5 +21,6 @@ export const englishLocale = {
   working: "The validation is in progress.",
   finished: "The validation is finished.",
   report: "Validation report",
-  finishTime: "Finish time"
+  finishTime: "Finish time",
+  notFound: "Sorry, page not found",
 };

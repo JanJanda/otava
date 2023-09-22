@@ -21,5 +21,6 @@ export const czechLocale = {
   working: "Validace právě probíhá.",
   finished: "Validace je dokončena.",
   report: "Validační zpráva",
-  finishTime: "Čas dokončení"
+  finishTime: "Čas dokončení",
+  notFound: "Smůla, stránka nenalezena",
 };

@@ -1,17 +1,27 @@
-import React from "react";
+import React, {useContext} from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import FormSelect from "react-bootstrap/FormSelect";
-import {Link} from "react-router-dom";
+import {Link, useLocation} from "react-router-dom";
 import {englishLocale} from "./englishLocale";
 import {czechLocale} from "./czechLocale";
+import {LocaleContext} from "./App";
 
 export default function TopBar(props) {
+  const locale = useContext(LocaleContext);
+  const location = useLocation();
+
+  let linkColor = "white";
+  if (location.pathname === "/validate") linkColor = "yellow";
+
   return (
     <Navbar className="bg-body-tertiary" data-bs-theme="dark">
       <Container>
         <Link to="/" style={{ textDecoration: "none" }}>
           <Navbar.Brand>OTAVA: Open Table Validator</Navbar.Brand>
+        </Link>
+        <Link to="/validate" style={{ textDecoration: "none", color: linkColor, fontWeight: "bold" }}>
+          {locale.validation}
         </Link>
           <LangSelect setLocale={props.setLocale} />
       </Container>

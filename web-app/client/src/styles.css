@@ -10,3 +10,7 @@ body {
 .keep-lines {
     white-space: pre-wrap;
 }
+
+.center-msg {
+    text-align: center;
+}
