@@ -29,5 +29,5 @@ export const englishLocale = {
   searchValidation: "Search validation",
   otava: "Open Table Validator",
   webApp: "Web Application",
-  introText: "This web application is a part of the larger OTAVA project."
+  introText: "This web application is a part of the larger OTAVA project. "
 };

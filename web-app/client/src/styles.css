@@ -25,3 +25,22 @@ body {
     color: black;
     font-size: 25px;
 }
+
+.extra-link {
+    color: black;
+    font-size: 20px;
+    margin-right: 50px;
+}
+
+.extra-link:hover {
+    color: red;
+}
+
+.topbar-link {
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.topbar-link:hover {
+    text-decoration: underline;
+}

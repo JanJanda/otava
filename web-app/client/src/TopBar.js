@@ -23,10 +23,10 @@ export default function TopBar(props) {
         <Link to="/" style={{ textDecoration: "none" }}>
           <Navbar.Brand>OTAVA - WebApp</Navbar.Brand>
         </Link>
-        <Link to="/validate" style={{ textDecoration: "none", color: validateColor, fontWeight: "bold" }}>
+        <Link to="/validate" className="topbar-link" style={{ color: validateColor }}>
           {locale.validate}
         </Link>
-        <Link to="/search" style={{ textDecoration: "none", color: searchColor, fontWeight: "bold" }}>
+        <Link to="/search" className="topbar-link" style={{ color: searchColor }}>
           {locale.searchValidation}
         </Link>
           <LangSelect setLocale={props.setLocale} />
