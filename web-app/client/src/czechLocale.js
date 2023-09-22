@@ -19,5 +19,7 @@ export const czechLocale = {
   reqDetail: "Detaily žádosti",
   langTag: "cs",
   working: "Validace právě probíhá.",
-  finished: "Validace je dokončena."
+  finished: "Validace je dokončena.",
+  report: "Validační zpráva",
+  finishTime: "Čas dokončení"
 };

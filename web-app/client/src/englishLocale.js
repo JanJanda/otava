@@ -19,5 +19,7 @@ export const englishLocale = {
   reqDetail: "Request details",
   langTag: "en",
   working: "The validation is in progress.",
-  finished: "The validation is finished."
+  finished: "The validation is finished.",
+  report: "Validation report",
+  finishTime: "Finish time"
 };
