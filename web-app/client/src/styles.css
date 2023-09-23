@@ -24,6 +24,7 @@ body {
 .intro-text {
     color: black;
     font-size: 25px;
+    text-align: justify;
 }
 
 .extra-link {

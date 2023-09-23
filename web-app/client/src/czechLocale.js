@@ -29,5 +29,7 @@ export const czechLocale = {
   searchValidation: "Hledat validaci",
   otava: "Otevřený validátor tabulek",
   webApp: "webová aplikace",
-  introText: ""
+  introText: "",
+  manual: "Návod k použití",
+  howToUse: ""
 };
