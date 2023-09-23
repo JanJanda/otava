@@ -27,7 +27,7 @@ export default function ResultPage() {
   const locale = useContext(LocaleContext);
 
   return (
-    <div className="mx-5 mt-4">
+    <div className="mx-5 mt-4 mb-5">
       <h1>{locale.validation} {resultId}</h1>
       {content}
     </div>
@@ -52,10 +52,10 @@ function Queueing(props) {
   const locale = useContext(LocaleContext);
 
   return (
-    <>
+    <div>
       <Alert variant="primary">{locale.queueing}<Spinner animation="border" variant="primary" style={{ float: "right" }} /></Alert>
       <RequestData dbData={props.dbData} />
-    </>
+    </div>
   );
 }
 
@@ -63,10 +63,10 @@ function Working(props) {
   const locale = useContext(LocaleContext);
 
   return (
-    <>
+    <div>
       <Alert variant="warning">{locale.working}<Spinner animation="grow" variant="warning" style={{ float: "right" }} /></Alert>
       <RequestData dbData={props.dbData} />
-    </>
+    </div>
   );
 }
 
@@ -74,11 +74,11 @@ function Finished(props) {
   const locale = useContext(LocaleContext);
 
   return (
-    <>
+    <div>
       <Alert variant="success">{locale.finished}</Alert>
       <RequestData dbData={props.dbData} />
       <Report dbData={props.dbData} />
-    </>
+    </div>
   );
 }
 
@@ -87,13 +87,13 @@ function RequestData(props) {
   const data = props.dbData;
 
   return (
-    <>
+    <div>
       <h2>{locale.reqDetail}</h2>
       <div className="mb-3">
         {locale.reqTime}: {new Date(data["request-time"]).toLocaleString(locale.langTag)}
       </div>
       <ValidationForm disabled={true} lang={data.language} valStyle={data.style} passiveTables={data["passive-tables"]} activeTables={data["active-tables"]} passiveDescriptors={data["passive-descriptors"]} activeDescriptors={data["active-descriptors"]} description={data.description} />
-    </>
+    </div>
   );
 }
 
@@ -102,15 +102,13 @@ function Report(props) {
   const data = props.dbData;
 
   return (
-    <>
+    <div>
       <h2>{locale.report}</h2>
       <div className="mb-3">
         {locale.finishTime}: {new Date(data["finish-time"]).toLocaleString(locale.langTag)}
       </div>
-      <div className="mb-5">
-        <ReportFormats dbData={props.dbData} />
-      </div>
-    </>
+      <ReportFormats dbData={props.dbData} />
+    </div>
   );
 }
 

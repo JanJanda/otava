@@ -10,7 +10,7 @@ export default function SearchPage() {
   const locale = useContext(LocaleContext);
 
   return (
-    <div className="mt-5 mx-auto search-bar">
+    <div className="mt-5 mb-5 mx-auto search-bar">
       <Form.Group controlId="result-search" style={{ float: "left" }}>
         <Form.Label style={{ marginRight: "10px", float: "left", marginTop: "5px" }}>{locale.searchById}:</Form.Label>
         <Form.Control value={searchId} onChange={e => setSearchId(e.target.value)} style={{ maxWidth: "100px", marginRight: "10px"}} />

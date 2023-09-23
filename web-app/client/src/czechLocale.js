@@ -1,6 +1,6 @@
 export const czechLocale = {
   noValidation: "Tato žádost o validaci neexistuje.",
-  queueing: "Žádost o validaci čeká ve frontě.",
+  queueing: "Žádost o validaci čeká ve frontě. Načtěte tuto stránku později.",
   setValLang: "Jazyk výsledku validace",
   english: "Angličtina",
   czech: "Čeština",
@@ -18,7 +18,7 @@ export const czechLocale = {
   reqTime: "Čas žádosti",
   reqDetail: "Detaily žádosti",
   langTag: "cs",
-  working: "Validace právě probíhá.",
+  working: "Validace právě probíhá. Načtěte tuto stránku později.",
   finished: "Validace je dokončena.",
   report: "Validační zpráva",
   finishTime: "Čas dokončení",

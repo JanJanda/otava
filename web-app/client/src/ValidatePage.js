@@ -5,7 +5,7 @@ import {LocaleContext} from "./App";
 
 export default function ValidatePage() {
   return (
-    <div className="mx-5 mt-4">
+    <div className="mx-5 mt-4 mb-5">
       <ValidationForm disabled={false} lang="en" valStyle="full" passiveTables="" activeTables="" passiveDescriptors="" activeDescriptors="" description="" />
     </div>
   );

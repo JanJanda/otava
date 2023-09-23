@@ -29,7 +29,7 @@ export default function TopBar(props) {
         <Link to="/search" className="topbar-link" style={{ color: searchColor }}>
           {locale.searchValidation}
         </Link>
-          <LangSelect setLocale={props.setLocale} />
+        <LangSelect setLocale={props.setLocale} />
       </Container>
     </Navbar>
   );

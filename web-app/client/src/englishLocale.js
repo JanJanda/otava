@@ -1,6 +1,6 @@
 export const englishLocale = {
   noValidation: "The validation request does not exist.",
-  queueing: "The validation request is waiting in the queue.",
+  queueing: "The validation request is waiting in the queue. Reload this page later.",
   setValLang: "Validation result language",
   english: "English",
   czech: "Czech",
@@ -18,7 +18,7 @@ export const englishLocale = {
   reqTime: "Request time",
   reqDetail: "Request details",
   langTag: "en",
-  working: "The validation is in progress.",
+  working: "The validation is in progress. Reload this page later.",
   finished: "The validation is finished.",
   report: "Validation report",
   finishTime: "Finish time",
