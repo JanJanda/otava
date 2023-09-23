@@ -41,16 +41,19 @@ export const englishLocale = {
     "The full validation validates all tables and descriptors together. " +
     "The tables only validation validates only passive tables alone. " +
     "The descriptors only validation validates only passive descriptors alone. " +
-    "There are four types of documents: active table, passive table, active descriptor, and passive descriptor. " +
+    "There are four types of documents: passive table, active table, passive descriptor, and active descriptor. " +
     "An active table attempts to locate its descriptor, a passive table does not. " +
     "An active descriptor attempts to locate its tables, a passive descriptor does not. " +
-    "Every document has a URL with the the actual location of the document. " +
+    "Every document has a URL with the the actual location of the file. " +
     "Every document may have an alias. " +
     "An alias is an alternative URL. " +
-    "If an alias is present, it is used in the validation instead of the real URL. " +
+    "If an alias is present, it is used in the validation instead of the actual URL. " +
     "A document is located and loaded according to its URL, but it pretends that it is on a different location according to the alias. " +
     "There is an input text field for each document type. " +
     "Each line in a field represent one document, and it contains a URL of the document first and optionally an alias of the document second separated by a space. " +
     "If you want to validate a local file on your computer, you have to upload it somewhere on the web first using a web service of your choice. " +
-    "The easiest option is probably GitHub."
+    "The easiest option is probably GitHub. " +
+    "Alternatively, you can use the command line interface Java application. " +
+    "After the validation is finished, the results of the validation can be searched by the assigned ID. " +
+    "Each validation request and results stay online for approximately seven days, and then they are deleted."
 };

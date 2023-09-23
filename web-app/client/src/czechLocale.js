@@ -29,7 +29,31 @@ export const czechLocale = {
   searchValidation: "Hledat validaci",
   otava: "Otevřený validátor tabulek",
   webApp: "webová aplikace",
-  introText: "",
+  introText: "Tato webová aplikace je součástí většího projektu OTAVA. " +
+    "Projekt OTAVA obsahuje software pro validaci CSV tabulek společně se soubory jejich metadatových deskriptorů podle doporučení CSV na Webu od organizace W3C. " +
+    "Doporučení CSV na Webu určuje, jak popsat CSV soubory publikované na webu za použití JSON-LD deskriptorů s důležitými metadaty, jako názvy sloupců, datové typy a další. " +
+    "Jádrem projektu je knihovna v jazyce Java s hlavní funkcionalitou. " +
+    "Projekt také obsahuje aplikaci příkazové řádky v jazyce Java, která poskytuje přístup ke každé schopnosti knihovny. " +
+    "Tato webová aplikace poskytuje zjednodušené rozhraní s omezenými schopnostmi pro méně zkušené uživatele.",
   manual: "Návod k použití",
-  howToUse: ""
+  howToUse: "Uživatelé podávají své žádosti o validace prostřednictvím webového formuláře. " +
+    "Formulář nabízí tři validační styly. " +
+    "Úplná validace validuje všechny tabulky a deskriptory dohromady. " +
+    "Validace jen tabulek validuje jen samotné pasivní tabulky. " +
+    "Validace jen deskriptorů validuje jen samotné pasivní deskriptory. " +
+    "Jsou zde čtyři typy dokumentů: pasivní tabulka, aktivní tabulka, pasivní deskriptor a aktivní deskriptor. " +
+    "Aktivní tabulka se pokusí lokalizovat svůj deskriptor, pasivní tabulka nikoli. " +
+    "Aktivní deskriptor se pokusí lokalizovat své tabulky, pasivní deskriptor nikoli. " +
+    "Každý dokument má URL se skutečným umístěním souboru. " +
+    "Každý dokument může mít alias. " +
+    "Alias je alternativní URL. " +
+    "Pokud je alias přítomen, pak je použit během validace místo skutečného URL. " +
+    "Dokument je nalezen a nahrán podle svého URL, ale předstírá, že se nachází na jiném umístění podle svého aliasu. " +
+    "Je zde textové vstupní pole pro každý typ dokumentu. " +
+    "Každá řádka v poli reprezentuje jeden dokument a obsahuje nejprve URL dokumentu a poté nepovinně alias dokumentu oddělený mezerou. " +
+    "Pokud chcete validovat lokální soubor na svém počítači, musíte ho nejprve nahrát někam na web pomocí vámi vybrané webové služby. " +
+    "Nejsnazší možnost je asi GitHub. " +
+    "Alternativně můžete použít aplikaci příkazové řádky v jazyce Java. " +
+    "Po dokončení validace je možné vyhledat výsledky validace podle přiděleného ID. " +
+    "Každá validační žádost a výsledky zůstanou online sedm dnů a poté jsou smazány."
 };
