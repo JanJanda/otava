@@ -30,7 +30,7 @@ It is important to understand the documents in the library. There are following 
 
 ## Command Line Application
 
-The command line application provides user access to the features of the library. It can be compiled and executed respectively with the following commands.
+The command line application provides user access to the features of the library. It can be compiled and executed respectively with the following commands in the directory `java-code`.
 
 ```
 mvn package
@@ -46,7 +46,7 @@ Perform full validation with the provided active online descriptor, and write th
 java -jar cli/target/cli-1.0-jar-with-dependencies.jar -full -text -aod https://w3c.github.io/csvw/tests/test011/tree-ops.csv-metadata.json
 ```
 
-The following examples are executed in the directory `library/src/test/resources`.
+The following examples are executed in the directory `java-code/library/src/test/resources`.
 
 Perform full validation with the provided passive local in-memory table and the provided passive local descriptor, and write the report as plain text. The table and the descriptor have both name and alias because the links in the descriptor would not be valid otherwise.
 ```
