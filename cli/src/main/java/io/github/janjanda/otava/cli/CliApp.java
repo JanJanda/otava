@@ -8,7 +8,7 @@ import io.github.janjanda.otava.library.locales.CzechLocale;
 import io.github.janjanda.otava.library.locales.EnglishLocale;
 import org.apache.commons.cli.*;
 
-public class CliApp {
+public final class CliApp {
     public static void main(String[] args) {
         System.setProperty("file.encoding", "UTF-8");
 
