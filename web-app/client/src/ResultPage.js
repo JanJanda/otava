@@ -120,19 +120,19 @@ function ReportFormats(props) {
       <Accordion.Item eventKey="0">
         <Accordion.Header>Text</Accordion.Header>
         <Accordion.Body>
-          <div className="keep-lines">{data["result-text"]}</div>
+          <div className="keep-lines">{data["outcome-text"]}</div>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="1">
         <Accordion.Header>JSON</Accordion.Header>
         <Accordion.Body>
-          <div className="keep-lines">{data["result-json"]}</div>
+          <div className="keep-lines">{data["outcome-json"]}</div>
         </Accordion.Body>
       </Accordion.Item>
       <Accordion.Item eventKey="2">
         <Accordion.Header>Turtle</Accordion.Header>
         <Accordion.Body>
-          <div className="keep-lines">{data["result-turtle"]}</div>
+          <div className="keep-lines">{data["outcome-turtle"]}</div>
         </Accordion.Body>
       </Accordion.Item>
     </Accordion>

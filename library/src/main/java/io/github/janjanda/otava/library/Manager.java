@@ -34,7 +34,6 @@ import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
 public final class Manager {
     public static final String rdfPrefix = "https://janjanda.github.io/otava/";
     private static Locale currentLocale = new EnglishLocale();
-    private static boolean localeLocked = false;
     private static final Class<? extends Check> tablesValidation = ConsistentColumnsCheck.class;
     private static final Class<? extends Check> descriptorsValidation = VirtualsLastCheck.class;
     private static final Class<? extends Check> fullRootValidation = FullRootCheck.class;
@@ -48,23 +47,11 @@ public final class Manager {
     }
 
     /**
-     * Sets the locale of the library. This method must be called before an instance of this class is created, otherwise the locale is not set.
+     * Sets the locale of the library.
      * @param locale the locale to set
-     * @return {@code true} if the locale was successfully set, {@code false} otherwise
      */
-    public static boolean setLocale(Locale locale) {
-        if (!localeLocked) {
-            currentLocale = locale;
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Locale cannot be set after this constructor is called.
-     */
-    public Manager() {
-        localeLocked = true;
+    public static void setLocale(Locale locale) {
+        currentLocale = locale;
     }
 
     /**

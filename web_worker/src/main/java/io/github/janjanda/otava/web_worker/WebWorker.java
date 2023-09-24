@@ -1,11 +1,56 @@
 package io.github.janjanda.otava.web_worker;
 
+import io.github.janjanda.otava.library.Manager;
+import io.github.janjanda.otava.library.Outcome;
+import io.github.janjanda.otava.library.ValidationSuite;
+import io.github.janjanda.otava.library.exceptions.ValidatorException;
+import io.github.janjanda.otava.library.locales.CzechLocale;
+import io.github.janjanda.otava.library.locales.EnglishLocale;
+import io.github.janjanda.otava.library.locales.Locale;
+
 import java.sql.*;
+import java.time.Instant;
+import java.util.function.BiConsumer;
 
 public final class WebWorker {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) throws SQLException, InterruptedException {
+        Thread.sleep(10000);
         Connection conn = getConnection();
-        findNewJob(conn);
+        while (true) {
+            RequestData requestData = findNewJob(conn);
+            if (requestData != null) {
+                ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
+                vsBuilder.setSaveMemory();
+                parseDocuments(requestData.passiveTables(), (a, b) -> vsBuilder.addPassiveTable(a, b, false, true));
+                parseDocuments(requestData.activeTables(), (a, b) -> vsBuilder.addActiveTable(a, b, false, true));
+                parseDocuments(requestData.passiveDescriptors(), (a, b) -> vsBuilder.addPassiveDescriptor(a, b, false));
+                parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
+                ValidationSuite vs = vsBuilder.build();
+
+                Manager.setLocale(getLocale(requestData.language()));
+                Manager m = new Manager();
+                Outcome outcome = null;
+                try {
+                    if (requestData.style().equals("full")) outcome = m.fullValidation(vs);
+                    if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(vs);
+                    if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(vs);
+                }
+                catch (ValidatorException e) {
+                    outcome = e;
+                }
+
+                String outcomeText = "";
+                String outcomeJson = "";
+                String outcomeTurtle = "";
+                if (outcome != null) {
+                    outcomeText = outcome.asText();
+                    outcomeJson = outcome.asJson();
+                    outcomeTurtle = outcome.asTurtle();
+                }
+                saveOutcomes(conn, requestData.id(), outcomeText, outcomeJson, outcomeTurtle);
+            }
+            Thread.sleep(1000);
+        }
     }
 
     private static Connection getConnection() throws SQLException {
@@ -38,6 +83,34 @@ public final class WebWorker {
             conn.commit();
 
             return requestData;
+        }
+    }
+
+    private static void parseDocuments(String docs, BiConsumer<String, String> acceptor) {
+        String[] lines = docs.trim().split("\n");
+        for (String line : lines) {
+            String[] tokens = line.trim().split("\\s+");
+            if (tokens.length == 1) acceptor.accept(tokens[0], null);
+            if (tokens.length == 2) acceptor.accept(tokens[0], tokens[1]);
+        }
+    }
+
+    private static Locale getLocale(String langTag) {
+        if (langTag.equals("en")) return new EnglishLocale();
+        if (langTag.equals("cs")) return new CzechLocale();
+        return new EnglishLocale();
+    }
+
+    private static void saveOutcomes(Connection conn, String rowId, String outcomeText, String outcomeJson, String outcomeTurtle) throws SQLException {
+        try (PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `finish-time` = ?, `state` = ?, `outcome-text` = ?, `outcome-json` = ?, `outcome-turtle` = ? WHERE `id` = ?;")) {
+            updateRow.setTimestamp(1, Timestamp.from(Instant.now()));
+            updateRow.setString(2, "finished");
+            updateRow.setString(3, outcomeText);
+            updateRow.setString(4, outcomeJson);
+            updateRow.setString(5, outcomeTurtle);
+            updateRow.setString(6, rowId);
+            updateRow.executeUpdate();
+            conn.commit();
         }
     }
 
