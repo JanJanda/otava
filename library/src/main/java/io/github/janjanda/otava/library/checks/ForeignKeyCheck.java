@@ -8,7 +8,7 @@ import io.github.janjanda.otava.library.exceptions.CheckCreationException;
 import io.github.janjanda.otava.library.exceptions.CheckRunException;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 import io.github.janjanda.otava.library.factories.CheckFactory;
-import io.github.janjanda.otava.library.utils.Pair;
+import io.github.janjanda.otava.library.utils.DescAndTable;
 import org.apache.commons.csv.CSVRecord;
 
 import java.net.MalformedURLException;
@@ -35,9 +35,9 @@ public final class ForeignKeyCheck extends Check {
         Result.Builder resultBuilder = new Result.Builder(this.getClass().getName());
         if (fatalSubResult()) return resultBuilder.setSkipped();
         for (Table table : tables) {
-            Pair<Descriptor, JsonNode> tableMeta = findTableDescriptorAndDescriptionWithExc(table, descriptors, this.getClass().getName());
-            Descriptor tableDescriptor = tableMeta.first;
-            JsonNode tableDescription = tableMeta.second;
+            DescAndTable tableMeta = findTableDescriptorAndDescriptionWithExc(table, descriptors, this.getClass().getName());
+            Descriptor tableDescriptor = tableMeta.descriptor();
+            JsonNode tableDescription = tableMeta.tableNode();
             String tableUrl = tableDescription.path("url").asText();
             JsonNode[] foreignKeys = extractForeignKeys(tableDescription);
             for (JsonNode foreignKey : foreignKeys) {

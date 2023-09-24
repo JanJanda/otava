@@ -34,20 +34,20 @@ public final class DescriptorUtils {
         return tableNodes;
     }
 
-    public static Pair<Descriptor, JsonNode> findTableDescriptorAndDescription(Table table, DocsGroup<Descriptor> descriptors) throws MalformedURLException {
+    public static DescAndTable findTableDescriptorAndDescription(Table table, DocsGroup<Descriptor> descriptors) throws MalformedURLException {
         String tableName = table.getPreferredName();
         for (Descriptor desc : descriptors) {
             String baseUrl = getBaseUrl(desc);
             List<JsonNode> tableNodes = extractTables(desc);
             for (JsonNode tableNode : tableNodes) {
                 JsonNode urlNode = tableNode.path("url");
-                if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return new Pair<>(desc, tableNode);
+                if (urlNode.isTextual() && resolveUrl(baseUrl, urlNode.asText()).equals(tableName)) return new DescAndTable(desc, tableNode);
             }
         }
-        return new Pair<>(null, MissingNode.getInstance());
+        return new DescAndTable(null, MissingNode.getInstance());
     }
 
-    public static Pair<Descriptor, JsonNode> findTableDescriptorAndDescriptionWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
+    public static DescAndTable findTableDescriptorAndDescriptionWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
         try {
             return findTableDescriptorAndDescription(table, descriptors);
         }
@@ -58,7 +58,7 @@ public final class DescriptorUtils {
 
     public static Descriptor findTableDescriptorWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
         try {
-            return findTableDescriptorAndDescription(table, descriptors).first;
+            return findTableDescriptorAndDescription(table, descriptors).descriptor();
         }
         catch (MalformedURLException e) {
             throw new CheckRunException(locale().checkRunException(cause));
@@ -67,7 +67,7 @@ public final class DescriptorUtils {
 
     public static JsonNode findTableDescriptionWithExc(Table table, DocsGroup<Descriptor> descriptors, String cause) throws CheckRunException {
         try {
-            return findTableDescriptorAndDescription(table, descriptors).second;
+            return findTableDescriptorAndDescription(table, descriptors).tableNode();
         }
         catch (MalformedURLException e) {
             throw new CheckRunException(locale().checkRunException(cause));
