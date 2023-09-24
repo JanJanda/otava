@@ -13,55 +13,58 @@ import java.time.Instant;
 import java.util.function.BiConsumer;
 
 public final class WebWorker {
-    public static void main(String[] args) throws SQLException, InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         Thread.sleep(10000);
-        Connection conn = getConnection();
         while (true) {
-            RequestData requestData = findNewJob(conn);
-            if (requestData != null) {
-                ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
-                vsBuilder.setSaveMemory();
-                parseDocuments(requestData.passiveTables(), (a, b) -> vsBuilder.addPassiveTable(a, b, false, true));
-                parseDocuments(requestData.activeTables(), (a, b) -> vsBuilder.addActiveTable(a, b, false, true));
-                parseDocuments(requestData.passiveDescriptors(), (a, b) -> vsBuilder.addPassiveDescriptor(a, b, false));
-                parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
-                ValidationSuite vs = vsBuilder.build();
+            try {
+                RequestData requestData = findNewJob();
+                if (requestData != null) {
+                    ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
+                    vsBuilder.setSaveMemory();
+                    parseDocuments(requestData.passiveTables(), (a, b) -> vsBuilder.addPassiveTable(a, b, false, true));
+                    parseDocuments(requestData.activeTables(), (a, b) -> vsBuilder.addActiveTable(a, b, false, true));
+                    parseDocuments(requestData.passiveDescriptors(), (a, b) -> vsBuilder.addPassiveDescriptor(a, b, false));
+                    parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
+                    ValidationSuite vs = vsBuilder.build();
 
-                Manager.setLocale(getLocale(requestData.language()));
-                Manager m = new Manager();
-                Outcome outcome = null;
-                try {
-                    if (requestData.style().equals("full")) outcome = m.fullValidation(vs);
-                    if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(vs);
-                    if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(vs);
-                }
-                catch (ValidatorException e) {
-                    outcome = e;
-                }
+                    Manager.setLocale(getLocale(requestData.language()));
+                    Manager m = new Manager();
+                    Outcome outcome = null;
+                    try {
+                        if (requestData.style().equals("full")) outcome = m.fullValidation(vs);
+                        if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(vs);
+                        if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(vs);
+                    } catch (ValidatorException e) {
+                        outcome = e;
+                    }
 
-                String outcomeText = "";
-                String outcomeJson = "";
-                String outcomeTurtle = "";
-                if (outcome != null) {
-                    outcomeText = outcome.asText();
-                    outcomeJson = outcome.asJson();
-                    outcomeTurtle = outcome.asTurtle();
+                    String outcomeText = "";
+                    String outcomeJson = "";
+                    String outcomeTurtle = "";
+                    if (outcome != null) {
+                        outcomeText = outcome.asText();
+                        outcomeJson = outcome.asJson();
+                        outcomeTurtle = outcome.asTurtle();
+                    }
+                    saveOutcomes(requestData.id(), outcomeText, outcomeJson, outcomeTurtle);
                 }
-                saveOutcomes(conn, requestData.id(), outcomeText, outcomeJson, outcomeTurtle);
             }
-            Thread.sleep(1000);
+            catch (SQLException e) {
+                System.out.println(e.getMessage());
+            }
+            Thread.sleep(3000);
         }
     }
 
     private static Connection getConnection() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/otava", "root", System.getenv("OTAVA_DB_PSW"));
         conn.setAutoCommit(false);
-        System.out.println("Connected to database");
         return conn;
     }
 
-    private static RequestData findNewJob(Connection conn) throws SQLException {
-        try (Statement stmt = conn.createStatement();
+    private static RequestData findNewJob() throws SQLException {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement();
              PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `state` = 'working' WHERE `id` = ?;");
              PreparedStatement selectData = conn.prepareStatement("SELECT * FROM `validations` WHERE `id` = ?;")) {
 
@@ -90,7 +93,7 @@ public final class WebWorker {
         String[] lines = docs.trim().split("\n");
         for (String line : lines) {
             String[] tokens = line.trim().split("\\s+");
-            if (tokens.length == 1) acceptor.accept(tokens[0], null);
+            if (tokens.length == 1 && !tokens[0].equals("")) acceptor.accept(tokens[0], null);
             if (tokens.length == 2) acceptor.accept(tokens[0], tokens[1]);
         }
     }
@@ -101,8 +104,9 @@ public final class WebWorker {
         return new EnglishLocale();
     }
 
-    private static void saveOutcomes(Connection conn, String rowId, String outcomeText, String outcomeJson, String outcomeTurtle) throws SQLException {
-        try (PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `finish-time` = ?, `state` = ?, `outcome-text` = ?, `outcome-json` = ?, `outcome-turtle` = ? WHERE `id` = ?;")) {
+    private static void saveOutcomes(String rowId, String outcomeText, String outcomeJson, String outcomeTurtle) throws SQLException {
+        try (Connection conn = getConnection();
+             PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `finish-time` = ?, `state` = ?, `outcome-text` = ?, `outcome-json` = ?, `outcome-turtle` = ? WHERE `id` = ?;")) {
             updateRow.setTimestamp(1, Timestamp.from(Instant.now()));
             updateRow.setString(2, "finished");
             updateRow.setString(3, outcomeText);
