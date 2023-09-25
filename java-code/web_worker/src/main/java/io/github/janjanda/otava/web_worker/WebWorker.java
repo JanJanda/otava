@@ -27,7 +27,7 @@ public final class WebWorker {
                     parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
                     ValidationSuite vs = vsBuilder.build();
 
-                    Manager.setLocale(getLocale(requestData.language()));
+                    Manager.setLocale(makeLocale(requestData.language()));
                     Manager m = new Manager();
                     Outcome outcome = null;
                     try {
@@ -57,35 +57,30 @@ public final class WebWorker {
     }
 
     private static Connection getConnection() throws SQLException {
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/otava", "root", System.getenv("OTAVA_DB_PSW"));
-        conn.setAutoCommit(false);
-        return conn;
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/otava", "root", System.getenv("OTAVA_DB_PSW"));
     }
 
     private static RequestData findNewJob() throws SQLException {
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
-             PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `state` = 'working' WHERE `id` = ?;");
+             PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `state` = 'working' WHERE `id` = ? AND `state` = 'queueing';");
              PreparedStatement selectData = conn.prepareStatement("SELECT * FROM `validations` WHERE `id` = ?;")) {
 
-            if (!stmt.execute("SELECT MIN(`id`) FROM `validations` WHERE `state` = 'queueing';")) return null;
+            stmt.execute("SELECT MIN(`id`) FROM `validations` WHERE `state` = 'queueing';");
             ResultSet minId = stmt.getResultSet();
             minId.next();
             String rowId = minId.getString(1);
             if (rowId == null) return null;
 
             updateRow.setString(1, rowId);
-            updateRow.executeUpdate();
+            int changedRows = updateRow.executeUpdate();
+            if (changedRows != 1) return null;
 
             selectData.setString(1, rowId);
             ResultSet rs = selectData.executeQuery();
             rs.next();
-            RequestData requestData = new RequestData(rs.getString("id"), rs.getString("language"), rs.getString("style"),
+            return new RequestData(rs.getString("id"), rs.getString("language"), rs.getString("style"),
                     rs.getString("passive-tables"), rs.getString("active-tables"), rs.getString("passive-descriptors"), rs.getString("active-descriptors"));
-
-            conn.commit();
-
-            return requestData;
         }
     }
 
@@ -98,7 +93,7 @@ public final class WebWorker {
         }
     }
 
-    private static Locale getLocale(String langTag) {
+    private static Locale makeLocale(String langTag) {
         if (langTag.equals("en")) return new EnglishLocale();
         if (langTag.equals("cs")) return new CzechLocale();
         return new EnglishLocale();
@@ -114,7 +109,6 @@ public final class WebWorker {
             updateRow.setString(5, outcomeTurtle);
             updateRow.setString(6, rowId);
             updateRow.executeUpdate();
-            conn.commit();
         }
     }
 
