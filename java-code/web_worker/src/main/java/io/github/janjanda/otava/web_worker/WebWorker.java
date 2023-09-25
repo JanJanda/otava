@@ -13,10 +13,14 @@ import java.time.Instant;
 import java.util.function.BiConsumer;
 
 public final class WebWorker {
+    private static String dbHost = "localhost";
+
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Starting");
-        Thread.sleep(30000);
-        System.out.println("Started");
+        Thread.sleep(40000);
+        System.out.println("Running");
+        String newHost = System.getenv("OTAVA_DB_HOST");
+        if (newHost != null) dbHost = newHost;
         while (true) {
             try {
                 RequestData requestData = findNewJob();
@@ -59,7 +63,7 @@ public final class WebWorker {
     }
 
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/otava", "root", System.getenv("OTAVA_DB_PSW"));
+        return DriverManager.getConnection("jdbc:mysql://" + dbHost + ":3306/otava", "root", System.getenv("OTAVA_DB_PSW"));
     }
 
     private static RequestData findNewJob() throws SQLException {

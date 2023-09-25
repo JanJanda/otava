@@ -1,4 +1,8 @@
 services:
+  database:
+    image: 'mysql:8.0'
+    environment:
+      - MYSQL_ROOT_PASSWORD=moje-heslo
   web_app:
     build: 'web-app'
     depends_on:
@@ -8,7 +12,10 @@ services:
     environment:
       - OTAVA_DB_HOST=database
       - OTAVA_DB_PSW=moje-heslo
-  database:
-    image: 'mysql:8.0'
+  web_worker:
+    build: 'java-code'
+    depends_on:
+      - database
     environment:
-      - MYSQL_ROOT_PASSWORD=moje-heslo
+      - OTAVA_DB_HOST=database
+      - OTAVA_DB_PSW=moje-heslo

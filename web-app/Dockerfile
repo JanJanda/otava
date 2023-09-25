@@ -1,6 +1,6 @@
 FROM node:18.18.0
 
-WORKDIR /usr/src/otava
+WORKDIR /usr/src/otava/web-app
 COPY . .
 
 WORKDIR client
