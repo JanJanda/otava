@@ -66,8 +66,7 @@ public final class WebWorker {
              PreparedStatement updateRow = conn.prepareStatement("UPDATE `validations` SET `state` = 'working' WHERE `id` = ? AND `state` = 'queueing';");
              PreparedStatement selectData = conn.prepareStatement("SELECT * FROM `validations` WHERE `id` = ?;")) {
 
-            stmt.execute("SELECT MIN(`id`) FROM `validations` WHERE `state` = 'queueing';");
-            ResultSet minId = stmt.getResultSet();
+            ResultSet minId = stmt.executeQuery("SELECT MIN(`id`) FROM `validations` WHERE `state` = 'queueing';");
             minId.next();
             String rowId = minId.getString(1);
             if (rowId == null) return null;
@@ -78,7 +77,8 @@ public final class WebWorker {
 
             selectData.setString(1, rowId);
             ResultSet rs = selectData.executeQuery();
-            rs.next();
+            boolean found = rs.next();
+            if (!found) return null;
             return new RequestData(rs.getString("id"), rs.getString("language"), rs.getString("style"),
                     rs.getString("passive-tables"), rs.getString("active-tables"), rs.getString("passive-descriptors"), rs.getString("active-descriptors"));
         }
