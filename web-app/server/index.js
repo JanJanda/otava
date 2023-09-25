@@ -23,7 +23,8 @@ app.post("/submit-validation", async (req, res) => {
   res.redirect("/result/" + id);
 });
 
+console.log("Starting");
 setTimeout(async () => {
   await init();
   app.listen(netPort, () => console.log("Listening on port " + netPort));
-}, 30000);
+}, 60000);

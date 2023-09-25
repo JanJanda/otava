@@ -17,7 +17,7 @@ public final class WebWorker {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Starting");
-        Thread.sleep(40000);
+        Thread.sleep(70000);
         System.out.println("Running");
         String newHost = System.getenv("OTAVA_DB_HOST");
         if (newHost != null) dbHost = newHost;

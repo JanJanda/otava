@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  database:
+    image: 'mysql:8.0'
+    volumes:
+      - './database-volume:/var/lib/mysql'
+    environment:
+      - 'MYSQL_ROOT_PASSWORD=my-password'
+  web_app:
+    build: 'web-app'
+    depends_on:
+      - 'database'
+    ports:
+      - '80:80'
+    environment:
+      - 'OTAVA_DB_HOST=database'
+      - 'OTAVA_DB_PSW=my-password'
+  web_worker:
+    build: 'java-code'
+    depends_on:
+      - 'database'
+    deploy:
+      replicas: 2
+    environment:
+      - 'OTAVA_DB_HOST=database'
+      - 'OTAVA_DB_PSW=my-password'
