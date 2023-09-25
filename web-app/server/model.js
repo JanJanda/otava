@@ -2,11 +2,12 @@ const mysql = require("mysql2/promise");
 
 let connectionPool;
 
-init();
-
 async function init() {
+  let dbHost = process.env.OTAVA_DB_HOST;
+  if (dbHost === undefined) dbHost = "localhost";
+
   connectionPool = await mysql.createPool({
-    host: "localhost",
+    host: dbHost,
     user: "root",
     password: process.env.OTAVA_DB_PSW
   });
@@ -37,5 +38,6 @@ async function getValidationData(id) {
   return result[0][0];
 }
 
+module.exports.init = init;
 module.exports.addValidationRequest = addValidationRequest;
 module.exports.getValidationData = getValidationData;

@@ -14,7 +14,9 @@ import java.util.function.BiConsumer;
 
 public final class WebWorker {
     public static void main(String[] args) throws InterruptedException {
-        Thread.sleep(10000);
+        System.out.println("Starting");
+        Thread.sleep(30000);
+        System.out.println("Started");
         while (true) {
             try {
                 RequestData requestData = findNewJob();
