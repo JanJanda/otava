@@ -21,7 +21,7 @@ services:
     depends_on:
       - 'database'
     deploy:
-      replicas: 2
+      replicas: 1
     environment:
       - 'OTAVA_DB_HOST=database'
       - 'OTAVA_DB_PSW=my-password'

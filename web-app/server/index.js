@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const {init, addValidationRequest, getValidationData} = require("./model");
+const {addValidationRequest, getValidationData} = require("./model");
 
 const app = express();
 
@@ -23,8 +23,4 @@ app.post("/submit-validation", async (req, res) => {
   res.redirect("/result/" + id);
 });
 
-console.log("Starting");
-setTimeout(async () => {
-  await init();
-  app.listen(netPort, () => console.log("Listening on port " + netPort));
-}, 60000);
+app.listen(netPort, () => console.log("Listening on port " + netPort));
