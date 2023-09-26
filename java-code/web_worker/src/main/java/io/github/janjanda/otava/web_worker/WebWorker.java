@@ -13,55 +13,70 @@ import java.time.Instant;
 import java.util.function.BiConsumer;
 
 public final class WebWorker {
-    private static String dbHost = "localhost";
+    private static  String dbHost = System.getenv("OTAVA_DB_HOST");
+    private static final String dbPsw = System.getenv("OTAVA_DB_PSW");
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Running");
-        String newHost = System.getenv("OTAVA_DB_HOST");
-        if (newHost != null) dbHost = newHost;
+        if (dbHost == null) dbHost = "localhost";
         while (true) {
             try {
-                RequestData requestData = findNewJob();
-                if (requestData != null) {
-                    ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
-                    vsBuilder.setSaveMemory();
-                    parseDocuments(requestData.passiveTables(), (a, b) -> vsBuilder.addPassiveTable(a, b, false, true));
-                    parseDocuments(requestData.activeTables(), (a, b) -> vsBuilder.addActiveTable(a, b, false, true));
-                    parseDocuments(requestData.passiveDescriptors(), (a, b) -> vsBuilder.addPassiveDescriptor(a, b, false));
-                    parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
-                    ValidationSuite vs = vsBuilder.build();
-
-                    Manager.setLocale(makeLocale(requestData.language()));
-                    Manager m = new Manager();
-                    Outcome outcome = null;
-                    try {
-                        if (requestData.style().equals("full")) outcome = m.fullValidation(vs);
-                        if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(vs);
-                        if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(vs);
-                    } catch (ValidatorException e) {
-                        outcome = e;
-                    }
-
-                    String outcomeText = "";
-                    String outcomeJson = "";
-                    String outcomeTurtle = "";
-                    if (outcome != null) {
-                        outcomeText = outcome.asText();
-                        outcomeJson = outcome.asJson();
-                        outcomeTurtle = outcome.asTurtle();
-                    }
-                    saveOutcomes(requestData.id(), outcomeText, outcomeJson, outcomeTurtle);
-                }
+                tryIteration();
             }
             catch (SQLException e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             Thread.sleep(3000);
         }
     }
 
+    private static void tryIteration() throws SQLException {
+        RequestData requestData = findNewJob();
+        if (requestData != null) {
+            ValidationSuite vs = makeValidationSuite(requestData);
+            Outcome outcome = produceOutcome(requestData, vs);
+            saveOutcomeFormats(requestData, outcome);
+        }
+    }
+
+    private static ValidationSuite makeValidationSuite(RequestData requestData) {
+        ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
+        vsBuilder.setSaveMemory();
+        parseDocuments(requestData.passiveTables(), (a, b) -> vsBuilder.addPassiveTable(a, b, false, true));
+        parseDocuments(requestData.activeTables(), (a, b) -> vsBuilder.addActiveTable(a, b, false, true));
+        parseDocuments(requestData.passiveDescriptors(), (a, b) -> vsBuilder.addPassiveDescriptor(a, b, false));
+        parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
+        return vsBuilder.build();
+    }
+
+    private static Outcome produceOutcome(RequestData requestData, ValidationSuite vs) {
+        Manager.setLocale(makeLocale(requestData.language()));
+        Manager m = new Manager();
+        Outcome outcome = null;
+        try {
+            if (requestData.style().equals("full")) outcome = m.fullValidation(vs);
+            if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(vs);
+            if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(vs);
+        } catch (ValidatorException e) {
+            outcome = e;
+        }
+        return outcome;
+    }
+
+    private static void saveOutcomeFormats(RequestData requestData, Outcome outcome) throws SQLException {
+        String outcomeText = "";
+        String outcomeJson = "";
+        String outcomeTurtle = "";
+        if (outcome != null) {
+            outcomeText = outcome.asText();
+            outcomeJson = outcome.asJson();
+            outcomeTurtle = outcome.asTurtle();
+        }
+        saveOutcomes(requestData.id(), outcomeText, outcomeJson, outcomeTurtle);
+    }
+
     private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://" + dbHost + ":3306/otava", "root", System.getenv("OTAVA_DB_PSW"));
+        return DriverManager.getConnection("jdbc:mysql://" + dbHost + ":3306/otava", "root", dbPsw);
     }
 
     private static RequestData findNewJob() throws SQLException {
