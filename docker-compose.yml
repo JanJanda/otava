@@ -8,7 +8,7 @@ services:
     environment:
       - 'MYSQL_ROOT_PASSWORD=my-password'
   web_app:
-    build: 'web-app'
+    build: './web-app'
     depends_on:
       - 'database'
     ports:
@@ -17,7 +17,7 @@ services:
       - 'OTAVA_DB_HOST=database'
       - 'OTAVA_DB_PSW=my-password'
   web_worker:
-    build: 'java-code'
+    build: './java-code'
     depends_on:
       - 'database'
     deploy:

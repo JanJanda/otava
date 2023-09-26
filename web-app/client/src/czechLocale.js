@@ -49,11 +49,11 @@ export const czechLocale = {
     "Alias je alternativní URL. " +
     "Pokud je alias přítomen, pak je použit během validace místo skutečného URL. " +
     "Dokument je nalezen a nahrán podle svého URL, ale předstírá, že se nachází na jiném umístění podle svého aliasu. " +
-    "Je zde textové vstupní pole pro každý typ dokumentu. " +
+    "Ve formuláři je textové vstupní pole pro každý typ dokumentu. " +
     "Každá řádka v poli reprezentuje jeden dokument a obsahuje nejprve URL dokumentu a poté nepovinně alias dokumentu oddělený mezerou. " +
     "Pokud chcete validovat lokální soubor na svém počítači, musíte ho nejprve nahrát někam na web pomocí vámi vybrané webové služby. " +
     "Nejsnazší možnost je asi GitHub. " +
     "Alternativně můžete použít aplikaci příkazové řádky v jazyce Java. " +
     "Po dokončení validace je možné vyhledat výsledky validace podle přiděleného ID. " +
-    "Každá validační žádost a výsledky zůstanou online sedm dnů a poté jsou smazány."
+    "Každá validační žádost a výsledky zůstanou online přibližně sedm dnů a poté jsou smazány."
 };

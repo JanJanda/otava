@@ -49,7 +49,7 @@ export const englishLocale = {
     "An alias is an alternative URL. " +
     "If an alias is present, it is used in the validation instead of the actual URL. " +
     "A document is located and loaded according to its URL, but it pretends that it is on a different location according to the alias. " +
-    "There is an input text field for each document type. " +
+    "There is an input text field for each document type in the form. " +
     "Each line in a field represent one document, and it contains a URL of the document first and optionally an alias of the document second separated by a space. " +
     "If you want to validate a local file on your computer, you have to upload it somewhere on the web first using a web service of your choice. " +
     "The easiest option is probably GitHub. " +
