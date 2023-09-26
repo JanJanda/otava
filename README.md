@@ -63,7 +63,7 @@ This section describes the deployment process of the web application in ten easy
 5. Use `cd otava` to go to the directory of the project.
 6. Edit the downloaded file `docker-compose.yml` like so: Come up with an original password, and replace every occurrence of `my-password` in the file with your password.
 7. Optional: Increase the `replicas` value under `web_worker` in the file to spawn more workers and increase performance.
-8. Run `docker compose up` to start everything and wait.
+8. Run `docker compose up` to start everything and wait. It can take a long time.
 9. Open your web browser and go to address `localhost` to see the web application.
 10. Open another command line in the `otava` directory and run `docker compose down` to stop everything.
 
