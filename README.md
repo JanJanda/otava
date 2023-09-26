@@ -67,4 +67,4 @@ This section describes the deployment process of the web application in ten easy
 9. Open your web browser and go to address `localhost` to see the web application.
 10. Open another command line in the `otava` directory and run `docker compose down` to stop everything.
 
-The application uses the directory `database-volume` to store its data.
+The application uses the created directory `database-volume` to store its data.
