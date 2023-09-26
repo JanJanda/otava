@@ -6,15 +6,9 @@
 
 The [CSV on the Web](https://www.w3.org/TR/2016/NOTE-tabular-data-primer-20160225/) W3C recommendations specify, how to describe CSV files published on the Web using JSON-LD descriptors containing important metadata, such as column names, data types and more. The goal of this project is to implement a validator of CSV files based on the CSV on the Web W3C recommendations.
 
-## Status of Development
+## Structure of the Project
 
-Java version 17.0.1 is used in this project.
-
-The library part of this project is developed. There are automatic unit tests with great coverage. It is possible to execute individual parts of the library in the tests. The tests can be modified to try different behavior. There are also resources for the tests. It is easy to find the files because the project follows the [Standard Maven Layout](https://maven.apache.org/guides/introduction/introduction-to-the-standard-directory-layout.html). The command `mvn test` executes the tests.
-
-The command line interface is also developed.
-
-The web application is currently being developed.
+This project achieves the goal and adds several extra features. Most of the project is implemented in Java, specifically Java 17.0.1 is used. The core is in a library. The library can be used with the command line interface application. The project also contains a web application implemented in JavaScript. The web application provides a graphical user interface for better user experience. There is a Java web worker in the backend of the web application. The project uses [Docker](https://www.docker.com/) to simplify development and deployment, but it can be used without Docker as well.
 
 ## The Library
 
@@ -57,3 +51,20 @@ Perform tables only validation with the provided tables, and write the report as
 ```
 java -jar ../../../../cli/target/cli-1.0-jar-with-dependencies.jar -tables -text -plit tables/table002.csv -plit tables/table013.csv -plit tables/table014.csv -plit tables/table015.csv
 ```
+
+## Web Application
+
+This section describes the deployment process of the web application in ten easy steps.
+
+1. Make sure that [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) is runnig and ready on your machine.
+2. Choose a directory for the application.
+3. Open your command line in that directory.
+4. Run `git clone https://github.com/JanJanda/otava.git` to download the source code of the project.
+5. Use `cd otava` to go to the directory of the project.
+6. Edit the downloaded file `docker-compose.yml` like so: Come up with an original password, and replace every occurrence of `my-password` in the file with your password.
+7. Optional: Increase the `replicas` value under `web_worker` in the file to spawn more workers and increase performance.
+8. Run `docker compose up` to start everything and wait.
+9. Open your web browser and go to address `localhost` to see the web application.
+10. Open another command line in the `otava` directory and run `docker compose down` to stop everything.
+
+The application uses the directory `database-volume` to store its data.
