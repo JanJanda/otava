@@ -3,9 +3,9 @@ const mysql = require("mysql2/promise");
 let retryId;
 
 function catchError(error) {
-  console.error(error);
   clearTimeout(retryId);
-  retryId = setTimeout(init, 10000)
+  retryId = setTimeout(init, 10000);
+  console.error(error);
 }
 
 let connectionPool;
