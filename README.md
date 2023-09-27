@@ -8,11 +8,11 @@ The [CSV on the Web](https://www.w3.org/TR/2016/NOTE-tabular-data-primer-2016022
 
 ## Structure of the Project
 
-This project achieves the goal and adds several extra features. Most of the project is implemented in Java, specifically Java 17.0.1 is used. The core is in a library. The library can be used with the command line interface application. The project also contains a web application implemented in JavaScript. The web application provides a graphical user interface for better user experience. There is a Java web worker in the backend of the web application. The project uses [Docker](https://www.docker.com/) to simplify development and deployment, but it can be used without Docker as well.
+This project achieves the goal and adds several extra features. Most of the project is implemented in Java, specifically Java version 17.0.1 is used and tested. The core is in a library. The library can be used with the included command line interface application. The project also contains a web application implemented in JavaScript. The web application provides a graphical user interface for better user experience. There is a Java web worker in the backend of the web application. It uses the library to process requests from the web. The project uses [Docker](https://www.docker.com/) to simplify development and deployment, but it can be used without Docker as well.
 
 ## The Library
 
-The library contains the core functionality of this project. It performs the validation and other supporting tasks. The library is used via the manager in the class `Manager` in the main package `io.github.janjanda.otava.library`. The manager provides simple public methods for users, and it hides the internal complexity of the library. The names of the methods are self-explanatory, and there are comments with additional instructions. The library is ready for international environment. Users can set locale in the manager. Users can use implemented locales in the subpackage `locales` or implement their own locale. The default locale is English, and there is also a Czech locale.
+The library contains the core functionality of this project. It performs the validation and other supporting tasks. The library is used via the manager in the class `Manager` in the main package `io.github.janjanda.otava.library`. The manager provides simple public methods for users, and it hides the internal complexity of the library. The names of the methods are self-explanatory, and there are comments with additional instructions. The library is ready for international environment. Users can set a locale in the manager. Users can use implemented locales in the subpackage `locales` or implement their own locale. The default locale is English, and there is also a Czech locale.
 
 ### Validation Principles
 
@@ -56,7 +56,7 @@ java -jar ../../../../cli/target/cli-1.0-jar-with-dependencies.jar -tables -text
 
 This section describes the deployment process of the web application in ten easy steps.
 
-1. Make sure that [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) is runnig and ready on your machine.
+1. Make sure that [Docker Engine](https://docs.docker.com/get-docker/) and [Docker Compose](https://docs.docker.com/compose/install/) are running and ready on your machine.
 2. Choose a directory for the application.
 3. Open your command line in that directory.
 4. Run `git clone https://github.com/JanJanda/otava.git` to download the source code of the project.
@@ -67,4 +67,4 @@ This section describes the deployment process of the web application in ten easy
 9. Open your web browser and go to address `localhost` to see the web application.
 10. Open another command line in the `otava` directory and run `docker compose down` to stop everything.
 
-The application uses the created directory `database-volume` to store its data.
+The application uses the created directory `database-volume` to store its data. An instruction manual is in the web application.
