@@ -20,13 +20,15 @@ public final class WebWorker {
         System.out.println("Running");
         if (dbHost == null) dbHost = "localhost";
         while (true) {
+            long delay = 3000;
             try {
                 tryIteration();
             }
             catch (SQLException e) {
+                delay = 10000;
                 System.err.println(e.getMessage());
             }
-            Thread.sleep(3000);
+            Thread.sleep(delay);
         }
     }
 
