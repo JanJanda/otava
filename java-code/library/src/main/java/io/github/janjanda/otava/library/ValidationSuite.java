@@ -75,7 +75,7 @@ public final class ValidationSuite {
         /**
          * Adds a passive table to the builder. Passive tables do not attempt to locate their descriptors.
          * @param name name of the file with the table, path for local file, URL for online file
-         * @param alias alternative name for validation purposes
+         * @param alias alternative name for validation purposes or {@code null}
          * @param isLocal {@code true} if the file is local in filesystem, {@code false} if the file is online
          * @param outOfMemory for large files, file will not be loaded to memory
          * @return reference to this builder
@@ -88,7 +88,7 @@ public final class ValidationSuite {
         /**
          * Adds an active table to the builder. Active tables attempt to locate their descriptors before validation.
          * @param name name of the file with the table, path for local file, URL for online file
-         * @param alias alternative name for validation purposes
+         * @param alias alternative name for validation purposes or {@code null}
          * @param isLocal {@code true} if the file is local in filesystem, {@code false} if the file is online
          * @param outOfMemory for large files, file will not be loaded to memory
          * @return reference to this builder
@@ -101,7 +101,7 @@ public final class ValidationSuite {
         /**
          * Adds a passive descriptor to the builder. Passive descriptors do not attempt to locate described tables.
          * @param name name of the file with the descriptor, path for local file, URL for online file
-         * @param alias alternative name for validation purposes
+         * @param alias alternative name for validation purposes or {@code null}
          * @param isLocal {@code true} if the file is local in filesystem, {@code false} if the file is online
          * @return reference to this builder
          */
@@ -113,7 +113,7 @@ public final class ValidationSuite {
         /**
          * Adds an active descriptor to the builder. Active descriptors attempt to locate described tables before validation.
          * @param name name of the file with the descriptor, path for local file, URL for online file
-         * @param alias alternative name for validation purposes
+         * @param alias alternative name for validation purposes or {@code null}
          * @param isLocal {@code true} if the file is local in filesystem, {@code false} if the file is online
          * @return reference to this builder
          */
