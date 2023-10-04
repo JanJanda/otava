@@ -66,15 +66,8 @@ public final class WebWorker {
     }
 
     private static void saveOutcomeFormats(RequestData requestData, Outcome outcome) throws SQLException {
-        String outcomeText = "";
-        String outcomeJson = "";
-        String outcomeTurtle = "";
-        if (outcome != null) {
-            outcomeText = outcome.asText();
-            outcomeJson = outcome.asJson();
-            outcomeTurtle = outcome.asTurtle();
-        }
-        saveOutcomes(requestData.id(), outcomeText, outcomeJson, outcomeTurtle);
+        if (outcome == null) saveOutcomes(requestData.id(), "", "", "");
+        else saveOutcomes(requestData.id(), outcome.asText(), outcome.asJson(), outcome.asTurtle());
     }
 
     private static Connection getConnection() throws SQLException {
@@ -106,7 +99,7 @@ public final class WebWorker {
     }
 
     private static void parseDocuments(String docs, BiConsumer<String, String> acceptor) {
-        String[] lines = docs.trim().split("\n");
+        String[] lines = docs.trim().split("\\r?\\n");
         for (String line : lines) {
             String[] tokens = line.trim().split("\\s+");
             if (tokens.length == 1 && !tokens[0].equals("")) acceptor.accept(tokens[0], null);
