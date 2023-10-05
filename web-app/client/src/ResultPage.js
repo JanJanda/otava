@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import {LocaleContext} from "./App";
-import {ValidationForm} from "./ValidatePage";
+import {ValidationForm} from "./ExpertValidationPage";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function ResultPage() {

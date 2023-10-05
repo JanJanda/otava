@@ -2,20 +2,13 @@ import React, {useContext} from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import FormSelect from "react-bootstrap/FormSelect";
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {englishLocale} from "./englishLocale";
 import {czechLocale} from "./czechLocale";
 import {LocaleContext} from "./App";
 
 export default function TopBar(props) {
   const locale = useContext(LocaleContext);
-  const location = useLocation();
-
-  let validateColor = "white";
-  if (location.pathname === "/validate") validateColor = "yellow";
-
-  let searchColor = "white";
-  if (location.pathname === "/search") searchColor = "yellow";
 
   return (
     <Navbar className="bg-body-tertiary" data-bs-theme="dark">
@@ -23,11 +16,11 @@ export default function TopBar(props) {
         <Link to="/" style={{ textDecoration: "none" }}>
           <Navbar.Brand>OTAVA - WebApp</Navbar.Brand>
         </Link>
-        <Link to="/validate" className="topbar-link" style={{ color: validateColor }}>
-          {locale.validate}
-        </Link>
-        <Link to="/search" className="topbar-link" style={{ color: searchColor }}>
+        <Link to="/search" className="topbar-link" style={{ color: "white" }}>
           {locale.searchValidation}
+        </Link>
+        <Link to="/about" className="topbar-link" style={{ color: "white" }}>
+          {locale.about}
         </Link>
         <LangSelect setLocale={props.setLocale} />
       </Container>

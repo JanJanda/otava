@@ -1,12 +1,13 @@
 import React, {createContext, useState} from "react";
 import {Route, Routes} from "react-router-dom";
-import ValidatePage from "./ValidatePage";
+import ExpertValidationPage from "./ExpertValidationPage";
 import ResultPage from "./ResultPage";
 import TopBar from "./TopBar";
 import {englishLocale} from "./englishLocale";
 import HomePage from "./HomePage";
 import NotFoundPage from "./NotFoundPage";
 import SearchPage from "./SearchPage";
+import AboutPage from "./AboutPage";
 
 export const LocaleContext = createContext(englishLocale);
 
@@ -18,7 +19,8 @@ export default function App() {
       <TopBar setLocale={setLocale} />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/validate" element={<ValidatePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/expert-validation" element={<ExpertValidationPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/result/:id" element={<ResultPage />} />
         <Route path="*" element={<NotFoundPage />} />

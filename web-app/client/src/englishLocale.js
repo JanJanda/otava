@@ -55,5 +55,6 @@ export const englishLocale = {
     "The easiest option is probably GitHub. " +
     "Alternatively, you can use the command line interface Java application. " +
     "After the validation is finished, the results of the validation can be searched by the assigned ID. " +
-    "Each validation request and results stay online for approximately seven days, and then they are deleted."
+    "Each validation request and results stay online for approximately seven days, and then they are deleted.",
+  about: "About this application"
 };

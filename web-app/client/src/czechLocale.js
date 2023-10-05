@@ -55,5 +55,6 @@ export const czechLocale = {
     "Nejsnazší možnost je asi GitHub. " +
     "Alternativně můžete použít aplikaci příkazové řádky v jazyce Java. " +
     "Po dokončení validace je možné vyhledat výsledky validace podle přiděleného ID. " +
-    "Každá validační žádost a výsledky zůstanou online přibližně sedm dnů a poté jsou smazány."
+    "Každá validační žádost a výsledky zůstanou online přibližně sedm dnů a poté jsou smazány.",
+  about: "O aplikaci"
 };

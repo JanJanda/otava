@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import {LocaleContext} from "./App";
 
-export default function ValidatePage() {
+export default function ExpertValidationPage() {
   return (
     <div className="mx-5 mt-4 mb-5">
       <ValidationForm disabled={false} lang="en" valStyle="full" passiveTables="" activeTables="" passiveDescriptors="" activeDescriptors="" description="" />
