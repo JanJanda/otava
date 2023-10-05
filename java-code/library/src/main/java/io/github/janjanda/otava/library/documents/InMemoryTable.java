@@ -22,10 +22,10 @@ public final class InMemoryTable implements Table {
         this.fileName = fileName;
         this.alias = alias;
         this.readerMaker = readerMaker;
-        fillCells(csvFormat);
+        parseTable(csvFormat);
     }
 
-    private void fillCells(CSVFormat csvFormat) throws ValidatorFileException {
+    private void parseTable(CSVFormat csvFormat) throws ValidatorFileException {
         try (InputStreamReader reader = readerMaker.makeReader(fileName);
              CSVParser csvParser = CSVParser.parse(reader, csvFormat)) {
             csvRecords = csvParser.getRecords();
