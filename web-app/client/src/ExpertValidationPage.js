@@ -6,12 +6,12 @@ import {LocaleContext} from "./App";
 export default function ExpertValidationPage() {
   return (
     <div className="mx-5 mt-4 mb-5">
-      <ValidationForm disabled={false} lang="en" valStyle="full" passiveTables="" activeTables="" passiveDescriptors="" activeDescriptors="" description="" />
+      <ExpertValidationForm disabled={false} lang="en" valStyle="full" passiveTables="" activeTables="" passiveDescriptors="" activeDescriptors="" description="" />
     </div>
   );
 }
 
-export function ValidationForm(props) {
+export function ExpertValidationForm(props) {
   const locale = useContext(LocaleContext);
 
   let submitButton = <Button variant="primary" type="submit">{locale.submit}</Button>;

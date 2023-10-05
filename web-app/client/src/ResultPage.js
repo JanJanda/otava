@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import {LocaleContext} from "./App";
-import {ValidationForm} from "./ExpertValidationPage";
+import {ExpertValidationForm} from "./ExpertValidationPage";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function ResultPage() {
@@ -92,7 +92,7 @@ function RequestData(props) {
       <div className="mb-3">
         {locale.reqTime}: {new Date(data["request-time"]).toLocaleString(locale.langTag)}
       </div>
-      <ValidationForm disabled={true} lang={data.language} valStyle={data.style} passiveTables={data["passive-tables"]} activeTables={data["active-tables"]} passiveDescriptors={data["passive-descriptors"]} activeDescriptors={data["active-descriptors"]} description={data.description} />
+      <ExpertValidationForm disabled={true} lang={data.language} valStyle={data.style} passiveTables={data["passive-tables"]} activeTables={data["active-tables"]} passiveDescriptors={data["passive-descriptors"]} activeDescriptors={data["active-descriptors"]} description={data.description} />
     </div>
   );
 }
