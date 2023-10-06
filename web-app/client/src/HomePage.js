@@ -7,6 +7,7 @@ export default function HomePage() {
 
   return (
     <div className="mx-auto mt-4 mb-3 home-page">
+      <h1 className="home-heading">{locale.chooseVal}</h1>
       <Link to="/table-validation" className="val-link">{locale.tableValidation}</Link>
       <Link to="/descriptor-validation" className="val-link">{locale.descValidation}</Link>
       <Link to="/expert-validation" className="val-link">{locale.expertValidation}</Link>

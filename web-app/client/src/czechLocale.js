@@ -63,5 +63,6 @@ export const czechLocale = {
   switchActiveTable: "Najít a použít deskriptor tabulky",
   tableValidation: "Validace tabulky",
   descValidation: "Validace deskriptoru",
-  expertValidation: "Expertní validace"
+  expertValidation: "Expertní validace",
+  chooseVal: "Vyberte si svou validaci"
 };

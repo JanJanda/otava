@@ -38,6 +38,7 @@ body {
 }
 
 .topbar-link {
+    color: white;
     text-decoration: none;
     font-weight: bold;
 }
@@ -58,9 +59,13 @@ body {
 }
 
 .val-link:hover {
-    background-color: yellow;
+    background-color: white;
 }
 
 .home-page {
     width: fit-content;
+}
+
+.home-heading {
+    text-align: center;
 }

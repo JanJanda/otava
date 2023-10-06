@@ -63,5 +63,6 @@ export const englishLocale = {
   switchActiveTable: "Find and use the descriptor of the table",
   tableValidation: "Table validation",
   descValidation: "Descriptor validation",
-  expertValidation: "Expert validation"
+  expertValidation: "Expert validation",
+  chooseVal: "Choose your validation"
 };
