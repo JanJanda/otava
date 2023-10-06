@@ -4,6 +4,8 @@ import Alert from "react-bootstrap/Alert";
 import Spinner from "react-bootstrap/Spinner";
 import {LocaleContext} from "./App";
 import {ExpertValidationForm} from "./ExpertValidationPage";
+import {TableValidationForm} from "./TableValidationPage";
+import {DescriptorValidationForm} from "./DescriptorValidationPage";
 import Accordion from "react-bootstrap/Accordion";
 
 export default function ResultPage() {
@@ -86,13 +88,32 @@ function RequestData(props) {
   const locale = useContext(LocaleContext);
   const data = props.dbData;
 
+  let formRender = <ExpertValidationForm disabled={true} lang={data.language} valStyle={data.style} passiveTables={data["passive-tables"]} activeTables={data["active-tables"]} passiveDescriptors={data["passive-descriptors"]} activeDescriptors={data["active-descriptors"]} description={data.description} />;
+  let valForm = locale.expertValidation;
+  if (data.form === "pas-table") {
+    formRender = <TableValidationForm disabled={true} lang={data.language} active={false} tableUrl={data["passive-tables"]} />;
+    valForm = locale.tableValidation;
+  }
+  if (data.form === "act-table") {
+    formRender = <TableValidationForm disabled={true} lang={data.language} active={true} tableUrl={data["active-tables"]} />;
+    valForm = locale.tableValidation;
+  }
+  if (data.form === "pas-desc") {
+    formRender = <DescriptorValidationForm disabled={true} lang={data.language} active={false} descUrl={data["passive-descriptors"]} />;
+    valForm = locale.descValidation;
+  }
+  if (data.form === "act-desc") {
+    formRender = <DescriptorValidationForm disabled={true} lang={data.language} active={true} descUrl={data["active-descriptors"]} />;
+    valForm = locale.descValidation;
+  }
+
   return (
     <div>
-      <h2>{locale.reqDetail}</h2>
+      <h2>{locale.reqDetail} - {valForm}</h2>
       <div className="mb-3">
         {locale.reqTime}: {new Date(data["request-time"]).toLocaleString(locale.langTag)}
       </div>
-      <ExpertValidationForm disabled={true} lang={data.language} valStyle={data.style} passiveTables={data["passive-tables"]} activeTables={data["active-tables"]} passiveDescriptors={data["passive-descriptors"]} activeDescriptors={data["active-descriptors"]} description={data.description} />
+      {formRender}
     </div>
   );
 }

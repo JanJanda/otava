@@ -9,7 +9,7 @@ export default function DescriptorValidationPage() {
   return (
     <div className="mx-5 mt-4 mb-5">
       <h1>{locale.descValidation}</h1>
-      <DescriptorValidationForm disabled={false} descUrl="" active={false} />
+      <DescriptorValidationForm disabled={false} lang="en" descUrl="" active={false} />
     </div>
   );
 }
@@ -22,7 +22,13 @@ export function DescriptorValidationForm(props) {
 
   return (
     <div style={{ maxWidth: "1000px" }}>
-      <Form method="post" action={props.disabled ? "" : "/submit-desc-validation"}>
+      <Form method="post" action={props.disabled ? "" : "/submit-descriptor-validation"}>
+
+        <div className="mb-3">
+          <Form.Label>{locale.setValLang}</Form.Label>
+          <Form.Check disabled={props.disabled} type="radio" name="language" value="en" label={locale.english} defaultChecked={props.lang === "en"} />
+          <Form.Check disabled={props.disabled} type="radio" name="language" value="cs" label={locale.czech} defaultChecked={props.lang === "cs"} />
+        </div>
 
         <Form.Group className="mb-3" controlId="desc-url">
           <Form.Label>{locale.enterDescUrl}</Form.Label>

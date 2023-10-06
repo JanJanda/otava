@@ -1,6 +1,6 @@
 const express = require("express");
 const path = require("path");
-const {addValidationRequest, getValidationData} = require("./model");
+const {addTableValidationRequest, addDescriptorValidationRequest, addExpertValidationRequest, getValidationData} = require("./model");
 
 const app = express();
 
@@ -18,8 +18,18 @@ app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 });
 
-app.post("/submit-validation", async (req, res) => {
-  const id = await addValidationRequest(req.body.language, req.body.style, req.body.passiveTables, req.body.activeTables, req.body.passiveDescriptors, req.body.activeDescriptors, req.body.description);
+app.post("/submit-table-validation", async (req, res) => {
+  const id = await addTableValidationRequest(req.body.language, req.body.tableUrl, req.body.active);
+  res.redirect("/result/" + id);
+});
+
+app.post("/submit-descriptor-validation", async (req, res) => {
+  const id = await addDescriptorValidationRequest(req.body.language, req.body.descUrl, req.body.active);
+  res.redirect("/result/" + id);
+});
+
+app.post("/submit-expert-validation", async (req, res) => {
+  const id = await addExpertValidationRequest(req.body.language, req.body.style, req.body.passiveTables, req.body.activeTables, req.body.passiveDescriptors, req.body.activeDescriptors, req.body.description);
   res.redirect("/result/" + id);
 });
 

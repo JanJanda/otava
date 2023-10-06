@@ -21,7 +21,7 @@ export function ExpertValidationForm(props) {
   if (props.disabled) submitButton = <></>;
 
   return (
-    <Form method="post" action={props.disabled ? "" : "/submit-validation"}>
+    <Form method="post" action={props.disabled ? "" : "/submit-expert-validation"}>
 
       <div className="mb-3">
         <Form.Label>{locale.setValLang}</Form.Label>

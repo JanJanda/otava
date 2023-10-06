@@ -25,7 +25,7 @@ async function init() {
 
     await connectionPool.query("CREATE DATABASE IF NOT EXISTS otava;");
     await connectionPool.query("USE otava;");
-    await connectionPool.query("CREATE TABLE IF NOT EXISTS `validations` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `language` VARCHAR(20) NOT NULL , `style` VARCHAR(20) NOT NULL , `passive-tables` TEXT NOT NULL , `active-tables` TEXT NOT NULL , `passive-descriptors` TEXT NOT NULL , `active-descriptors` TEXT NOT NULL , `description` TEXT NOT NULL , `request-time` DATETIME NOT NULL , `finish-time` DATETIME NULL , `state` VARCHAR(20) NOT NULL , `outcome-text` TEXT NULL , `outcome-json` TEXT NULL , `outcome-turtle` TEXT NULL , PRIMARY KEY (`id`));");
+    await connectionPool.query("CREATE TABLE IF NOT EXISTS `validations` (`id` INT UNSIGNED NOT NULL AUTO_INCREMENT , `language` VARCHAR(20) NOT NULL , `style` VARCHAR(20) NOT NULL , `passive-tables` TEXT NOT NULL , `active-tables` TEXT NOT NULL , `passive-descriptors` TEXT NOT NULL , `active-descriptors` TEXT NOT NULL , `description` TEXT NOT NULL , `form` VARCHAR(20) NOT NULL , `request-time` DATETIME NOT NULL , `finish-time` DATETIME NULL , `state` VARCHAR(20) NOT NULL , `outcome-text` TEXT NULL , `outcome-json` TEXT NULL , `outcome-turtle` TEXT NULL , PRIMARY KEY (`id`));");
 
     console.log("Database is ready");
   }
@@ -47,10 +47,54 @@ async function deleteOld() {
   }
 }
 
-async function addValidationRequest(language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description) {
+async function addTableValidationRequest(language, url, active) {
   try {
-    const result = await connectionPool.execute("INSERT INTO `validations` (`language`, `style`, `passive-tables`, `active-tables`, `passive-descriptors`, `active-descriptors`, `description`, `request-time`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
-      [language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description, new Date(), "queueing"]);
+    let style = "tables";
+    let passiveTables = url;
+    let activeTables = "";
+    let form = "pas-table";
+    if (active === "on") {
+      style = "full";
+      passiveTables = "";
+      activeTables = url;
+      form = "act-table";
+    }
+
+    const result = await connectionPool.execute("INSERT INTO `validations` (`language`, `style`, `passive-tables`, `active-tables`, `passive-descriptors`, `active-descriptors`, `description`, `form`, `request-time`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      [language, style, passiveTables, activeTables, "", "", "", form, new Date(), "queueing"]);
+    return result[0].insertId;
+  }
+  catch (error) {
+    catchError(error);
+  }
+}
+
+async function addDescriptorValidationRequest(language, url, active) {
+  try {
+    let style = "descs";
+    let passiveDescriptors = url;
+    let activeDescriptors = "";
+    let form = "pas-desc";
+    if (active === "on") {
+      style = "full";
+      passiveDescriptors = "";
+      activeDescriptors = url;
+      form = "act-desc";
+    }
+
+    const result = await connectionPool.execute("INSERT INTO `validations` (`language`, `style`, `passive-tables`, `active-tables`, `passive-descriptors`, `active-descriptors`, `description`, `form`, `request-time`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      [language, style, "", "", passiveDescriptors, activeDescriptors, "", form, new Date(), "queueing"]);
+    return result[0].insertId;
+  }
+  catch (error) {
+    catchError(error);
+  }
+}
+
+async function addExpertValidationRequest(language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description) {
+  try {
+    const result = await connectionPool.execute("INSERT INTO `validations` (`language`, `style`, `passive-tables`, `active-tables`, `passive-descriptors`, `active-descriptors`, `description`, `form`, `request-time`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      [language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description, "expert", new Date(), "queueing"]);
     return result[0].insertId;
   }
   catch (error) {
@@ -68,5 +112,7 @@ async function getValidationData(id) {
   }
 }
 
-module.exports.addValidationRequest = addValidationRequest;
+module.exports.addTableValidationRequest = addTableValidationRequest;
+module.exports.addDescriptorValidationRequest = addDescriptorValidationRequest;
+module.exports.addExpertValidationRequest = addExpertValidationRequest;
 module.exports.getValidationData = getValidationData;
