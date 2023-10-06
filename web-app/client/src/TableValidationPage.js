@@ -31,7 +31,7 @@ export function TableValidationForm(props) {
         </div>
 
         <Form.Group className="mb-3" controlId="table-url">
-          <Form.Label>{locale.enterTableUrl}</Form.Label>
+          <Form.Label>{locale.tableUrl}</Form.Label>
           <Form.Control disabled={props.disabled} name="tableUrl" defaultValue={props.tableUrl} />
         </Form.Group>
 

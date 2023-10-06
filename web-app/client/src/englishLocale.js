@@ -57,9 +57,9 @@ export const englishLocale = {
     "After the validation is finished, the results of the validation can be searched by the assigned ID. " +
     "Each validation request and results stay online for approximately seven days, and then they are deleted.",
   about: "About this application",
-  enterDescUrl: "Enter descriptor URL",
+  descUrl: "Descriptor URL",
   switchActiveDesc: "Find and use tables from the descriptor",
-  enterTableUrl: "Enter table URL",
+  tableUrl: "Table URL",
   switchActiveTable: "Find and use the descriptor of the table",
   tableValidation: "Table validation",
   descValidation: "Descriptor validation",

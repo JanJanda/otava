@@ -31,7 +31,7 @@ export function DescriptorValidationForm(props) {
         </div>
 
         <Form.Group className="mb-3" controlId="desc-url">
-          <Form.Label>{locale.enterDescUrl}</Form.Label>
+          <Form.Label>{locale.descUrl}</Form.Label>
           <Form.Control disabled={props.disabled} name="descUrl" defaultValue={props.descUrl} />
         </Form.Group>
 
