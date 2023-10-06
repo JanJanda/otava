@@ -56,5 +56,12 @@ export const czechLocale = {
     "Alternativně můžete použít aplikaci příkazové řádky v jazyce Java. " +
     "Po dokončení validace je možné vyhledat výsledky validace podle přiděleného ID. " +
     "Každá validační žádost a výsledky zůstanou online přibližně sedm dnů a poté jsou smazány.",
-  about: "O aplikaci"
+  about: "O aplikaci",
+  enterDescUrl: "Zadejte URL deskriptoru",
+  switchActiveDesc: "Najít a použít tabulky z deskriptoru",
+  enterTableUrl: "Zadejte URL tabulky",
+  switchActiveTable: "Najít a použít deskriptor tabulky",
+  tableValidation: "Validace tabulky",
+  descValidation: "Validace deskriptoru",
+  expertValidation: "Expertní validace"
 };

@@ -4,8 +4,11 @@ import Form from "react-bootstrap/Form";
 import {LocaleContext} from "./App";
 
 export default function ExpertValidationPage() {
+  const locale = useContext(LocaleContext);
+
   return (
     <div className="mx-5 mt-4 mb-5">
+      <h1>{locale.expertValidation}</h1>
       <ExpertValidationForm disabled={false} lang="en" valStyle="full" passiveTables="" activeTables="" passiveDescriptors="" activeDescriptors="" description="" />
     </div>
   );

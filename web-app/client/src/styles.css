@@ -45,3 +45,22 @@ body {
 .topbar-link:hover {
     text-decoration: underline;
 }
+
+.val-link {
+    color: black;
+    text-decoration: none;
+    font-size: 30px;
+    border: solid;
+    display: block;
+    margin: 30px;
+    padding: 20px;
+    text-align: center;
+}
+
+.val-link:hover {
+    background-color: yellow;
+}
+
+.home-page {
+    width: fit-content;
+}

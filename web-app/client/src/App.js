@@ -1,5 +1,7 @@
 import React, {createContext, useState} from "react";
 import {Route, Routes} from "react-router-dom";
+import DescriptorValidationPage from "./DescriptorValidationPage";
+import TableValidationPage from "./TableValidationPage";
 import ExpertValidationPage from "./ExpertValidationPage";
 import ResultPage from "./ResultPage";
 import TopBar from "./TopBar";
@@ -20,6 +22,8 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/descriptor-validation" element={<DescriptorValidationPage />} />
+        <Route path="/table-validation" element={<TableValidationPage />} />
         <Route path="/expert-validation" element={<ExpertValidationPage />} />
         <Route path="/search" element={<SearchPage />} />
         <Route path="/result/:id" element={<ResultPage />} />
