@@ -6,7 +6,7 @@ const app = express();
 
 const netPort = 80;
 
-app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use(express.static(path.join(__dirname, "..", "client", "dist")));
 app.use(express.urlencoded({extended: true}));
 
 app.get("/validation-data/:id", async (req, res) => {
@@ -15,7 +15,7 @@ app.get("/validation-data/:id", async (req, res) => {
 });
 
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
 
 app.post("/submit-table-validation", async (req, res) => {
