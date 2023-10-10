@@ -62,9 +62,9 @@ This section describes the deployment process of the web application in ten easy
 4. Run `git clone https://github.com/JanJanda/otava.git` to download the source code of the project.
 5. Use `cd otava` to go to the directory of the project.
 6. Edit the downloaded file `docker-compose.yml` like so: Come up with an original password, and replace every occurrence of `my-password` in the file with your password.
-7. Optional: Increase the `replicas` value under `web_worker` in the file to spawn more workers and increase performance.
-8. Run `docker compose up` to start everything and wait. It can take a long time. Command line stops printing text when the application is ready.
-9. Open your web browser and go to address `localhost` to see the web application.
+7. *Optional:* Increase the `replicas` value under `web_worker` in the file `docker-compose.yml` to spawn more workers and increase validation performance.
+8. Run `docker compose up` in the directory `otava` to start everything and wait. It can take a long time. Command line prints "Database is ready" and stops printing other text when the application is ready.
+9. Open your web browser and go to the address `localhost` to see the web application.
 10. Open another command line in the `otava` directory and run `docker compose down` to stop everything.
 
-The application uses the created directory `database-volume` to store its data. An instruction manual is in the web application.
+The application uses the created directory `database-volume` to store its data. An instruction manual is in the web application. Repeat the steps 7-10 to start the application again. If you want to deploy a new version of the application, delete the two built otava images, run `git pull` in the directory `otava` to download the new version from this repository, and then use steps 7-10.
