@@ -10,7 +10,7 @@ The [CSV on the Web](https://www.w3.org/TR/2016/NOTE-tabular-data-primer-2016022
 
 This project achieves the goal and adds several extra features. Most of the project is implemented in Java, specifically Java version 17.0.1 is used and tested. The core is in a library. The library can be used with the included command line interface application. The project also contains a web application implemented in JavaScript. The web application provides a graphical user interface for better user experience. There is a Java web worker in the backend of the web application. It uses the library to process requests from the web. The project uses [Docker](https://www.docker.com/) to simplify development and deployment, but it can be used without Docker as well.
 
-## The Library
+## Library
 
 The library contains the core functionality of this project. It performs the validation and other supporting tasks. The library is used via the manager in the class `Manager` in the main package `io.github.janjanda.otava.library`. The manager provides simple public methods for users, and it hides the internal complexity of the library. The names of the methods are self-explanatory, and there are comments with additional instructions. The library is ready for international environment. Users can set a locale in the manager. Users can use implemented locales in the subpackage `locales` or implement their own locale. The default locale is English, and there is also a Czech locale.
 
