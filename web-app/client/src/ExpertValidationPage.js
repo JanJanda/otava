@@ -24,12 +24,6 @@ export function ExpertValidationForm(props) {
     <Form method="post" action={props.disabled ? "" : "/submit-expert-validation"}>
 
       <div className="mb-3">
-        <Form.Label>{locale.setValLang}</Form.Label>
-        <Form.Check disabled={props.disabled} type="radio" name="language" value="en" label={locale.english} defaultChecked={props.lang === "en"} />
-        <Form.Check disabled={props.disabled} type="radio" name="language" value="cs" label={locale.czech} defaultChecked={props.lang === "cs"} />
-      </div>
-
-      <div className="mb-3">
         <Form.Label>{locale.valStyle}</Form.Label>
         <Form.Check disabled={props.disabled} type="radio" name="style" value="full" label={locale.fullVal} defaultChecked={props.valStyle === "full"} />
         <Form.Check disabled={props.disabled} type="radio" name="style" value="tables" label={locale.tablesVal} defaultChecked={props.valStyle === "tables"} />
@@ -60,6 +54,12 @@ export function ExpertValidationForm(props) {
         <Form.Label>{locale.description}</Form.Label>
         <Form.Control disabled={props.disabled} as="textarea" name="description" defaultValue={props.description} />
       </Form.Group>
+
+      <div className="mb-3">
+        <Form.Label>{locale.setValLang}</Form.Label>
+        <Form.Check disabled={props.disabled} type="radio" name="language" value="en" label={locale.english} defaultChecked={props.lang === "en"} />
+        <Form.Check disabled={props.disabled} type="radio" name="language" value="cs" label={locale.czech} defaultChecked={props.lang === "cs"} />
+      </div>
 
       {submitButton}
     </Form>
