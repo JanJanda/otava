@@ -22,8 +22,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.*;
 
-import static io.github.janjanda.otava.library.ValidationSuite.DescResource;
-import static io.github.janjanda.otava.library.ValidationSuite.TableResource;
+import static io.github.janjanda.otava.library.Request.DescResource;
+import static io.github.janjanda.otava.library.Request.TableResource;
 import static io.github.janjanda.otava.library.utils.DescriptorUtils.extractTables;
 import static io.github.janjanda.otava.library.utils.UrlUtils.getBaseUrlWithExc;
 import static io.github.janjanda.otava.library.utils.UrlUtils.resolveUrl;
@@ -55,15 +55,15 @@ public final class Manager {
     }
 
     /**
-     * Validates only tables without descriptors. Only passive tables from the validation suite are validated.
-     * @param validationSuite specification of validated files, only passive tables are read
+     * Validates only tables, no descriptors. Only passive tables from the validation request are validated.
+     * @param request specification of validated files, only passive tables are read
      * @return validation report
      * @throws ValidatorException If the validation cannot be performed.
      */
-    public Report tablesOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+    public Report tablesOnlyValidation(Request request) throws ValidatorException {
         Instant start = Instant.now();
         DocumentFactory df = new DocumentFactory();
-        List<Table> tables = createTables(validationSuite.getPassiveTables(), df);
+        List<Table> tables = createTables(request.getPassiveTables(), df);
         DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
         SingletonCheckFactory scf = new SingletonCheckFactory(tableGroup, null);
         Check check = scf.getInstance(tablesValidation);
@@ -74,15 +74,15 @@ public final class Manager {
     }
 
     /**
-     * Validate only descriptors without tables. Only passive descriptors from the validation suite are validated.
-     * @param validationSuite specification of validate files, only passive descriptors are read
+     * Validate only descriptors, no tables. Only passive descriptors from the validation request are validated.
+     * @param request specification of validate files, only passive descriptors are read
      * @return validation report
      * @throws ValidatorException If the validation cannot be performed.
      */
-    public Report descriptorsOnlyValidation(ValidationSuite validationSuite) throws ValidatorException {
+    public Report descriptorsOnlyValidation(Request request) throws ValidatorException {
         Instant start = Instant.now();
         DocumentFactory df = new DocumentFactory();
-        List<Descriptor> descriptors = createDescriptors(validationSuite.getPassiveDescriptors(), df);
+        List<Descriptor> descriptors = createDescriptors(request.getPassiveDescriptors(), df);
         DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
         SingletonCheckFactory scf = new SingletonCheckFactory(null, descGroup);
         Check check = scf.getInstance(descriptorsValidation);
@@ -93,22 +93,22 @@ public final class Manager {
     }
 
     /**
-     * Performs full validation with the provided validation suite.
-     * @param validationSuite specifications of validated files
+     * Performs full validation with the provided validation request.
+     * @param request specifications of validated files
      * @return validation report
      * @throws ValidatorException If the validation cannot be performed.
      */
-    public Report fullValidation(ValidationSuite validationSuite) throws ValidatorException {
+    public Report fullValidation(Request request) throws ValidatorException {
         Instant start = Instant.now();
         DocumentFactory df = new DocumentFactory();
-        List<Table> tables = createTables(validationSuite.getActiveTables(), df);
-        List<Descriptor> descriptors = createDescriptors(validationSuite.getActiveDescriptors(), df);
+        List<Table> tables = createTables(request.getActiveTables(), df);
+        List<Descriptor> descriptors = createDescriptors(request.getActiveDescriptors(), df);
         DescResource[] descResources = createDescResources(tables);
-        TableResource[] tableResources = createTableResources(descriptors, validationSuite.saveMemory);
+        TableResource[] tableResources = createTableResources(descriptors, request.saveMemory);
         tables.addAll(createTables(tableResources, df));
         descriptors.addAll(createDescriptors(descResources, df));
-        tables.addAll(createTables(validationSuite.getPassiveTables(), df));
-        descriptors.addAll(createDescriptors(validationSuite.getPassiveDescriptors(), df));
+        tables.addAll(createTables(request.getPassiveTables(), df));
+        descriptors.addAll(createDescriptors(request.getPassiveDescriptors(), df));
         DocsGroup<Table> tableGroup = new DocsGroup<>(tables.toArray(new Table[0]));
         DocsGroup<Descriptor> descGroup = new DocsGroup<>(descriptors.toArray(new Descriptor[0]));
         SingletonCheckFactory scf = new SingletonCheckFactory(tableGroup, descGroup);

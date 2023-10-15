@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Disabled("This project does not support every specified feature because it is not required. Results: 80 failed, 201 passed")
 class W3Tests {
-    record TestData(String testName, ValidationSuite suite, String validation, String result) {}
+    record TestData(String testName, Request request, String validation, String result) {}
 
     static Stream<TestData> dataProvider() throws Exception {
         try (InputStreamReader reader = makeFileReader("src/test/resources/w3tests.csv");
@@ -28,7 +28,7 @@ class W3Tests {
             Stream.Builder<TestData> data = Stream.builder();
             for (CSVRecord row : csvParser) {
                 if (row.getRecordNumber() != 1) {
-                    ValidationSuite.Builder builder = new ValidationSuite.Builder();
+                    Request.Builder builder = new Request.Builder();
                     if (!row.get(1).isEmpty()) builder.addPassiveTable(row.get(1), null, false, false);
                     if (!row.get(2).isEmpty()) builder.addActiveTable(row.get(2), null, false, false);
                     if (!row.get(3).isEmpty()) builder.addPassiveDescriptor(row.get(3), null, false);
@@ -46,19 +46,19 @@ class W3Tests {
         Manager manager = new Manager();
         Report report = null;
         try {
-            if (data.validation.equals("full")) report = manager.fullValidation(data.suite);
-            if (data.validation.equals("table")) report = manager.tablesOnlyValidation(data.suite);
-            if (data.validation.equals("desc")) report = manager.descriptorsOnlyValidation(data.suite);
+            if (data.validation().equals("full")) report = manager.fullValidation(data.request());
+            if (data.validation().equals("table")) report = manager.tablesOnlyValidation(data.request());
+            if (data.validation().equals("desc")) report = manager.descriptorsOnlyValidation(data.request());
         }
         catch (ValidatorException e) {
-            assertEquals("fail", data.result, data.testName);
+            assertEquals("fail", data.result(), data.testName());
             return;
         }
 
-        switch (data.result) {
-            case "ok" -> assertFalse(hasFatal(report.getResults()), data.testName);
-            case "fail" -> assertTrue(hasFatal(report.getResults()), data.testName);
-            case "warn" -> assertFalse(allOk(report.getResults()), data.testName);
+        switch (data.result()) {
+            case "ok" -> assertFalse(hasFatal(report.getResults()), data.testName());
+            case "fail" -> assertTrue(hasFatal(report.getResults()), data.testName());
+            case "warn" -> assertFalse(allOk(report.getResults()), data.testName());
             default -> fail("Invalid test data entry!");
         }
     }

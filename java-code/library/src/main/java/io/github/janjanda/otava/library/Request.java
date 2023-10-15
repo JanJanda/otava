@@ -6,14 +6,14 @@ import java.util.List;
 /**
  * This class only collects input data for validation. It does not do anything with the data. It has a convenient builder.
  */
-public final class ValidationSuite {
+public final class Request {
     public final boolean saveMemory;
     private final TableResource[] passiveTables;
     private final TableResource[] activeTables;
     private final DescResource[] passiveDescriptors;
     private final DescResource[] activeDescriptors;
 
-    private ValidationSuite(Builder b) {
+    private Request(Builder b) {
         saveMemory = b.saveMemory;
         passiveTables = b.passiveTables.toArray(new TableResource[0]);
         activeTables = b.activeTables.toArray(new TableResource[0]);
@@ -123,11 +123,11 @@ public final class ValidationSuite {
         }
 
         /**
-         * Creates a new validation suite with the data from this builder.
-         * @return new validation suite with the data from this builder
+         * Creates a new request with the data from this builder.
+         * @return new validation request with the data from this builder
          */
-        public ValidationSuite build() {
-            return new ValidationSuite(this);
+        public Request build() {
+            return new Request(this);
         }
     }
 

@@ -2,7 +2,7 @@ package io.github.janjanda.otava.web_worker;
 
 import io.github.janjanda.otava.library.Manager;
 import io.github.janjanda.otava.library.Outcome;
-import io.github.janjanda.otava.library.ValidationSuite;
+import io.github.janjanda.otava.library.Request;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.locales.CzechLocale;
 import io.github.janjanda.otava.library.locales.EnglishLocale;
@@ -35,30 +35,30 @@ public final class WebWorker {
     private static void tryIteration() throws SQLException {
         RequestData requestData = findNewJob();
         if (requestData != null) {
-            ValidationSuite vs = makeValidationSuite(requestData);
-            Outcome outcome = produceOutcome(requestData, vs);
+            Request request = makeValidationSuite(requestData);
+            Outcome outcome = produceOutcome(requestData, request);
             saveOutcomeFormats(requestData, outcome);
         }
     }
 
-    private static ValidationSuite makeValidationSuite(RequestData requestData) {
-        ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
-        vsBuilder.setSaveMemory();
-        parseDocuments(requestData.passiveTables(), (a, b) -> vsBuilder.addPassiveTable(a, b, false, true));
-        parseDocuments(requestData.activeTables(), (a, b) -> vsBuilder.addActiveTable(a, b, false, true));
-        parseDocuments(requestData.passiveDescriptors(), (a, b) -> vsBuilder.addPassiveDescriptor(a, b, false));
-        parseDocuments(requestData.activeDescriptors(), (a, b) -> vsBuilder.addActiveDescriptor(a, b, false));
-        return vsBuilder.build();
+    private static Request makeValidationSuite(RequestData requestData) {
+        Request.Builder requestBuilder = new Request.Builder();
+        requestBuilder.setSaveMemory();
+        parseDocuments(requestData.passiveTables(), (a, b) -> requestBuilder.addPassiveTable(a, b, false, true));
+        parseDocuments(requestData.activeTables(), (a, b) -> requestBuilder.addActiveTable(a, b, false, true));
+        parseDocuments(requestData.passiveDescriptors(), (a, b) -> requestBuilder.addPassiveDescriptor(a, b, false));
+        parseDocuments(requestData.activeDescriptors(), (a, b) -> requestBuilder.addActiveDescriptor(a, b, false));
+        return requestBuilder.build();
     }
 
-    private static Outcome produceOutcome(RequestData requestData, ValidationSuite vs) {
+    private static Outcome produceOutcome(RequestData requestData, Request request) {
         Manager.setLocale(makeLocale(requestData.language()));
         Manager m = new Manager();
         Outcome outcome = null;
         try {
-            if (requestData.style().equals("full")) outcome = m.fullValidation(vs);
-            if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(vs);
-            if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(vs);
+            if (requestData.style().equals("full")) outcome = m.fullValidation(request);
+            if (requestData.style().equals("tables")) outcome = m.tablesOnlyValidation(request);
+            if (requestData.style().equals("descs")) outcome = m.descriptorsOnlyValidation(request);
         } catch (ValidatorException e) {
             outcome = e;
         }

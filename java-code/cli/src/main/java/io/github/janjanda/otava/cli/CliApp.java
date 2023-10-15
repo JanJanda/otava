@@ -2,7 +2,7 @@ package io.github.janjanda.otava.cli;
 
 import io.github.janjanda.otava.library.Manager;
 import io.github.janjanda.otava.library.Outcome;
-import io.github.janjanda.otava.library.ValidationSuite;
+import io.github.janjanda.otava.library.Request;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.locales.CzechLocale;
 import io.github.janjanda.otava.library.locales.EnglishLocale;
@@ -26,18 +26,18 @@ public final class CliApp {
         Option json = Option.builder("json").desc("print result as JSON").build();
         Option turtle = Option.builder("turtle").desc("print result as RDF 1.1 Turtle").build();
         Option sep = Option.builder("sep").desc("set separator between name and alias of a table or a descriptor, ; is default, regex parameter to String.split(String regex)").hasArg().argName("regex").build();
-        Option plit = Option.builder("plit").desc("add passive local in-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
-        Option plot = Option.builder("plot").desc("add passive local out-of-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
-        Option poit = Option.builder("poit").desc("add passive online in-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
-        Option poot = Option.builder("poot").desc("add passive online out-of-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
-        Option alit = Option.builder("alit").desc("add active local in-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
-        Option alot = Option.builder("alot").desc("add active local out-of-memory table to validation suite").hasArgs().argName("path[;alias]...").build();
-        Option aoit = Option.builder("aoit").desc("add active online in-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
-        Option aoot = Option.builder("aoot").desc("add active online out-of-memory table to validation suite").hasArgs().argName("url[;alias]...").build();
-        Option pld = Option.builder("pld").desc("add passive local descriptor to validation suite").hasArgs().argName("path[;alias]...").build();
-        Option pod = Option.builder("pod").desc("add passive online descriptor to validation suite").hasArgs().argName("url[;alias]...").build();
-        Option ald = Option.builder("ald").desc("add active local descriptor to validation suite").hasArgs().argName("path[;alias]...").build();
-        Option aod = Option.builder("aod").desc("add active online descriptor to validation suite").hasArgs().argName("url[;alias]...").build();
+        Option plit = Option.builder("plit").desc("add passive local in-memory table to the validation request").hasArgs().argName("path[;alias]...").build();
+        Option plot = Option.builder("plot").desc("add passive local out-of-memory table to the validation request").hasArgs().argName("path[;alias]...").build();
+        Option poit = Option.builder("poit").desc("add passive online in-memory table to the validation request").hasArgs().argName("url[;alias]...").build();
+        Option poot = Option.builder("poot").desc("add passive online out-of-memory table to the validation request").hasArgs().argName("url[;alias]...").build();
+        Option alit = Option.builder("alit").desc("add active local in-memory table to the validation request").hasArgs().argName("path[;alias]...").build();
+        Option alot = Option.builder("alot").desc("add active local out-of-memory table to the validation request").hasArgs().argName("path[;alias]...").build();
+        Option aoit = Option.builder("aoit").desc("add active online in-memory table to the validation request").hasArgs().argName("url[;alias]...").build();
+        Option aoot = Option.builder("aoot").desc("add active online out-of-memory table to the validation request").hasArgs().argName("url[;alias]...").build();
+        Option pld = Option.builder("pld").desc("add passive local descriptor to the validation request").hasArgs().argName("path[;alias]...").build();
+        Option pod = Option.builder("pod").desc("add passive online descriptor to the validation request").hasArgs().argName("url[;alias]...").build();
+        Option ald = Option.builder("ald").desc("add active local descriptor to the validation request").hasArgs().argName("path[;alias]...").build();
+        Option aod = Option.builder("aod").desc("add active online descriptor to the validation request").hasArgs().argName("url[;alias]...").build();
 
         // add options
         Options options = new Options();
@@ -107,30 +107,30 @@ public final class CliApp {
         // set separator
         String separator = line.getOptionValue(sep, ";");
 
-        // crate validation suite
-        ValidationSuite.Builder vsBuilder = new ValidationSuite.Builder();
-        if (line.hasOption(saveMem)) vsBuilder.setSaveMemory();
-        addTables(line.getOptionValues(plit), false, true, false, separator, vsBuilder);
-        addTables(line.getOptionValues(plot), false, true, true, separator, vsBuilder);
-        addTables(line.getOptionValues(poit), false, false, false, separator, vsBuilder);
-        addTables(line.getOptionValues(poot), false, false, true, separator, vsBuilder);
-        addTables(line.getOptionValues(alit), true, true, false, separator, vsBuilder);
-        addTables(line.getOptionValues(alot), true, true, true, separator, vsBuilder);
-        addTables(line.getOptionValues(aoit), true, false, false, separator, vsBuilder);
-        addTables(line.getOptionValues(aoot), true, false, true, separator, vsBuilder);
-        addDescriptors(line.getOptionValues(pld), false, true, separator, vsBuilder);
-        addDescriptors(line.getOptionValues(pod), false, false, separator, vsBuilder);
-        addDescriptors(line.getOptionValues(ald), true, true, separator, vsBuilder);
-        addDescriptors(line.getOptionValues(aod), true, false, separator, vsBuilder);
-        ValidationSuite vs = vsBuilder.build();
+        // crate validation request
+        Request.Builder requestBuilder = new Request.Builder();
+        if (line.hasOption(saveMem)) requestBuilder.setSaveMemory();
+        addTables(line.getOptionValues(plit), false, true, false, separator, requestBuilder);
+        addTables(line.getOptionValues(plot), false, true, true, separator, requestBuilder);
+        addTables(line.getOptionValues(poit), false, false, false, separator, requestBuilder);
+        addTables(line.getOptionValues(poot), false, false, true, separator, requestBuilder);
+        addTables(line.getOptionValues(alit), true, true, false, separator, requestBuilder);
+        addTables(line.getOptionValues(alot), true, true, true, separator, requestBuilder);
+        addTables(line.getOptionValues(aoit), true, false, false, separator, requestBuilder);
+        addTables(line.getOptionValues(aoot), true, false, true, separator, requestBuilder);
+        addDescriptors(line.getOptionValues(pld), false, true, separator, requestBuilder);
+        addDescriptors(line.getOptionValues(pod), false, false, separator, requestBuilder);
+        addDescriptors(line.getOptionValues(ald), true, true, separator, requestBuilder);
+        addDescriptors(line.getOptionValues(aod), true, false, separator, requestBuilder);
+        Request request = requestBuilder.build();
 
         // perform validation
         Manager manager = new Manager();
         Outcome outcome = null;
         try {
-            if (line.hasOption(tables)) outcome = manager.tablesOnlyValidation(vs);
-            if (line.hasOption(descs)) outcome = manager.descriptorsOnlyValidation(vs);
-            if (line.hasOption(full)) outcome = manager.fullValidation(vs);
+            if (line.hasOption(tables)) outcome = manager.tablesOnlyValidation(request);
+            if (line.hasOption(descs)) outcome = manager.descriptorsOnlyValidation(request);
+            if (line.hasOption(full)) outcome = manager.fullValidation(request);
         }
         catch (ValidatorException e) {
             outcome = e;
@@ -170,32 +170,32 @@ public final class CliApp {
         return false;
     }
 
-    private static void addTables(String[] specs, boolean active, boolean local, boolean outOfMemory, String separator, ValidationSuite.Builder vsBuilder) {
+    private static void addTables(String[] specs, boolean active, boolean local, boolean outOfMemory, String separator, Request.Builder requestBuilder) {
         if (specs == null) return;
         for (String spec : specs) {
             String[] splitSpec = spec.split(separator);
             if (splitSpec.length == 1) {
-                if (active) vsBuilder.addActiveTable(splitSpec[0], null, local, outOfMemory);
-                else vsBuilder.addPassiveTable(splitSpec[0], null, local, outOfMemory);
+                if (active) requestBuilder.addActiveTable(splitSpec[0], null, local, outOfMemory);
+                else requestBuilder.addPassiveTable(splitSpec[0], null, local, outOfMemory);
             }
             if (splitSpec.length == 2) {
-                if (active) vsBuilder.addActiveTable(splitSpec[0], splitSpec[1], local, outOfMemory);
-                else vsBuilder.addPassiveTable(splitSpec[0], splitSpec[1], local, outOfMemory);
+                if (active) requestBuilder.addActiveTable(splitSpec[0], splitSpec[1], local, outOfMemory);
+                else requestBuilder.addPassiveTable(splitSpec[0], splitSpec[1], local, outOfMemory);
             }
         }
     }
 
-    private static void addDescriptors(String[] specs, boolean active, boolean local, String separator, ValidationSuite.Builder vsBuilder) {
+    private static void addDescriptors(String[] specs, boolean active, boolean local, String separator, Request.Builder requestBuilder) {
         if (specs == null) return;
         for (String spec : specs) {
             String[] splitSpec = spec.split(separator);
             if (splitSpec.length == 1) {
-                if (active) vsBuilder.addActiveDescriptor(splitSpec[0], null, local);
-                else vsBuilder.addPassiveDescriptor(splitSpec[0], null, local);
+                if (active) requestBuilder.addActiveDescriptor(splitSpec[0], null, local);
+                else requestBuilder.addPassiveDescriptor(splitSpec[0], null, local);
             }
             if (splitSpec.length == 2) {
-                if (active) vsBuilder.addActiveDescriptor(splitSpec[0], splitSpec[1], local);
-                else vsBuilder.addPassiveDescriptor(splitSpec[0], splitSpec[1], local);
+                if (active) requestBuilder.addActiveDescriptor(splitSpec[0], splitSpec[1], local);
+                else requestBuilder.addPassiveDescriptor(splitSpec[0], splitSpec[1], local);
             }
         }
     }
