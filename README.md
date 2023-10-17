@@ -68,3 +68,5 @@ This section describes the deployment process of the web application in ten easy
 10. Open another command line in the `otava` directory and run `docker compose down` to stop everything.
 
 The application uses the created directory `database-volume` to store its data. An instruction manual is in the web application. Repeat the steps 7-10 to start the application again. If you want to deploy a new version of the application, delete the two built otava images, run `git pull` in the directory `otava` to download the new version from this repository, and then use steps 7-10.
+
+There is a [C4](https://c4model.com/) diagram of the web application in the directory `web-app`. It can be rendered with [Structurizr](https://structurizr.com/dsl).
