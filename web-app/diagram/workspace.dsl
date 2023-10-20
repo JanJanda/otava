@@ -4,17 +4,17 @@ workspace "OTAVA" {
     expert = person "Expert"
 
     webApp = softwareSystem "Web Application" {
-      webClient = container "Web Client" "" "React" {
-        tableValPage = component "Table Validation" "" "" "webPage"
-        descValPage = component "Descriptor Validation" "" "" "webPage"
-        expertValPage = component "Expert Validation" "" "" "webPage"
+      client = container "Client" "" "React" {
+        tableValPage = component "Table Validation" "" "" "page"
+        descValPage = component "Descriptor Validation" "" "" "page"
+        expertValPage = component "Expert Validation" "" "" "page"
       }
-      webServer = container "Web Server" "" "Node.js" {
+      server = container "Server" "" "Node.js" {
         router = component "Router"
         model = component "Model"
       }
       database = container "Database" "" "MySQL" "database"
-      webWorker = container "Web Worker" "" "Java" {
+      worker = container "Worker" "" "Java" {
         dbConn = component "Database Connector"
         lib = component "Validation Library"
       }
@@ -26,7 +26,7 @@ workspace "OTAVA" {
     expert -> descValPage "Uses"
     expert -> expertValPage "Uses"
 
-    webClient -> router "Communicates"
+    client -> router "Communicates"
     router -> model "Uses"
     model -> database "Reads & Writes"
 
@@ -43,21 +43,21 @@ workspace "OTAVA" {
       include *
       autoLayout
     }
-    component webClient {
+    component client {
       include *
       autoLayout
     }
-    component webServer {
+    component server {
       include *
       autoLayout
     }
-    component webWorker {
+    component worker {
       include *
       autoLayout
     }
 
     styles {
-      element webPage {
+      element page {
         shape WebBrowser
       }
       element database {
