@@ -50,16 +50,16 @@ export function ExpertValidationForm(props) {
         <Form.Control disabled={props.disabled} as="textarea" name="activeDescriptors" defaultValue={props.activeDescriptors} />
       </Form.Group>
 
-      <Form.Group className="mb-3" controlId="description">
-        <Form.Label>{locale.description}</Form.Label>
-        <Form.Control disabled={props.disabled} as="textarea" name="description" defaultValue={props.description} />
-      </Form.Group>
-
       <div className="mb-3">
         <Form.Label>{locale.setValLang}</Form.Label>
         <Form.Check disabled={props.disabled} type="radio" name="language" value="en" label={locale.english} defaultChecked={props.lang === "en"} />
         <Form.Check disabled={props.disabled} type="radio" name="language" value="cs" label={locale.czech} defaultChecked={props.lang === "cs"} />
       </div>
+
+      <Form.Group className="mb-3" controlId="description">
+        <Form.Label>{locale.description}</Form.Label>
+        <Form.Control disabled={props.disabled} as="textarea" name="description" defaultValue={props.description} />
+      </Form.Group>
 
       {submitButton}
     </Form>
