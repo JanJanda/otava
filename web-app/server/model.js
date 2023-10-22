@@ -48,6 +48,7 @@ async function deleteOld() {
 }
 
 async function addTableValidationRequest(language, url, active) {
+  if (language === undefined || url === undefined || active === undefined) return;
   try {
     let style = "tables";
     let passiveTables = url;
@@ -70,6 +71,7 @@ async function addTableValidationRequest(language, url, active) {
 }
 
 async function addDescriptorValidationRequest(language, url, active) {
+  if (language === undefined || url === undefined || active === undefined) return;
   try {
     let style = "descs";
     let passiveDescriptors = url;
@@ -92,6 +94,7 @@ async function addDescriptorValidationRequest(language, url, active) {
 }
 
 async function addExpertValidationRequest(language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description) {
+  if (language === undefined || style === undefined || passiveTables === undefined || activeTables === undefined || passiveDescriptors === undefined || activeDescriptors === undefined || description === undefined) return;
   try {
     const result = await connectionPool.execute("INSERT INTO `validations` (`language`, `style`, `passive-tables`, `active-tables`, `passive-descriptors`, `active-descriptors`, `description`, `form`, `request-time`, `state`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
       [language, style, passiveTables, activeTables, passiveDescriptors, activeDescriptors, description, "expert", new Date(), "queueing"]);
@@ -103,6 +106,7 @@ async function addExpertValidationRequest(language, style, passiveTables, active
 }
 
 async function getValidationData(id) {
+  if (id === undefined) return;
   try {
     const result = await connectionPool.execute("SELECT * FROM `validations` WHERE `id` = ?;", [id]);
     return result[0][0];
