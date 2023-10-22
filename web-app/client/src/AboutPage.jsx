@@ -16,10 +16,12 @@ export default function AboutPage() {
 }
 
 function Extras() {
+  const locale = useContext(LocaleContext);
+
   return (
     <div className="mt-5">
       <hr />
-      <a href="https://github.com/JanJanda/otava" target="_blank" rel="noreferrer" className="extra-link">The project on GitHub</a>
+      <a href="https://github.com/JanJanda/otava" target="_blank" rel="noreferrer" className="extra-link">{locale.projectGitHub}</a>
       <a href="https://www.w3.org/TR/2016/NOTE-tabular-data-primer-20160225/" target="_blank" rel="noreferrer" className="extra-link">CSV on the Web</a>
     </div>
   );

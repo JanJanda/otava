@@ -37,7 +37,7 @@ export const czechLocale = {
     "Tato webová aplikace poskytuje zjednodušené rozhraní s omezenými schopnostmi pro méně zkušené uživatele.",
   manual: "Návod k použití",
   howToUse: "Uživatelé podávají své žádosti o validace prostřednictvím webového formuláře. " +
-    "Formulář nabízí tři validační styly. " +
+    "Expertní formulář nabízí tři validační styly. " +
     "Úplná validace validuje všechny tabulky a deskriptory dohromady. " +
     "Validace jen tabulek validuje jen samotné pasivní tabulky. " +
     "Validace jen deskriptorů validuje jen samotné pasivní deskriptory. " +
@@ -64,5 +64,6 @@ export const czechLocale = {
   tableValidation: "Validace tabulky",
   descValidation: "Validace deskriptoru",
   expertValidation: "Expertní validace",
-  chooseVal: "Vyberte si svou validaci"
+  chooseVal: "Vyberte si svou validaci",
+  projectGitHub: "Tento projekt na GitHubu"
 };

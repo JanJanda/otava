@@ -37,7 +37,7 @@ export const englishLocale = {
     "This web application provides a simplified interface with limited features for less experienced users.",
   manual: "Instruction manual",
   howToUse: "Users submit their validation requests using a web form. " +
-    "The form offers three validation styles. " +
+    "The expert form offers three validation styles. " +
     "The full validation validates all tables and descriptors together. " +
     "The tables only validation validates only passive tables alone. " +
     "The descriptors only validation validates only passive descriptors alone. " +
@@ -50,7 +50,7 @@ export const englishLocale = {
     "If an alias is present, it is used in the validation instead of the actual URL. " +
     "A document is located and loaded according to its URL, but it pretends that it is on a different location according to the alias. " +
     "There is an input text field for each document type in the form. " +
-    "Each line in a field represent one document, and it contains a URL of the document first and optionally an alias of the document second separated by a space. " +
+    "Each line in a field represents one document, and it contains a URL of the document first and optionally an alias of the document second separated by a space. " +
     "If you want to validate a local file on your computer, you have to upload it somewhere on the web first using a web service of your choice. " +
     "The easiest option is probably GitHub. " +
     "Alternatively, you can use the command line interface Java application. " +
@@ -64,5 +64,6 @@ export const englishLocale = {
   tableValidation: "Table validation",
   descValidation: "Descriptor validation",
   expertValidation: "Expert validation",
-  chooseVal: "Choose your validation"
+  chooseVal: "Choose your validation",
+  projectGitHub: "This project on GitHub"
 };
