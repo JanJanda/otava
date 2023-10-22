@@ -42,8 +42,8 @@ export const englishLocale = {
     "The tables only validation validates only passive tables alone. " +
     "The descriptors only validation validates only passive descriptors alone. " +
     "There are four types of documents: passive table, active table, passive descriptor, and active descriptor. " +
-    "An active table attempts to locate its descriptor, a passive table does not. " +
-    "An active descriptor attempts to locate its tables, a passive descriptor does not. " +
+    "An active table attempts to locate and load its descriptor, a passive table does not. " +
+    "An active descriptor attempts to locate and load its tables, a passive descriptor does not. " +
     "Every document has a URL with the the actual location of the file. " +
     "Every document may have an alias. " +
     "An alias is an alternative URL. " +

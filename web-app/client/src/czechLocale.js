@@ -42,8 +42,8 @@ export const czechLocale = {
     "Validace jen tabulek validuje jen samotné pasivní tabulky. " +
     "Validace jen deskriptorů validuje jen samotné pasivní deskriptory. " +
     "Jsou zde čtyři typy dokumentů: pasivní tabulka, aktivní tabulka, pasivní deskriptor a aktivní deskriptor. " +
-    "Aktivní tabulka se pokusí lokalizovat svůj deskriptor, pasivní tabulka nikoli. " +
-    "Aktivní deskriptor se pokusí lokalizovat své tabulky, pasivní deskriptor nikoli. " +
+    "Aktivní tabulka se pokusí lokalizovat a nahrát svůj deskriptor, pasivní tabulka nikoli. " +
+    "Aktivní deskriptor se pokusí lokalizovat a nahrát své tabulky, pasivní deskriptor nikoli. " +
     "Každý dokument má URL se skutečným umístěním souboru. " +
     "Každý dokument může mít alias. " +
     "Alias je alternativní URL. " +
