@@ -1,0 +1,163 @@
+openapi: 3.0.0
+info:
+  title: OTAVA Web server
+  description: The web interface of the OTAVA server validation web service.
+  version: 1.0.0
+tags:
+  - name: Results
+    description: Provides validation results and other data about particular validation.
+  - name: Forms
+    description: Accepts data from web forms.
+paths:
+  /validation-data/{validationID}:
+    parameters:
+      - name: validationID
+        in: path
+        description: ID of validation to return
+        required: true
+        schema:
+          type: integer
+    get:
+      tags:
+        - Results
+      summary: Returns data for specified validation.
+      responses:
+        '200':
+          description: A JSON object with validation data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  language:
+                    type: string
+                  style:
+                    type: string
+                  passive-tables:
+                    type: string
+                  active-tables:
+                    type: string
+                  passive-descriptors:
+                    type: string
+                  active-descriptors:
+                    type: string
+                  description:
+                    type: string
+                  form:
+                    type: string
+                  request-time:
+                    type: string
+                  finish-time:
+                    type: string
+                  state:
+                    type: string
+                  outcome-text:
+                    type: string
+                  outcome-json:
+                    type: string
+                  outcome-turtle:
+                    type: string
+  /submit-table-validation:
+    post:
+      tags:
+        - Forms
+      summary: Accepts data from table validation form.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                tableUrl:
+                  type: string
+                active:
+                  type: string
+                language:
+                  type: string
+              required:
+                - tableUrl
+                - active
+                - language
+      responses:
+        '302':
+          description: Empty response. Redirects to a page with validation data.
+          headers:
+            Location:
+              description: /result/{newID}
+              schema:
+                type: string
+  /submit-descriptor-validation:
+    post:
+      tags:
+        - Forms
+      summary: Accepts data from descriptor validation form.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                descUrl:
+                  type: string
+                active:
+                  type: string
+                language:
+                  type: string
+              required:
+                - descUrl
+                - active
+                - language
+      responses:
+        '302':
+          description: Empty response. Redirects to a page with validation data.
+          headers:
+            Location:
+              description: /result/{newID}
+              schema:
+                type: string
+  /submit-expert-validation:
+    post:
+      tags:
+        - Forms
+      summary: Accepts data from expert validation form.
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                style:
+                  type: string
+                passiveTables:
+                  type: string
+                activeTables:
+                  type: string
+                passiveDescriptors:
+                  type: string
+                activeDescriptors:
+                  type: string
+                language:
+                  type: string
+                description:
+                  type: string
+              required:
+                - style
+                - passiveTables
+                - activeTables
+                - passiveDescriptors
+                - activeDescriptors
+                - language
+                - description
+      responses:
+        '302':
+          description: Empty response. Redirects to a page with validation data.
+          headers:
+            Location:
+              description: /result/{newID}
+              schema:
+                type: string
