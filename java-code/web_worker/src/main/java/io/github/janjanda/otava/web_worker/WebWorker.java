@@ -35,13 +35,13 @@ public final class WebWorker {
     private static void tryIteration() throws SQLException {
         RequestData requestData = findNewJob();
         if (requestData != null) {
-            Request request = makeValidationSuite(requestData);
+            Request request = makeValidationRequest(requestData);
             Outcome outcome = produceOutcome(requestData, request);
             saveOutcomeFormats(requestData, outcome);
         }
     }
 
-    private static Request makeValidationSuite(RequestData requestData) {
+    private static Request makeValidationRequest(RequestData requestData) {
         Request.Builder requestBuilder = new Request.Builder();
         requestBuilder.setSaveMemory();
         parseDocuments(requestData.passiveTables(), (a, b) -> requestBuilder.addPassiveTable(a, b, false, true));
