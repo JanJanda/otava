@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * @see <a href="https://w3c.github.io/csvw/tests/reports/index.html#csvw-validation-tests-1">CSVW Implementation Report</a>
  */
 @Disabled("This project does not support every specified feature because it is not required. Results: 80 failed, 201 passed")
-class W3Tests {
+class W3CTests {
     record TestData(String testName, Request request, String validation, String result) {}
 
     static Stream<TestData> dataProvider() throws Exception {
