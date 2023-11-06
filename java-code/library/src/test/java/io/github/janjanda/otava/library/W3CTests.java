@@ -23,7 +23,7 @@ class W3CTests {
     record TestData(String testName, Request request, String validation, String result) {}
 
     static Stream<TestData> dataProvider() throws Exception {
-        try (InputStreamReader reader = makeFileReader("src/test/resources/w3tests.csv");
+        try (InputStreamReader reader = makeFileReader("src/test/resources/w3c-tests.csv");
              CSVParser csvParser = CSVParser.parse(reader, CSVFormat.DEFAULT)) {
             Stream.Builder<TestData> data = Stream.builder();
             for (CSVRecord row : csvParser) {
