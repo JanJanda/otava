@@ -48,7 +48,7 @@ async function deleteOld() {
 }
 
 async function addTableValidationRequest(language, url, active) {
-  if (language === undefined || url === undefined || active === undefined) return;
+  if (language === undefined || url === undefined) return;
   try {
     let style = "tables";
     let passiveTables = url;
@@ -71,7 +71,7 @@ async function addTableValidationRequest(language, url, active) {
 }
 
 async function addDescriptorValidationRequest(language, url, active) {
-  if (language === undefined || url === undefined || active === undefined) return;
+  if (language === undefined || url === undefined) return;
   try {
     let style = "descs";
     let passiveDescriptors = url;
