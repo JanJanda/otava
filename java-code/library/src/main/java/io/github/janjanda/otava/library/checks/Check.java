@@ -8,6 +8,7 @@ import io.github.janjanda.otava.library.exceptions.FileIteratorException;
 import io.github.janjanda.otava.library.exceptions.ValidatorException;
 import io.github.janjanda.otava.library.exceptions.ValidatorFileException;
 
+import java.io.UncheckedIOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.HashSet;
@@ -60,7 +61,7 @@ public abstract class Check {
             result = resultBuilder.build();
             return result;
         }
-        catch (FileIteratorException e) {
+        catch (FileIteratorException | UncheckedIOException e) {
             throw new ValidatorFileException(e.getMessage());
         }
     }
